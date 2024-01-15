@@ -14,6 +14,12 @@
 \contentsline {section}{\numberline {3.4}Listas de items}{6}{section.3.4}%
 \contentsline {section}{\numberline {3.5}Tablas}{7}{section.3.5}%
 \contentsline {chapter}{4.\hskip .5em\relax Técnicas y herramientas}{9}{chapter*.9}%
-\contentsline {chapter}{5.\hskip .5em\relax Aspectos relevantes del desarrollo del proyecto}{11}{chapter*.10}%
-\contentsline {chapter}{6.\hskip .5em\relax Trabajos relacionados}{13}{chapter*.11}%
-\contentsline {chapter}{7.\hskip .5em\relax Conclusiones y Líneas de trabajo futuras}{15}{chapter*.12}%
+\contentsline {section}{\numberline {4.1}Análisis Comparativo entre Google Books API y Amazon Books API}{9}{section.4.1}%
+\contentsline {subsection}{Accesibilidad y Documentación}{9}{section*.10}%
+\contentsline {subsection}{Amplitud de Datos Disponibles}{9}{section*.11}%
+\contentsline {subsection}{Facilidad de Integración y Uso}{9}{section*.12}%
+\contentsline {subsection}{Restricciones de Uso y Limitaciones}{10}{section*.13}%
+\contentsline {section}{\numberline {4.2}Justificación para la Elección de Google Books API}{10}{section.4.2}%
+\contentsline {chapter}{5.\hskip .5em\relax Aspectos relevantes del desarrollo del proyecto}{11}{chapter*.14}%
+\contentsline {chapter}{6.\hskip .5em\relax Trabajos relacionados}{13}{chapter*.15}%
+\contentsline {chapter}{7.\hskip .5em\relax Conclusiones y Líneas de trabajo futuras}{15}{chapter*.16}%

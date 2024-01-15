@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Editar Libro
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Editar Libro</h2>
+    <form method="POST">
+        <div class="mb-3">
+            <label for="titulo" class="form-label">Título</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" value="{{ libro.titulo }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="isbn" class="form-label">ISBN</label>
+            <input type="text" class="form-control" id="isbn" name="isbn" value="{{ libro.isbn }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="editorial" class="form-label">Editorial</label>
+            <input type="text" class="form-control" id="editorial" name="editorial" value="{{ libro.editorial }}">
+        </div>
+        <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea class="form-control" id="descripcion" name="descripcion" rows="3">{{ libro.descripcion }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="genero" class="form-label">Género</label>
+            <input type="text" class="form-control" id="genero" name="genero" value="{{ libro.genero }}">
+        </div>
+        <div class="mb-3">
+            <label for="portada" class="form-label">Portada (URL)</label>
+            <input type="text" class="form-control" id="portada" name="portada" value="{{ libro.portada }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    </form>
+</div>
+{% endblock %}

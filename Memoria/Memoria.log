@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10.12) (preloaded format=pdflatex 2023.12.19)  20 DEC 2023 16:47
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10.12) (preloaded format=pdflatex 2023.12.19)  20 DEC 2023 20:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -767,7 +767,16 @@ LaTeX Font Info:    Trying to load font information for T1+lmr on input line 36
  (C:\Users\ferda\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmr.fd
 File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-No file Memoria.aux.
+(Memoria.aux
+LaTeX Info: Redefining \. on input line 12.
+LaTeX Info: Redefining \% on input line 12.
+LaTeX Info: Redefining \. on input line 13.
+LaTeX Info: Redefining \% on input line 13.
+ (tex/1_Introduccion.aux) (tex/2_Objetivos_del_proyecto.aux)
+(tex/3_Conceptos_teoricos.aux) (tex/4_Tecnicas_y_herramientas.aux)
+(tex/5_Aspectos_relevantes_del_desarrollo_del_proyecto.aux)
+(tex/6_Trabajos_relacionados.aux)
+(tex/7_Conclusiones_Lineas_de_trabajo_futuras.aux))
 \openout1 = `Memoria.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 363.
@@ -806,6 +815,7 @@ LaTeX Info: Redefining \showhyphens on input line 363.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
+
 (C:\Users\ferda\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
@@ -836,17 +846,19 @@ fg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
 Package hyperref Info: Link coloring ON on input line 363.
+ (Memoria.out) (Memoria.out)
 \@outlinefile=\write4
 \openout4 = `Memoria.out'.
 
-<./Imagenes/cabecera.pdf, id=3, 617.67549pt x 135.51413pt>
+<./Imagenes/cabecera.pdf, id=71, 617.67549pt x 135.51413pt>
 File: ./Imagenes/cabecera.pdf Graphic file (type pdf)
 <use ./Imagenes/cabecera.pdf>
 Package pdftex.def Info: ./Imagenes/cabecera.pdf  used on input line 365.
 (pdftex.def)             Requested size: 383.0pt x 84.02823pt.
 LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 3
 65.
- (C:\Users\ferda\AppData\Local\Programs\MiKTeX\tex/latex/lm\ot1lmr.fd
+
+(C:\Users\ferda\AppData\Local\Programs\MiKTeX\tex/latex/lm\ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 3
@@ -873,7 +885,7 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <8> on input line 365.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <6> on input line 365.
-<./Imagenes/escudoInfor.pdf, id=4, 618.11432pt x 737.07487pt>
+<./Imagenes/escudoInfor.pdf, id=72, 618.11432pt x 737.07487pt>
 File: ./Imagenes/escudoInfor.pdf Graphic file (type pdf)
 <use ./Imagenes/escudoInfor.pdf>
 Package pdftex.def Info: ./Imagenes/escudoInfor.pdf  used on input line 365.
@@ -923,16 +935,31 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
-No file Memoria.toc.
-[3
+(Memoria.toc
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+LaTeX Info: Redefining \. on input line 2.
+LaTeX Info: Redefining \% on input line 2.
 
-]
-No file Memoria.lof.
-[4
 
-]
-No file Memoria.lot.
-[5
+LaTeX Font Warning: Font shape `T1/lmr/bx/sc' undefined
+(Font)              using `T1/lmr/bx/n' instead on input line 3.
+
+) [3
+
+] (Memoria.lof
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+LaTeX Info: Redefining \. on input line 2.
+LaTeX Info: Redefining \% on input line 2.
+) [4
+
+] (Memoria.lot
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+LaTeX Info: Redefining \. on input line 2.
+LaTeX Info: Redefining \% on input line 2.
+) [5
 
 ] [6
 
@@ -947,6 +974,9 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                replaced by space on input line 1.
 
 )
+Underfull \vbox (badness 4726) has occurred while \output is active []
+
+
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
 <to be read again> 
@@ -956,20 +986,18 @@ l.461 \include{./tex/1_Introduccion}
 
 
 ]
-\openout2 = `./tex/2_Objetivos_del_proyecto.aux'.
+LaTeX Info: Redefining \. on input line 461.
+LaTeX Info: Redefining \% on input line 461.
 
- (tex/2_Objetivos_del_proyecto.tex
 pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1 \capitulo{2}{Objetivos del proyecto}
-                                         [2
+l.461 \include{./tex/1_Introduccion}
+                                     [2]
+\openout2 = `./tex/2_Objetivos_del_proyecto.aux'.
 
-
-
-
-]
+ (tex/2_Objetivos_del_proyecto.tex
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \hskip 5.87491pt
@@ -981,7 +1009,12 @@ been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.462 \include{./tex/2_Objetivos_del_proyecto}
-                                               [3]
+                                               [3
+
+
+
+
+]
 \openout2 = `./tex/3_Conceptos_teoricos.aux'.
 
 
@@ -1056,21 +1089,24 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \hskip 5.87491pt
 (hyperref)                replaced by space on input line 1.
 
-) [9]
+[9])
+LaTeX Info: Redefining \. on input line 464.
+LaTeX Info: Redefining \% on input line 464.
+ [10]
 \openout2 = `./tex/5_Aspectos_relevantes_del_desarrollo_del_proyecto.aux'.
 
- (tex/5_Aspectos_relevantes_del_desarrollo_del_proyecto.tex [10
-
-
-
-
-]
+ (tex/5_Aspectos_relevantes_del_desarrollo_del_proyecto.tex
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                \hskip 5.87491pt
 (hyperref)                replaced by space on input line 1.
 
-) [11]
+) [11
+
+
+
+
+]
 \openout2 = `./tex/6_Trabajos_relacionados.aux'.
 
  (tex/6_Trabajos_relacionados.tex [12
@@ -1134,28 +1170,22 @@ L3 programming layer <2020/03/25>
  ***********
 
 
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package rerunfilecheck Warning: File `Memoria.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `Memoria.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  CC8CCB88B4EC8BE96BEE3B55436826CC;2338.
+Package rerunfilecheck Info: File `Memoria.out' has not changed.
+(rerunfilecheck)             Checksum: 8B44B8A6595838E58C859C06A8727D83;3067.
  ) 
 Here is how much of TeX's memory you used:
- 17670 strings out of 474491
- 286036 string characters out of 5743833
+ 17757 strings out of 474491
+ 288559 string characters out of 5743833
  1944473 words of memory out of 5000000
- 39495 multiletter control sequences out of 15000+600000
- 645909 words of font info for 150 fonts, out of 8000000 for 9000
+ 39528 multiletter control sequences out of 15000+600000
+ 649940 words of font info for 162 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 85i,12n,93p,1006b,500s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 85i,12n,93p,1006b,551s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/ferda/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pf
 b><C:/Users/ferda/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pf
 b><C:/Users/ferda/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmcsc10.p
@@ -1166,9 +1196,9 @@ b><C:/Users/ferda/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb
 :/Users/ferda/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/
 Users/ferda/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmro12.pfb><C:/
 Users/ferda/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb>
-Output written on Memoria.pdf (28 pages, 634681 bytes).
+Output written on Memoria.pdf (28 pages, 658943 bytes).
 PDF statistics:
- 571 PDF objects out of 1000 (max. 8388607)
- 45 named destinations out of 1000 (max. 500000)
- 53259 words of extra memory for PDF output out of 61914 (max. 10000000)
+ 650 PDF objects out of 1000 (max. 8388607)
+ 51 named destinations out of 1000 (max. 500000)
+ 55443 words of extra memory for PDF output out of 61914 (max. 10000000)
 

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Catálogo{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>Listado de libros</h3>
+    <!-- Formulario de Búsqueda -->
+    <form method="POST" action="{{ url_for('catalogo') }}">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Buscar por ISBN o Título" name="busqueda">
+            <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+        </div>
+    </form>
+    <!-- Botón Agregar Libro -->
+    {% if current_user.is_authenticated %}
+    <div class="text-end mb-3">
+        <a href="{{ url_for('agregar_libro') }}" class="btn btn-primary">Agregar Libro</a>
+    </div>
+    {% endif %}
+
+    <!-- Listado de Libros -->
+    {% for libro in libros %}
+        {% if loop.index0 % 2 == 0 %}
+            {% if not loop.first %}
+                </div>
+            {% endif %}
+            <div class="row">
+        {% endif %}
+        <div class="col-md-6">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ libro.titulo }}</h5>
+                    <p class="card-text">{{ libro.descripcion }}</p>
+                    <p class="list-group-item">Editorial: {{ libro.editorial }}</p>
+                    <a href="#" class="btn btn-primary">Más información</a>
+                    <div class="d-flex justify-content-start">
+                    <!-- Botones Editar y Eliminar -->
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('editar_libro', id=libro.id) }}" class="btn btn-link text-primary">Editar</a>
+                    <a href="{{ url_for('eliminar_libro', id=libro.id) }}" class="btn btn-link text-danger">Eliminar</a>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
