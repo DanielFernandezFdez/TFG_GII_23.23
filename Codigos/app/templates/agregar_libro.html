@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}
+Agregar Libro
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Agregar Nuevo Libro</h2>
+    <form action="/agregar" method="POST">
+        <div class="mb-3">
+            <label for="titulo" class="form-label">Título</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" required>
+        </div>
+        <div class="mb-3">
+            <label for="isbn" class="form-label">ISBN</label>
+            <input type="text" class="form-control" id="isbn" name="isbn" required>
+        </div>
+        <div class="mb-3">
+            <label for="editorial" class="form-label">Editorial</label>
+            <input type="text" class="form-control" id="editorial" name="editorial">
+        </div>
+        <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="genero" class="form-label">Género</label>
+            <input type="text" class="form-control" id="genero" name="genero">
+        </div>
+        <div class="mb-3">
+            <label for="portada" class="form-label">Portada (URL)</label>
+            <input type="text" class="form-control" id="portada" name="portada">
+        </div>
+        <button type="submit" class="btn btn-primary">Agregar Libro</button>
+    </form>
+</div>
+{% endblock %}
