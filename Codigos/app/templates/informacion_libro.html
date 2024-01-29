@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Información del libro{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-6 mb-3">
+            <!-- Asumiendo que libro.imagen_url es la variable con la URL de la imagen -->
+            <img src="{{ libro.url_imagen }}" class="img-fluid rounded-start" alt="Portada del libro">
+        </div>
+        <div class="col-lg-6">
+            <h1 class="mb-3">{{ libro.titulo }}</h1>
+            <p class="mb-1"><strong>ISBN:</strong> {{ libro.isbn }}</p>
+            <p class="mb-1"><strong>Editorial:</strong> {{ libro.editorial }}</p>
+            <p class="mb-1"><strong>Año de publicación:</strong> {{ libro.año_publicacion }}</p>
+            <p class="mb-1"><strong>Ubicación del Estudio:</strong> <a href="{{ libro.ubicacion_estudio }}" target="_blank">Enlace al estudio</a></p>
+            <h2 class="mt-4">Descripción del libro</h2>
+            <p>{{ libro.descripcion}}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
