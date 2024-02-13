@@ -18,6 +18,7 @@ class Libros(db.Model):
     editorial = db.Column(db.String(100))
     descripcion = db.Column(db.Text)
     año_publicacion = db.Column(db.String(50))
+    puntuacion = db.Column(db.Integer, nullable=True)
     ubicacion_estudio = db.Column(db.String(300))
     url_imagen = db.Column(db.String(300))   
 
@@ -36,9 +37,8 @@ class fecha_modificacion(db.Model):
     # Método para actualizar la fecha de última modificación
     def actualizar_fecha_modificacion(self):
         FechaUTC=datetime.now(timezone.utc)
-        #zona_horaria_local = ZoneInfo("Europe/Madrid")
-        #self.ultima_modificacion = FechaUTC.astimezone(zona_horaria_local)
-        self.ultima_modificacion = FechaUTC
+        zona_horaria_local = ZoneInfo('Europe/Berlin')
+        self.ultima_modificacion = FechaUTC.astimezone(zona_horaria_local)
         db.session.commit()
 
 def creacion():
@@ -109,13 +109,13 @@ def catalogo():
     if request.method == 'POST':
         if 'btn_exportar' in request.form:
             return exportar_csv()
+        elif 'btn_buscar' in request.form:
+            busqueda = request.form.get('busqueda')
+            libros = Libros.query.filter((Libros.titulo.contains(busqueda)) | (Libros.isbn.contains(busqueda))).all()
         elif 'archivo_csv' in request.files:
             archivo = request.files['archivo_csv']
             print('Archivo recibido')
             return importar_csv(archivo)
-        else:
-            busqueda = request.form.get('busqueda')
-            libros = Libros.query.filter((Libros.titulo.contains(busqueda)) | (Libros.isbn.contains(busqueda))).all()
     else:
         libros = Libros.query.all()
     fecha=fecha_modificacion.query.get_or_404(1)
@@ -133,6 +133,7 @@ def agregar_libro():
             editorial=request.form['editorial'],
             descripcion=request.form['descripcion'] if request.form['descripcion'] else descripcion_defecto,
             año_publicacion=request.form['año_publicacion'],
+            puntuacion=request.form['puntuacion'],
             ubicacion_estudio=request.form['ubicacion_estudio'],
             url_imagen=request.form['url_imagen']
         )
@@ -158,6 +159,7 @@ def editar_libro(id):
         libro.editorial = request.form['editorial']
         libro.descripcion = request.form['descripcion']
         libro.año_publicacion = request.form['año_publicacion']
+        libro.puntuacion = request.form['puntuacion']
         libro.ubicacion_estudio = request.form['ubicacion_estudio']
         libro.url_imagen = request.form['url_imagen']
         # Actualizar la fecha de última modificación
@@ -195,7 +197,7 @@ def informacion_libro(id):
 #Funcion de exportar a CSV
 def exportar_csv():
     si = StringIO()
-    cw = csv.writer(si, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+    cw = csv.writer(si, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
     # Escribe los encabezados en el archivo CSV
     cw.writerow(['ID', 'Título', 'ISBN', 'Editorial', 'Descripción', 'Año de publicación', 'Ubicación del estudio', 'URL de la imagen'])
@@ -205,7 +207,7 @@ def exportar_csv():
 
     # Escribe los datos de cada libro en el archivo CSV
     for libro in libros:
-        cw.writerow([libro.id, libro.titulo, libro.isbn, libro.editorial, libro.descripcion, libro.año_publicacion, libro.ubicacion_estudio, libro.url_imagen])
+        cw.writerow([libro.id, libro.titulo, libro.isbn, libro.editorial, libro.descripcion, libro.año_publicacion,libro.puntuacion, libro.ubicacion_estudio, libro.url_imagen])
 
     output = si.getvalue()
 
@@ -218,7 +220,7 @@ def exportar_csv():
 
 def importar_csv(archivo):
     stream = StringIO(archivo.stream.read().decode("UTF-8"), newline=None)
-    csv_input = csv.reader(stream)
+    csv_input = csv.reader(stream,delimiter=';')
 
     # Borrar los datos existentes si es necesario
     Libros.query.delete()
@@ -236,8 +238,9 @@ def importar_csv(archivo):
             editorial=row[3],
             descripcion=row[4],
             año_publicacion=row[5],
-            ubicacion_estudio=row[6],
-            url_imagen=row[7]
+            puntiacion=row[6],
+            ubicacion_estudio=row[7],
+            url_imagen=row[8]
         )
 
         # Agregar el nuevo libro a la sesión de la base de datos
@@ -253,7 +256,7 @@ def importar_csv(archivo):
 
     # Confirmar los cambios en la base de datos
     db.session.commit()
-
+    print('Datos importados')
     # Redireccionar o enviar una respuesta adecuada
     return redirect(url_for('catalogo'))
 

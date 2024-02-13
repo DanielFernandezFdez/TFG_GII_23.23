@@ -9,7 +9,7 @@
     <form method="POST" action="{{ url_for('catalogo') }}"  enctype="multipart/form-data">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Buscar por ISBN o Título" name="busqueda">
-            <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+            <button class="btn btn-outline-secondary" type="submit" name="btn_buscar">Buscar</button>
         </div>
 
         <!-- Botón para Exportar a CSV -->
@@ -18,7 +18,7 @@
             <div class="btn-group" role="group" aria-label="Basic outlined example">
                 <button type="button" id="btn_importar" class="btn btn-outline-primary">Importar CSV</button>
                 <button type="submit" name="btn_exportar" class="btn btn-outline-primary">Exportar un CSV</button>
-                <a href="{{ url_for('agregar_libro') }}" class="btn btn-outline-primary">Agregar Libro</a>
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalAgregarLibro">Agregar Libro</button>
             </div>
         </div>
         <!-- Campo para cargar archivos csv -->
@@ -79,5 +79,33 @@
     });
 </script>
 
+<!-- Modal Agregar Libro -->
+<div class="modal fade" id="modalAgregarLibro" tabindex="-1" role="dialog" aria-labelledby="modalAgregarLibroLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalAgregarLibroLabel">¿Cómo quiere agregar el libro?</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body d-flex justify-content-around">
+          <!-- Botones dentro de la modal -->
+          <a href="/catalogo" class="btn btn-primary">
+            <i class="fas fa-search"></i> <br> Busqueda automática
+          </a>
+          <a href="/agregar" class="btn btn-secondary">
+            <i class="fas fa-pencil-alt"></i> <br> Agregar manualmente
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 {% endblock %}
+
+
+
+
 
