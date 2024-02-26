@@ -29,8 +29,16 @@ Editar Libro
             <input type="text" class="form-control" id="año_publicacion" name="año_publicacion" value="{{ libro.año_publicacion }}">
         </div>
         <div class="mb-3">
-            <label for="puntuacion" class="form-label">Puntuacion</label>
-            <input type="text" class="form-control" id="puntuacion" name="puntuacion" value="{{ libro.puntuacion }}">
+            <label for="puntuacion" class="form-label">Puntuación</label>
+            <select class="form-select" id="puntuacion" name="puntuacion" value="{{ libro.puntuacion }}">
+                <option value="{{ libro.puntuacion }}"> {{ libro.puntuacion }}</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
         </div>
         <div class="mb-3">
             <label for="ubicacion_estudio" class="form-label">Ubicación del estudio</label>

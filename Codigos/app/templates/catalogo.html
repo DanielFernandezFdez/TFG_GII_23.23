@@ -3,10 +3,10 @@
 {% block title %}Catálogo{% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container" >
     <h3>Listado de libros</h3>
     <!-- Formulario de Búsqueda -->
-    <form method="POST" action="{{ url_for('catalogo') }}"  enctype="multipart/form-data">
+    <form method="POST" action="{{ url_for('pantallas_generales.catalogo') }}"  enctype="multipart/form-data">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Buscar por ISBN o Título" name="busqueda">
             <button class="btn btn-outline-secondary" type="submit" name="btn_buscar">Buscar</button>
@@ -22,38 +22,37 @@
             </div>
         </div>
         <!-- Campo para cargar archivos csv -->
-        <input type="file" name="archivo_csv" id="archivo_csv" accept=".csv" style="display: none;" onchange="this.form.submit()">
+        <input type="file" class="input-file-catalogo" name="archivo_csv" id="archivo_csv" accept=".csv"  onchange="this.form.submit()">
         {% endif %}
         
 
     </form>
     
-
     <!-- Listado de Libros -->
     <div class="container mt-3">
         {% for libro in libros %}
-            {% if loop.index0 % 2 == 0 %}
+            {% if loop.index0 % 4 == 0 %}
                 {% if not loop.first %}
                     </div>
                 {% endif %}
                 <div class="row g-3">
             {% endif %}
-            <div class="col-md-3">
-                <div class="card h-100 text-center">
+            <div class=" col-md-3">
+                <div class="card h-100  text-center">
                     <img src="{{ libro.url_imagen }}" class="card-img-top" alt="{{ libro.titulo }}">
-                    <div class="card-body">
+                    <div class="card-body ">
                         <h5 class="card-title">{{ libro.titulo }}</h5>
                         <p class="card-text">ISBN: {{ libro.isbn }}</p>
                         <p class="card-text">Editorial: {{ libro.editorial }}</p>
                     
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
-                            <a href="{{ url_for('informacion_libro', id=libro.id) }}" class="btn btn-primary">Más información</a>
+                            <a href="{{ url_for('pantallas_generales.informacion_libro', id=libro.id) }}" class="btn btn-primary">Más información</a>
                         </li>
                     </ul>
                         {% if current_user.is_authenticated %}
-                            <a href="{{ url_for('editar_libro', id=libro.id) }}" class="btn btn-outline-primary">Editar</a>
-                            <a href="{{ url_for('eliminar_libro', id=libro.id) }}" class="btn btn-outline-danger">Eliminar</a>
+                            <a href="{{ url_for('modificacion_libros.editar_libro', id=libro.id) }}" class="btn btn-outline-primary">Editar</a>
+                            <a href="{{ url_for('modificacion_libros.eliminar_libro', id=libro.id) }}" class="btn btn-outline-danger">Eliminar</a>
                         {% endif %}
                 </div>
                 </div>
@@ -70,15 +69,6 @@
         </div>
     </div>
 
-
-
-
-<script>
-    document.getElementById('btn_importar').addEventListener('click', function() {
-        document.getElementById('archivo_csv').click();
-    });
-</script>
-
 <!-- Modal Agregar Libro -->
 <div class="modal fade" id="modalAgregarLibro" tabindex="-1" role="dialog" aria-labelledby="modalAgregarLibroLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -91,7 +81,7 @@
         </div>
         <div class="modal-body d-flex justify-content-around">
           <!-- Botones dentro de la modal -->
-          <a href="/catalogo" class="btn btn-primary">
+          <a href="/agregar_auto" class="btn btn-primary">
             <i class="fas fa-search"></i> <br> Busqueda automática
           </a>
           <a href="/agregar" class="btn btn-secondary">
@@ -102,7 +92,11 @@
     </div>
   </div>
 
-
+  <script>
+    document.getElementById('btn_importar').addEventListener('click', function() {
+        document.getElementById('archivo_csv').click();
+    });
+</script>
 {% endblock %}
 
 

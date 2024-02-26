@@ -4,20 +4,14 @@
 
 {%block content%}
 
-
-<div class="container">
-    <h3>Descripción de la página</h3>
-
-    <div class="container">
-        <ul>
-            <li>La página principal muestra una descripción de la página</li>
-            <li>El catálogo muestra los libros que se han clasificado</li>
-            <li>El login permite acceder a características de administración</li>
-        </ul>
-    </div>
+<div class="div-style-inicio">
+    <img id="imagenletras" class="img-letras-logo rounded" src="../static/img/letras-logo.png" alt="Letras logo">
+    <form method="POST" action="{{ url_for('pantallas_generales.inicio') }}"  enctype="multipart/form-data">
+        <div class="input-group-style-inicio input-group">
+            <input type="text" class="form-control" placeholder="Buscar por ISBN o Título" name="busqueda_inicio">
+            <button class="btn btn-secondary" type="submit" name="btn_buscar_inicio">Buscar</button>
+        </div>
+    </form>
 </div>
 
-
 {%endblock%}
-
-

@@ -3,6 +3,8 @@
 {% block title %}Información del libro{% endblock %}
 
 {% block content %}
+
+
 <div class="container mt-5">
     <div class="row">
         <div class="col-lg-6 mb-3">
@@ -14,12 +16,38 @@
             <p class="mb-1"><strong>ISBN:</strong> {{ libro.isbn }}</p>
             <p class="mb-1"><strong>Editorial:</strong> {{ libro.editorial }}</p>
             <p class="mb-1"><strong>Año de publicación:</strong> {{ libro.año_publicacion }}</p>
-            <p class="mb-1"><strong>Ubicación del Estudio:</strong> <a href="{{ libro.ubicacion_estudio }}" target="_blank">Enlace al estudio</a></p>
+            {% if libro.ubicacion_estudio =="" %}
+                <p class="mb-1"><strong>Ubicación del Estudio:</strong> No disponible</p>
+            {% else %}
+                <p class="mb-1"><strong>Ubicación del Estudio:</strong> <a href="{{ libro.ubicacion_estudio }}" target="_blank">Enlace al estudio</a></p>
+            {% endif %}
             <h2 class="mt-4">Descripción del libro</h2>
             <p>{{ libro.descripcion}}</p>
-            <h2 class="mt-4">Puntuacion del libro</h2>
-            <p>{{ libro.puntuacion}}</p>
+            <div class="stars" data-rating="{{ libro.puntuacion }}">
+                <h2 class="mt-4">Puntuación del libro </h2>
+                <span class="far fa-star star" data-index="1"></span>
+                <span class="far fa-star star" data-index="2"></span>
+                <span class="far fa-star star" data-index="3"></span>
+                <span class="far fa-star star" data-index="4"></span>
+                <span class="far fa-star star" data-index="5"></span>
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var starsContainers = document.querySelectorAll('.stars');
+    starsContainers.forEach(function(container) {
+        var rating = parseInt(container.getAttribute('data-rating'), 10);
+        var stars = container.querySelectorAll('.star');
+        for (let i = 0; i < rating; i++) {
+            stars[i].classList.replace('far', 'fas'); //pasa de vacia a llena
+        }
+    });
+});
+</script>
+
+
+
 {% endblock %}

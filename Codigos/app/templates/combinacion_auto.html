@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Editar Libro
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Combinar información de los proveedores</h2>
+
+    <form method="POST">
+        <div class="mb-3">
+            <label for="titulo" class="form-label">Título</label>
+            <select class="form-select" id="titulo" name="titulo">
+                <option> </option>
+                {% for t in titulo %}
+                    <option value="{{ t }}">{{ t }}</option>
+                {% endfor %}
+                <option value="otro">Otro</option>
+            </select>
+            <input type="text" class="input-text-style-combinacion-auto form-control mt-2" id="titulo-otro" name="titulo_otro" placeholder="Especifique título">
+        </div>
+
+        
+        <div class="mb-3">
+            <label for="isbn" class="form-label">ISBN</label>
+            <select class="form-select" id="isbn" name="isbn">
+                <option> </option>
+                {% for i in isbn %}
+                    <option value="{{ i }}">{{ i }}</option>
+                {% endfor %}
+                <option value="otro">Otro</option>
+            </select>
+            <input type="text" class="input-text-style-combinacion-auto form-control mt-2" id="isbn-otro" name="isbn_otro" placeholder="Especifique ISBN">
+        </div>
+
+        <div class="mb-3">
+            <label for="editorial" class="form-label">Editorial</label>
+            <select class="form-select" id="editorial" name="editorial">
+                <option> </option>
+                {% for e in editorial %}
+                    <option value="{{ e }}">{{ e }}</option>
+                {% endfor %}
+                <option value="otro">Otro</option>
+            </select>
+            <input type="text" class="input-text-style-combinacion-auto form-control mt-2" id="editorial-otro" name="editorial_otro" placeholder="Especifique editorial">
+        </div>
+
+
+        <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripcion</label>
+            <select class="form-select" id="descripcion" name="descripcion">
+                <option> </option>
+                {% for d in descripcion %}
+                    <option value="{{ d }}">{{ d }}</option>
+                {% endfor %}
+                <option value="otro">Otro</option>
+            </select>
+            <input type="text" class="input-text-style-combinacion-auto form-control mt-2" id="descripcion-otro" name="descripcion_otro" placeholder="Especifique descripcion" >
+        </div>
+
+
+        <div class="mb-3">
+            <label for="año_publicacion" class="form-label">Año de publicación</label>
+            <select class="form-select" id="año_publicacion" name="año_publicacion">
+                <option> </option>
+                {% for a in año_publicacion %}
+                    <option value="{{ a }}">{{ a }}</option>
+                {% endfor %}
+                <option value="otro">Otro</option>
+            </select>
+            <input type="text" class="input-text-style-combinacion-auto form-control mt-2" id="año_publicacion-otro" name="año_publicacion_otro" placeholder="Especifique año de publicación">
+        </div>
+
+        <div class="mb-3">
+            <label for="puntuacion" class="form-label">Puntuación</label>
+            <select class="form-select" id="puntuacion" name="puntuacion">
+                <option> </option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+
+
+
+
+        <div class="mb-3">
+            <label for="ubicacion_estudio" class="form-label">Ubicación del estudio</label>
+            <input type="text" class="form-control" id="ubicacion_estudio" name="ubicacion_estudio">
+        </div>
+
+
+        <div class="mb-3">
+            <label for="url_imagen" class="form-label">URL de la imagen</label>
+            <select class="form-select" id="url_imagen" name="url_imagen">
+                <option> </option>
+                {% for u in url_imagen %}
+                    <option value="{{ u }}">{{ u }}</option>
+                {% endfor %}
+                <option value="otro">Otro</option>
+            </select>
+            <input type="text" class="input-text-style-combinacion-auto form-control mt-2" id="url_imagen-otro" name="url_imagen_otro" placeholder="Especifique URL de la imagen" >
+
+       
+        
+        <button type="submit" class="btn btn-primary mt-5" >Guardar Cambios</button>
+    </form>
+
+    <div class="container mt-4 text-center">
+        <h3> Preview de la imagen obtenida</h3>
+        <img id="imagenPrevisualizacion"class="img-preview-style-combinacion-auto rounded mx-auto d-block"  src="" alt="Previsualización de imagen">
+    </div>
+    
+</div>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var selectorImagen = document.getElementById('url_imagen'); 
+        var inputOtroImagen = document.getElementById('url_imagen-otro');
+        var previsualizacionImagen = document.getElementById('imagenPrevisualizacion');
+    
+        // Función para manejar la visibilidad del input 'otro'
+        function toggleInputOtro(selector, inputOtro) {
+            if (selector.value === 'otro') {
+                inputOtro.style.display = 'block';
+            } else {
+                inputOtro.style.display = 'none';
+            }
+        }
+    
+        // Evento para la imagen
+        selectorImagen.addEventListener('change', function() {
+            var urlImagen = this.value === 'otro' ? inputOtroImagen.value : this.value;
+            if (urlImagen) {
+                previsualizacionImagen.src = urlImagen;
+                previsualizacionImagen.style.display = 'block';
+            } else {
+                previsualizacionImagen.style.display = 'none';
+            }
+            toggleInputOtro(selectorImagen, inputOtroImagen);
+        });
+    
+        inputOtroImagen.addEventListener('input', function() {
+            if (selectorImagen.value === 'otro') {
+                previsualizacionImagen.src = this.value;
+                previsualizacionImagen.style.display = 'block';
+            }
+        });
+    
+        // Aplica la función toggleInputOtro para cada selector con opción 'otro'
+        var selectores = ['titulo', 'isbn', 'editorial', 'descripcion', 'año_publicacion', 'url_imagen'];
+        selectores.forEach(function(selectorId) {
+            var selector = document.getElementById(selectorId);
+            var inputOtro = document.getElementById(selectorId + '-otro');
+            selector.addEventListener('change', function() {
+                toggleInputOtro(selector, inputOtro);
+            });
+            // Inicializa la visibilidad correcta al cargar la página
+            toggleInputOtro(selector, inputOtro);
+        });
+    });
+    </script>
+{% endblock %}

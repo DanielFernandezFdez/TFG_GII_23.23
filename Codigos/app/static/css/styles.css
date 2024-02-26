@@ -1,0 +1,121 @@
+/* Inicio.html */
+.div-style-inicio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: calc(100vh - 100px);
+    background-image: url('../img/fondo-incio.webp');
+    background-size: 100% 100%;
+    background-position: center;
+    background-attachment: fixed;
+
+}
+
+.img-letras-logo {
+    margin-top: -320px;
+    max-width: 100%;
+    height: auto;
+}
+
+.input-group-style-inicio {
+    margin-top: -350px;
+}
+
+/* Agregar_auto.html */
+
+.card-img {
+    height: 350px;
+    width: 50%;
+    object-fit: cover;
+}
+
+
+.spinner-style-agregar-auto {
+    display: none;
+}
+
+.logo-style-agregar-auto {
+    height: 50px;
+}
+
+.card-style-agregar-auto {
+    max-width: 100%;
+}
+
+/* Base.html */
+.navbar-style-base {
+    background-color: #eed09d;
+    
+}
+.navbar {
+    
+    overflow: hidden;
+   
+}
+.navbar a {
+  
+    display: flex;
+    color: white;
+    text-align: center;
+    align-items: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    transition-duration:0.4s ;
+    height: 50px;
+}
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.logo-style-base {
+    margin-right: 10px;
+}
+
+.div-center-style-base {
+    background-color: #eed09d;
+    height: 50px;
+}
+
+
+/* Catalogo.html */
+.card-img-top-catalogo {
+    height: 300px; /* Establece una altura fija para todas las imágenes */
+    width: 100%; /* Establece un ancho relativo al contenedor */
+    object-fit: contain; /* Escala la imagen para que se ajuste al contenedor */
+    object-position: center; /* Centra la imagen dentro del contenedor */
+}
+
+.input-file-catalogo {
+    display: none;
+}
+
+/* Informacion_libro.html */
+.img-fluid-info-libro {
+    height: 500px; /* Establece una altura fija para todas las imágenes */
+    width: 100%; /* Establece un ancho relativo al contenedor */
+    object-fit: contain; /* Escala la imagen para que se ajuste al contenedor */
+    object-position: center; /* Centra la imagen dentro del contenedor */
+}
+
+
+/* Login.html */
+.alert-danger-login {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+/* Combinacion_auto.html */
+.input-text-style-combinacion-auto {
+    display: none;
+}
+
+.img-preview-style-combinacion-auto {
+    max-width: 25%;
+    max-height: 300px;
+    display: none;
+}
