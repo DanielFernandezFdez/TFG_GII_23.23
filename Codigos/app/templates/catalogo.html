@@ -12,18 +12,22 @@
             <button class="btn btn-outline-secondary" type="submit" name="btn_buscar">Buscar</button>
         </div>
 
+        
         <!-- Botón para Exportar a CSV -->
-        {% if current_user.is_authenticated %}
+        
         <div class="text-end mb-4">
+            <a href="{{ url_for('pantallas_generales.calculadora') }}" class="btn btn-outline-primary">Calculadora</a>
+            {% if current_user.is_authenticated %}
             <div class="btn-group" role="group" aria-label="Basic outlined example">
-                <button type="button" id="btn_importar" class="btn btn-outline-primary">Importar CSV</button>
+                <button type="button" id="btn_importar" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalRecordatorioExportar">Importar CSV</button>
                 <button type="submit" name="btn_exportar" class="btn btn-outline-primary">Exportar un CSV</button>
                 <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalAgregarLibro">Agregar Libro</button>
             </div>
+            {% endif %}
         </div>
         <!-- Campo para cargar archivos csv -->
         <input type="file" class="input-file-catalogo" name="archivo_csv" id="archivo_csv" accept=".csv"  onchange="this.form.submit()">
-        {% endif %}
+       
         
 
     </form>
@@ -92,10 +96,53 @@
     </div>
   </div>
 
+<!-- Modal Recordatorio Exportar -->
+<div class="modal fade" id="modalRecordatorioExportar" tabindex="-1" role="dialog" aria-labelledby="modalRecordatorioExportarLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalRecordatorioExportarLabel">Recordatorio de Seguridad</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Antes de importar un nuevo catálogo, asegúrate de haber exportado el catálogo actual para no perder datos.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="confirmarImportacion">Continuar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
   <script>
-    document.getElementById('btn_importar').addEventListener('click', function() {
-        document.getElementById('archivo_csv').click();
+
+document.addEventListener('DOMContentLoaded', function() {
+    var importarBtn = document.getElementById('btn_importar');
+    var modalRecordatorio = new bootstrap.Modal(document.getElementById('modalRecordatorioExportar'));
+    var confirmarBtn = document.getElementById('confirmarImportacion');
+    
+    importarBtn.addEventListener('click', function() {
+        modalRecordatorio.show();
     });
+
+    confirmarBtn.addEventListener('click', function() {
+        document.getElementById('archivo_csv').click();
+        modalRecordatorio.hide();
+    });
+
+
+    document.getElementById('modalRecordatorioExportar').addEventListener('hide.bs.modal', function (event) {
+        var backdrop = document.querySelector('.modal-backdrop');
+        if (backdrop) {
+            backdrop.remove();
+        }
+    });
+});
+
 </script>
 {% endblock %}
 

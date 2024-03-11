@@ -37,3 +37,7 @@ def catalogo():
 def informacion_libro(id):
     libro = Libros.query.get_or_404(id)
     return render_template('informacion_libro.html', libro=libro)
+
+@pantallas_generales.route('/calculadora', methods=['GET','POST'])
+def calculadora():
+    return render_template('calculadora.html')

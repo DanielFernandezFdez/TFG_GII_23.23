@@ -1,0 +1,88 @@
+{%extends 'base.html'%}
+
+{%block title%}Inicio{%endblock%}
+
+{%block content%}
+<div class="container py-5">
+    <h2 class="mb-3">Formulario de Cálculos</h2>
+    <form id="calculoForm">
+        <div class="mb-3">
+            <label for="inputImagenNina" class="form-label">Masculino Genérico</label>
+            <input type="checkbox"  id="masculino" name="masculino">
+        </div>
+        <div class="mb-3">
+            <label for="inputImagenNina" class="form-label">Imagen Niña</label>
+            <input type="number" class="form-control" id="inputImagenNina" name="imagen_nina" placeholder="0">
+        </div>
+        <div class="mb-3">
+            <label for="inputImagenNino" class="form-label">Imagen Niño</label>
+            <input type="number" class="form-control" id="inputImagenNino" name="imagen_nino" placeholder="0">
+        </div>
+        <div class="mb-3">
+            <label for="inputImagenMujer" class="form-label">Imagen Mujer</label>
+            <input type="number" class="form-control" id="inputImagenMujer" name="imagen_mujer" placeholder="0">
+        </div>
+        <div class="mb-3">
+            <label for="inputImagenHombre" class="form-label">Imagen Hombre</label>
+            <input type="number" class="form-control" id="inputImagenHombre" name="imagen_hombre" placeholder="0">
+        </div>
+
+        <div class="mt-4">
+            <button type="button" class="btn btn-primary" onclick="ajustarPorcentajes()">Calcular</button>
+        </div>
+
+        <div id="resultadoPorcentajes" class="mt-3"></div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("calcularBtn").addEventListener("click", ajustarPorcentajes);
+});
+
+function ajustarPorcentajes() {
+    var masculino = document.getElementById('masculino').checked;
+    var nina = parseInt(document.getElementById('inputImagenNina').value || 0);
+    var nino = parseInt(document.getElementById('inputImagenNino').value || 0);
+    var mujer = parseInt(document.getElementById('inputImagenMujer').value || 0);
+    var hombre = parseInt(document.getElementById('inputImagenHombre').value || 0);
+    
+    var total_nino=(nino+nina)
+    var p_nino=(100*nino)/(total_nino)
+    var p_nina=(100*nina)/(total_nino)
+    
+    var total_adulto=(mujer+hombre)
+    var p_mujer=(mujer)/(total_adulto)*100
+    var p_hombre=(hombre)/(total_adulto)*100
+
+    if (p_nino<p_nina) {
+        var porcentaje_ninos=(p_nino*100)/50;
+    }
+    else if (p_nina<p_nino){
+        var porcentaje_ninos=(p_nina*100)/50;
+    }
+    else if (p_nina==p_nino){
+        var porcentaje_ninos=50;
+    }
+
+    if (p_hombre<p_mujer) {
+        var porcentaje_adulto=(p_hombre*100)/50;
+    }
+    else if (p_mujer<p_hombre){
+        var porcentaje_adulto=(p_mujer*100)/50;
+    }
+    else if (p_mujer==p_hombre){
+        var porcentaje_adulto=50;
+    }
+
+
+    var resultadoHTML = `
+        <p>Porcentaje Adulto: ${porcentaje_adulto}%</p>
+        <p>Porcentaje Niños: ${porcentaje_ninos}%</p>
+  
+    `;
+    document.getElementById('resultadoPorcentajes').innerHTML = resultadoHTML;
+}
+</script>
+
+{%endblock%}
