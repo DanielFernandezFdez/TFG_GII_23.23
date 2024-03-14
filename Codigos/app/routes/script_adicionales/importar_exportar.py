@@ -12,7 +12,7 @@ def exportar_csv():
     cw = csv.writer(si, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
     # Escribe los encabezados en el archivo CSV
-    cw.writerow(['ID', 'Título', 'ISBN', 'Editorial', 'Descripción', 'Año de publicación', 'Ubicación del estudio', 'URL de la imagen'])
+    cw.writerow(['ID', 'Título', 'ISBN', 'Editorial', 'Descripción', 'Año de publicación',"Puntuación", 'Ubicación del estudio', 'URL de la imagen'])
 
     # Obtiene todos los libros de la base de datos
     libros = Libros.query.all()
