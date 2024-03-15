@@ -1,0 +1,57 @@
+
+.p-menubar {
+    background-color: #eed09d;
+    text-decoration: none;
+    top:0;
+    right: 0;
+    left: 0;
+    position: fixed;
+}
+
+
+.footer {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    background-color: #eed09d; 
+    padding: 10px 0; 
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0; 
+}
+
+
+.div-style-inicio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position:fixed;
+    top: 100;
+    left: 0;
+    overflow: hidden;
+    justify-content: flex-start;
+    background-image: url('assets/images/fondo-inicio.webp');
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    height:100vh; 
+    width: 100%; 
+    z-index: -1;
+
+}
+
+
+
+.img-letras-logo {
+    margin-top: -320px;
+    max-width: 100%;
+    height: auto;
+}
+
+.editar{
+    margin-right: 5px;
+}
+
+
