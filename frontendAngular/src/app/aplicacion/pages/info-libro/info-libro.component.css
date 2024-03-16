@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+  }
+  
+  .columna {
+    flex: 1;
+    padding: 0 10px;
+  }
+  
+  .img-fluid-info-libro {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    margin-left: 300px;
+  }
+  
+  .margen {
+    margin-top: 100px;
+  }

@@ -1,0 +1,31 @@
+
+<app-menu></app-menu>
+<div class="listado-libros container mt-4 text-center" >
+    <h3>Listado de libros</h3>
+    <div class="p-inputgroup buscador-catalogo">
+        <input pInputText type="text"  placeholder="Buscar por ISBN o Título" [(ngModel)]="busqueda">
+        <button pButton icon="pi pi-search" (click)="cargaLibroBusqueda()"></button>
+    </div>
+
+
+    <div class="grid cards">
+        <div *ngFor="let libro of libros" class="p-col-12 p-md-4 card_individual">
+            <p-card [header]="libro.titulo" [subheader]="libro.isbn">
+                <ng-template pTemplate="header">
+                    <img [src]="libro.url_imagen" class="card-image"  (error)="imagenPorDefecto($event)">
+                </ng-template>
+                <div class="p-card-content">
+                    {{ libro.editorial | titlecase }}  
+                </div>
+                <p-footer class="p-card-footer">
+                    <div class="mas_informacion">
+                        <p-button icon="pi pi-info" size="small" label="Más información" severity="info" (click)="masInformacion(libro.id)"></p-button>
+                    </div>
+                    <p-button  icon="pi pi-pencil" label="Editar" size="small" class=" editar"></p-button>
+                    <p-button  icon="pi pi-trash" label="Eliminar" size="small" severity="danger"></p-button>
+                </p-footer>
+            </p-card>
+        </div>
+    </div>
+
+    <p-divider align="center">Última modificación del catálogo: {{fecha_modif}}</p-divider>

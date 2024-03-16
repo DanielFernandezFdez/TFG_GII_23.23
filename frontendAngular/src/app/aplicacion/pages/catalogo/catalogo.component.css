@@ -1,0 +1,41 @@
+.text-center {
+    text-align: center;
+}
+.card-image {
+    width: 100%;
+    height: 300px; 
+    object-fit: contain;
+    margin-bottom: 1rem;
+}
+
+
+.listado-libros{
+    margin-top: 100px;
+}
+
+.buscador-catalogo {
+    max-width: 600px; 
+    margin: auto;
+}
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    margin-right: 40px;
+    margin-left: 50px;
+}
+
+.mas_informacion{
+    margin-bottom: 10px;
+}
+.cards{
+    margin-top: 50px;
+}
+
+.card_individual{
+    margin-bottom: 50px;
+    margin-right: 10px;
+}
+
+
