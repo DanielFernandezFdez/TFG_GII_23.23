@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-menu',
@@ -9,8 +10,37 @@ import { MenuItem } from 'primeng/api';
 export class MenuComponent {
   elem_izq: MenuItem[] =[];
   
-
+  isLoggedIn: boolean = false;
+  userName: string | null = '';
+  
+  constructor(public authService: AuthService) {
+    if (this.authService.estaAutenticado()){
+      this.isLoggedIn = true;
+      this.userName = this.authService.usuarioActualValue;
+    }
+    }
+  items: any[]=[];
+  
+  logout() {
+    this.authService.logout();
+  }
   ngOnInit() {
+    this.authService.tokenValor.subscribe(token => {
+      if (token) {
+        this.items = [
+          {
+            label: 'Panel de Administrador',
+            icon: 'pi pi-fw pi-cog',
+            command: () => {
+              // Acción para navegar al Panel de Administrador
+            }
+          },
+          {
+            label: 'Cerrar Sesión',
+            icon: 'pi pi-fw pi-sign-out',
+            command: () => this.logout()}];
+      } 
+    });
     this.elem_izq = [
       {
         label: 'Inicio',

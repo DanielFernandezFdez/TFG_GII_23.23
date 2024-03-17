@@ -10,6 +10,7 @@ import { EditarAutoComponent } from './pages/editar-auto/editar-auto.component';
 import { CombinarAutoComponent } from './pages/combinar-auto/combinar-auto.component';
 import { PrimeNgModule } from '../prime-ng/prime-ng.module';
 import { SharedModule } from '../shared/shared.module';
+import { LoginComponent } from './pages/login/login.component';
 
 
 
@@ -23,7 +24,8 @@ import { SharedModule } from '../shared/shared.module';
     EditarLibroComponent,
     AgregarAutoComponent,
     EditarAutoComponent,
-    CombinarAutoComponent
+    CombinarAutoComponent,
+    LoginComponent
   ],
   imports: [
     CommonModule,

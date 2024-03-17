@@ -7,11 +7,15 @@ import { Observable } from 'rxjs';
 })
 export class LibrosService {
   private apiUrl = 'http://127.0.0.1:5000'; 
-  private apiKey = 'clave'; 
   constructor(private http: HttpClient) { }
 
   private getHeaders() {
-    return new HttpHeaders().set("X_API_KEY", this.apiKey);
+    let headers = new HttpHeaders();
+    const token = localStorage.getItem('token'); 
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+    return headers;
   }
 
   listarLibros(): Observable<any> {
@@ -37,8 +41,23 @@ export class LibrosService {
   borrarLibro(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/borrarLibro/${id}`, { headers: this.getHeaders() });
   }
+  
   fecha(): Observable<any> {
     return this.http.get(`${this.apiUrl}/fecha`, { headers: this.getHeaders() });
   }
+
+  
+  buscarLibroAutomatico(elemento: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/buscar_libro_automatico`, { elemento }, { headers: this.getHeaders() });
+  }
+
+  listarLibrosAutomaticos(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/listar_libros_automaticos`, { headers: this.getHeaders() });
+  }
+
+  borrarTablaLibrosAutomaticos(): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/borrar`, { headers: this.getHeaders() });
+  }
+
 
 }

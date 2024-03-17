@@ -8,6 +8,7 @@ import { AgregarAutoComponent } from './aplicacion/pages/agregar-auto/agregar-au
 import { EditarAutoComponent } from './aplicacion/pages/editar-auto/editar-auto.component';
 import { CombinarAutoComponent } from './aplicacion/pages/combinar-auto/combinar-auto.component';
 import { InfoLibroComponent } from './aplicacion/pages/info-libro/info-libro.component';
+import { LoginComponent } from './aplicacion/pages/login/login.component';
 
 
 const routes: Routes = [
@@ -49,6 +50,11 @@ const routes: Routes = [
   {
     path: 'combinar_auto',
     component: CombinarAutoComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
     pathMatch: 'full'
   }
 

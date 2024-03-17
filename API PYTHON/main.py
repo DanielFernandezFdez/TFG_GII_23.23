@@ -7,7 +7,7 @@ from zoneinfo import ZoneInfo
 from flask_cors import CORS
 import funciones_webscraping as fw
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import create_access_token, jwt_required,JWTManager
+from flask_jwt_extended import create_access_token, jwt_required,JWTManager, get_jwt_identity
 import json
 
 
@@ -64,31 +64,25 @@ class fecha_modificacion(db.Model):
         return f"<Fecha Modificación: {self.ultima_modificacion}>"
 
 
-class Usuarios(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    usuario = db.Column(db.String(100), unique=True, nullable=False)
-    contrasenya_encriptada = db.Column(db.String(128), nullable=False)
-    rol = db.Column(db.Integer, db.ForeignKey("roles.id"), nullable=False) #! Relacion con la tabla roles MIRAR
-
-
-
 class Roles(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre_rol = db.Column(db.String(100), unique=True, nullable=False)
+    usuarios = db.relationship('Usuarios', backref='rol', lazy='joined')
+
+class Usuarios(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    usuario = db.Column(db.String(100), nullable=False)
+    correo = db.Column(db.String(100), unique=True, nullable=False)
+    contrasenya_encriptada = db.Column(db.String(128), nullable=False)
+    rol_id = db.Column(db.Integer, db.ForeignKey('roles.id'), nullable=False)
     
     
 class Botones(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre_boton = db.Column(db.String(100), unique=True, nullable=False)
     roles_autorizados=db.Column(db.String(255), nullable=True)
-    def obtener_roles_autorizados(self):
-        if self.roles_autorizados:
-            return json.loads(self.roles_autorizados) 
-        else:
-            return []
+       
 
-    def asignar_roles_autorizados(self, roles):
-        self.roles_autorizados = json.dumps(roles)
     
 
 
@@ -116,7 +110,7 @@ jwt=JWTManager(app)
 
 
 class Listadoibros(Resource):
-    @jwt_required()
+   
     def get(self):
         libros = Libros.query.all()
         return jsonify(
@@ -326,10 +320,16 @@ class listarLibrosAutomaticos(Resource):
 class RegistroUsuario(Resource):
     def post(self):
         data = request.get_json()
+        usuario = Usuarios.query.filter_by(correo=data['correo']).first()
+        if usuario:
+            respuesta = jsonify({"mensaje": "El correo ya está registrado"})
+            respuesta.status_code = 400
+            return respuesta
         nuevo_usuario = Usuarios(
             usuario=data['usuario'],
+            correo=data['correo'],
             contrasenya_encriptada=generate_password_hash(data['contrasenya']),
-            rol=data['rol'] if 'rol' in data else 1
+            rol_id=data['rol'] if 'rol' in data else 1
         )
         db.session.add(nuevo_usuario)
         db.session.commit()
@@ -338,29 +338,47 @@ class RegistroUsuario(Resource):
 class Login(Resource):
     def post(self):
         data = request.get_json()
-        usuario = Usuarios.query.filter_by(usuario=data['usuario']).first()
+        usuario = Usuarios.query.filter_by(correo=data['correo']).first()
         if not usuario or not check_password_hash(usuario.contrasenya_encriptada, data['contrasenya']):
-            return jsonify({"mensaje": "Usuario o contraseña incorrectos"}), 401
-        access_token = create_access_token(identity=usuario.id)
-        return jsonify(access_token=access_token)
+            respuesta = jsonify({"mensaje": "Usuario o contraseña incorrectos"})
+            respuesta.status_code = 401
+            return respuesta
+        access_token = create_access_token(identity=usuario.id) #Con esto puedo obtener el id de  ususario ya que se contiene en el jwt
+        return jsonify({
+            "token": access_token,
+            "nombre": usuario.usuario,
+            "id": usuario.id})
     
     
 class ModificarUsuario(Resource):
     def put(self, user_id):
         usuario = Usuarios.query.get_or_404(user_id)
         data = request.get_json()
-        if 'contrasenya' in data:
-            usuario.contrasenya_encriptada = generate_password_hash(data['contrasenya'])
+        if 'contrasenya_nueva' in data:
+            if not check_password_hash(usuario.contrasenya_encriptada, data['contrasenya_actual']):
+                respuesta = jsonify({"mensaje": "Contraseña actual incorrecta"})
+                respuesta.status_code = 400
+                return respuesta
+            usuario.contrasenya_encriptada = generate_password_hash(data['contrasenya_nueva'])
         if 'usuario' in data:
             usuario.usuario = data['usuario']
         if 'rol' in data:
-            usuario.rol = data['rol']
+            if usuario.id == 1:
+                respuesta = jsonify({"mensaje": "No se puede modificar el rol del usuario administrador"})
+                respuesta.status_code = 400
+                return respuesta
+
+            usuario.rol_id = data['rol']
         db.session.commit()
         return jsonify({"mensaje": "Usuario modificado exitosamente"})
 
 class EliminarUsuario(Resource):
     def delete(self, user_id):
         usuario = Usuarios.query.get_or_404(user_id)
+        if usuario.id == 1:
+            respuesta = jsonify({"mensaje": "No se puede eliminar el usuario administrador"})
+            respuesta.status_code = 400
+            return respuesta
         db.session.delete(usuario)
         db.session.commit()
         return jsonify({"mensaje": "Usuario eliminado exitosamente"})   
@@ -374,10 +392,23 @@ class ListarUsuarios(Resource):
                 {
                     "id": usuario.id,
                     "usuario": usuario.usuario,
-                    "rol": usuario.rol.nombre if usuario.rol else None
+                    "correo": usuario.correo,
+                    "rol": usuario.rol.nombre_rol if usuario.rol else None,
                 }
                 for usuario in usuarios
             ]
+        )
+
+class InfoUsuario(Resource):
+    def get(self, user_id):
+        usuario = Usuarios.query.get_or_404(user_id)
+        return jsonify(
+            {
+                "id": usuario.id,
+                "usuario": usuario.usuario,
+                "correo": usuario.correo,
+                "rol": usuario.rol.nombre_rol if usuario.rol else None,
+            }
         )
 
 
@@ -397,6 +428,11 @@ class ObtenerRoles(Resource):
 class CrearRol(Resource):
     def post(self):
         data = request.get_json()
+        rol = Roles.query.filter_by(nombre_rol=data['nombre_rol']).first()
+        if rol:
+            respuesta = jsonify({"mensaje": "El rol ya existe"})
+            respuesta.status_code = 400
+            return respuesta
         nuevo_rol = Roles(
             nombre_rol=data['nombre_rol'],
         )
@@ -409,6 +445,11 @@ class EditarRol(Resource):
     def put(self, rol):
         rol = Roles.query.get_or_404(rol)
         data = request.get_json()
+        nombre_rol_existente = Roles.query.filter_by(nombre_rol=data['nombre_rol']).first()
+        if nombre_rol_existente:
+            json = jsonify({"mensaje": "El rol ya existe"})
+            json.status_code = 400
+            return json
         if 'nombre_rol' in data:
             rol.nombre_rol = data['nombre_rol']
         db.session.commit()
@@ -418,6 +459,29 @@ class EditarRol(Resource):
 class BorrarRol(Resource):
     def delete(self, rol):
         rol = Roles.query.get_or_404(rol)
+        if rol.id == 1:
+            respuesta = jsonify({"mensaje": "No se puede eliminar el rol de administrador"})
+            respuesta.status_code = 400
+            return respuesta
+        if rol.id == 2:
+            respuesta = jsonify({"mensaje": "No se puede eliminar el rol de usuario"})
+            respuesta.status_code = 400
+            return respuesta
+        #Actualizacion de usuarios a usuario
+        usuarios = Usuarios.query.filter_by(rol_id=rol.id).all()
+        for usuario in usuarios:
+            usuario.rol_id = 2
+            
+        db.session.commit()
+        
+        #Actualizacion de botones
+        botones = Botones.query.all()
+        for boton in botones:
+            roles_actuales = json.loads(boton.roles_autorizados)
+            if rol.nombre_rol in roles_actuales:
+                roles_actuales.remove(rol.nombre_rol)
+                boton.roles_autorizados = json.dumps(roles_actuales)
+        
         db.session.delete(rol)
         db.session.commit()
         return jsonify({"mensaje": "Rol eliminado exitosamente"}) 
@@ -431,41 +495,82 @@ class buscarBotones(Resource): #!Solo durante pruebas
                 {
                     "id": boton.id,
                     "nombre": boton.nombre_boton,
-                    "roles": boton.roles_autorizados
+                    "roles": json.loads(boton.roles_autorizados if boton.roles_autorizados else []) 
                 }
                 for boton in botones
             ]
         )
 
+class consultarBoton(Resource):
+    @jwt_required()
+    def post(self):
+        data = request.get_json()
+        id_usuario = get_jwt_identity()
+        usuario = Usuarios.query.get_or_404(id_usuario)
+        rol_usuario = usuario.rol.nombre_rol
+
+        botones_respuesta = []
+
+        for nombre_boton in data['nombre_botones']:
+            boton = Botones.query.filter_by(nombre_boton=nombre_boton).first()
+            if boton:
+                roles_autorizados = json.loads(boton.roles_autorizados if boton.roles_autorizados else '[]')
+                autorizado = 1 if rol_usuario in roles_autorizados else 0
+            else:
+                autorizado = 0  
+            botones_respuesta.append({"nombre": nombre_boton, "autorizado": autorizado})
+
+        return jsonify(botones_respuesta)
+
 class CrearBoton(Resource): #!Solo durante pruebas
     def post(self):
         data = request.get_json()
+        boton_existente=Botones.query.filter_by(nombre_boton=data['nombre_boton']).first()
+        if boton_existente:
+            respuesta = jsonify({"mensaje": "El boton ya existe"})
+            respuesta.status_code = 400
+            return respuesta
         nuevo_boton = Botones(
             nombre_boton=data['nombre_boton'],
-            roles_autorizados=data['roles_autorizados']
+            roles_autorizados=json.dumps(data['roles_autorizados'] if 'roles_autorizados' in data else []) 
         )
         db.session.add(nuevo_boton)
         db.session.commit()
         return jsonify({"mensaje": "Boton creado exitosamente"})
 
+
+
 class EditarBoton(Resource):
-    def put(self, boton_id):
-        boton = Botones.query.get_or_404(boton_id)
+    def put(self):
         data = request.get_json()
-        for key in data:
-            if key == 'nombre_boton':
-                boton.nombre_boton = data['nombre_boton']
-            if key == 'roles_autorizados':
-                roles=boton.obtener_roles_autorizados()
-                if (data['roles_autorizados'] == ""):
-                    if(roles.contains(data['roles_autorizados'])):
-                        roles.remove(data['roles_autorizados'])
-                        boton.asignar_roles_autorizados(roles)
-                else:
-                    roles.append(data['roles_autorizados'])
-                    boton.asignar_roles_autorizados(roles)
+        for boton_data in data['botones']:
+            boton = Botones.query.filter_by(nombre_boton=boton_data['nombre_boton']).first()
+            
+            roles_actuales = json.loads(boton.roles_autorizados)
+
+            if 'roles_autorizados' in boton_data:
+                rol = boton_data['roles_autorizados']
+                if rol not in roles_actuales:
+                    roles_actuales.append(rol)
+            
+            else:
+                rol_solicitado = boton_data['rol_solicitado']
+                if rol_solicitado in roles_actuales:
+                    roles_actuales.remove(rol_solicitado)
+
+            boton.roles_autorizados = json.dumps(roles_actuales)
+            
+            db.session.commit()
+
+        return jsonify({"mensaje": "Botones actualizados exitosamente"})
+    
+    
+class BorrarBoton(Resource):
+    def delete(self, boton_id):
+        boton = Botones.query.get_or_404(boton_id)
+        db.session.delete(boton)
         db.session.commit()
-        return jsonify({"mensaje": "Preferencias modificadas exitosamente"})
+        return jsonify({"mensaje": "Boton eliminado exitosamente"})   
     
 # TODO: Crear un endpoint tanto para importar como para exportar los datos de la BD
 
@@ -481,11 +586,14 @@ api.add_resource(listarLibrosAutomaticos, "/listar_libros_automaticos")
 api.add_resource(Fecha, "/fecha")
 
 
+
+
 api.add_resource(RegistroUsuario, '/registro')
 api.add_resource(Login, '/login')
 api.add_resource(ModificarUsuario, '/modificar_usuario/<int:user_id>')
 api.add_resource(EliminarUsuario, '/eliminar_usuario/<int:user_id>') 
 api.add_resource(ListarUsuarios, '/usuarios')
+api.add_resource(InfoUsuario, '/info_usuario/<int:user_id>')
 api.add_resource(ObtenerRoles, '/roles')
 api.add_resource(CrearRol, '/crear_rol')
 api.add_resource(EditarRol, '/editar_rol/<int:rol>')
@@ -494,11 +602,33 @@ api.add_resource(BorrarRol, '/borrar_rol/<int:rol>')
 
 
 api.add_resource(buscarBotones, '/botones')
+api.add_resource(consultarBoton, '/consultar_boton')
 api.add_resource(CrearBoton, '/crear_boton')
-api.add_resource(EditarBoton, '/editar_boton/<int:boton_id>')
+api.add_resource(EditarBoton, '/editar_boton')
+api.add_resource(BorrarBoton, '/borrar_boton/<int:boton_id>')
 
 
 
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+
+# "botones": [
+#         {
+#             "nombre_boton": "nombre_boton1",
+#             "rol_solicitado": Admin    Quiero trabajar con el rol de admin
+#             "roles_autorizados": "Admin" Añadir el rol de admin
+#         },
+#         {
+#             "nombre_boton": "nombre_boton2",
+#             "rol_solicitado": Admin   Quiero trabajar con el rol de admin
+#                                       No quiero trabajar con el rol de usuario
+#         },
+#         {
+#             "nombre_boton": "nombre_boton3",
+#             "rol_solicitado": Admin
+#             "roles_autorizados": Admin
+#         }
+#     ]

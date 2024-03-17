@@ -9,6 +9,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { RatingModule } from 'primeng/rating';
 import { DividerModule } from 'primeng/divider';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { CheckboxModule } from 'primeng/checkbox';
 
 
 @NgModule({
@@ -25,7 +27,10 @@ import { DividerModule } from 'primeng/divider';
     InputTextModule,
     FormsModule,
     RatingModule,
-    DividerModule
+    DividerModule,
+    SplitButtonModule,
+    CheckboxModule
+   
   ]
 })
 export class PrimeNgModule { }
