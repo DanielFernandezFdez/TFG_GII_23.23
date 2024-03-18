@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2'
 
@@ -87,8 +87,19 @@ export class AuthService {
           this.router.navigate(['/catalogo']);
           this.msgInicioCorrecto();
         }
+      }),
+      catchError(error => {
+        if (error.status === 401) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Correo o contraseña incorrectos'
+          });
+        }
+        throw error;
       }));
-  }
+      
+    }
 
   logout(): void {
     localStorage.removeItem('usuarioActual');

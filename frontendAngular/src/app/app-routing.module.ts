@@ -9,6 +9,8 @@ import { EditarAutoComponent } from './aplicacion/pages/editar-auto/editar-auto.
 import { CombinarAutoComponent } from './aplicacion/pages/combinar-auto/combinar-auto.component';
 import { InfoLibroComponent } from './aplicacion/pages/info-libro/info-libro.component';
 import { LoginComponent } from './aplicacion/pages/login/login.component';
+import { EstimadorComponent } from './aplicacion/pages/estimador/estimador.component';
+import { AuthGuard } from './auth/auth.guard';
 
 
 const routes: Routes = [
@@ -20,7 +22,8 @@ const routes: Routes = [
   {
     path: 'catalogo',
     component: CatalogoComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
+    //canActivate: [AuthGuard]
   },
   {
     path: 'info_libro/:id',
@@ -55,6 +58,11 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'estimador',
+    component: EstimadorComponent,
     pathMatch: 'full'
   }
 

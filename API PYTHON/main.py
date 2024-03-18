@@ -519,6 +519,8 @@ class consultarBoton(Resource):
                 alias = boton.alias
                 descripcion = boton.descripcion
                 roles_autorizados = json.loads(boton.roles_autorizados if boton.roles_autorizados else '[]')
+                if roles_autorizados==[]:
+                    autorizado = 1
                 autorizado = 1 if rol_usuario in roles_autorizados else 0
             else:
                 autorizado = 0  
