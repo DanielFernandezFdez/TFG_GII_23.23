@@ -20,7 +20,8 @@ import { RouterModule } from '@angular/router';
     RouterModule,
     SharedModule,
     AplicacionModule,
-    HttpClientModule
+    HttpClientModule,
+   
   ],
 
   providers: [],

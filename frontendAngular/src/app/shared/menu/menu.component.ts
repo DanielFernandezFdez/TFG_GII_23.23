@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from '../../services/auth.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-menu',
@@ -38,7 +39,7 @@ export class MenuComponent {
           {
             label: 'Cerrar Sesión',
             icon: 'pi pi-fw pi-sign-out',
-            command: () => this.logout()}];
+            command: () => this.msgConfirmacionLogout()}];
       } 
     });
     this.elem_izq = [
@@ -71,10 +72,37 @@ export class MenuComponent {
         label: 'Guía de puntuación',
         icon: 'pi pi-fw pi-info-circle',
         routerLink: ['/'],
-      }
+      },
+      {
+        label: 'Estimador',
+        icon: 'pi pi-fw pi-calculator',
+        routerLink: ['/estimador'],
+      },
      
     ];
     
     }
+
+msgConfirmacionLogout=()=>{
+    Swal.fire({
+      title: "Cerrar Sesión",
+      text: "¿Está seguro de que desea cerrar sesión?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Cerrar Sesión",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Session cerrada",
+          text: "Ha salido existosamente de su cuenta",
+          icon: "success"
+        });
+        this.logout();
+      }
+    });
+  }
   }
 

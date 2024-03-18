@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2'
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +21,11 @@ export class AuthService {
   constructor(private http : HttpClient , private router: Router) { 
     this.cargarUsuarioActual();
     this.cargarToken();
+    this.cargarId();
   }
 
   public get usuarioActualValue(): string | null {
+
     return this.usuarioActual.value;
   }
 
@@ -81,8 +84,8 @@ export class AuthService {
           this.usuarioActual.next(respuesta.nombre);
           this.token.next(respuesta.token);
           this.id.next(respuesta.id);
-
           this.router.navigate(['/catalogo']);
+          this.msgInicioCorrecto();
         }
       }));
   }
@@ -116,5 +119,29 @@ export class AuthService {
 
   listarUsuarios(): Observable<any> {
     return this.http.get(`${this.apiUrl}/usuarios`, { headers: this.getHeaders() });
+  }
+
+
+
+
+
+
+  // Mensaje de inicio de sesión correcto SweetAlert2
+  msgInicioCorrecto= () => {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "bottom-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+    Toast.fire({
+      icon: "success",
+      title: "Inicio de sesión exitoso"
+    });
   }
 }

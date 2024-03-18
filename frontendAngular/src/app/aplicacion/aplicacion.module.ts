@@ -11,6 +11,7 @@ import { CombinarAutoComponent } from './pages/combinar-auto/combinar-auto.compo
 import { PrimeNgModule } from '../prime-ng/prime-ng.module';
 import { SharedModule } from '../shared/shared.module';
 import { LoginComponent } from './pages/login/login.component';
+import { EstimadorComponent } from './pages/estimador/estimador.component';
 
 
 
@@ -25,7 +26,8 @@ import { LoginComponent } from './pages/login/login.component';
     AgregarAutoComponent,
     EditarAutoComponent,
     CombinarAutoComponent,
-    LoginComponent
+    LoginComponent,
+    EstimadorComponent
   ],
   imports: [
     CommonModule,

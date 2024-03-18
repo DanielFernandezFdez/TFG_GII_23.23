@@ -80,6 +80,8 @@ class Usuarios(db.Model):
 class Botones(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre_boton = db.Column(db.String(100), unique=True, nullable=False)
+    alias = db.Column(db.String(255), nullable=True)
+    descripcion = db.Column(db.String(255), nullable=True)
     roles_autorizados=db.Column(db.String(255), nullable=True)
        
 
@@ -495,6 +497,8 @@ class buscarBotones(Resource): #!Solo durante pruebas
                 {
                     "id": boton.id,
                     "nombre": boton.nombre_boton,
+                    "alias": boton.alias,
+                    "descripcion": boton.descripcion,
                     "roles": json.loads(boton.roles_autorizados if boton.roles_autorizados else []) 
                 }
                 for boton in botones
@@ -502,10 +506,8 @@ class buscarBotones(Resource): #!Solo durante pruebas
         )
 
 class consultarBoton(Resource):
-    @jwt_required()
-    def post(self):
+    def post(self, id_usuario):
         data = request.get_json()
-        id_usuario = get_jwt_identity()
         usuario = Usuarios.query.get_or_404(id_usuario)
         rol_usuario = usuario.rol.nombre_rol
 
@@ -514,11 +516,19 @@ class consultarBoton(Resource):
         for nombre_boton in data['nombre_botones']:
             boton = Botones.query.filter_by(nombre_boton=nombre_boton).first()
             if boton:
+                alias = boton.alias
+                descripcion = boton.descripcion
                 roles_autorizados = json.loads(boton.roles_autorizados if boton.roles_autorizados else '[]')
                 autorizado = 1 if rol_usuario in roles_autorizados else 0
             else:
                 autorizado = 0  
-            botones_respuesta.append({"nombre": nombre_boton, "autorizado": autorizado})
+            botones_respuesta.append(
+                {
+                "nombre": nombre_boton,
+                "alias":alias,
+                "descripcion":descripcion, 
+                "autorizado": autorizado
+                })
 
         return jsonify(botones_respuesta)
 
@@ -532,6 +542,8 @@ class CrearBoton(Resource): #!Solo durante pruebas
             return respuesta
         nuevo_boton = Botones(
             nombre_boton=data['nombre_boton'],
+            alias=data['alias'] if 'alias' in data else "Sin nombre",
+            descripcion=data['descripcion'] if 'descripcion' in data else "Sin descripcion",
             roles_autorizados=json.dumps(data['roles_autorizados'] if 'roles_autorizados' in data else []) 
         )
         db.session.add(nuevo_boton)
@@ -602,7 +614,7 @@ api.add_resource(BorrarRol, '/borrar_rol/<int:rol>')
 
 
 api.add_resource(buscarBotones, '/botones')
-api.add_resource(consultarBoton, '/consultar_boton')
+api.add_resource(consultarBoton, '/consultar_boton/<int:id_usuario>')
 api.add_resource(CrearBoton, '/crear_boton')
 api.add_resource(EditarBoton, '/editar_boton')
 api.add_resource(BorrarBoton, '/borrar_boton/<int:boton_id>')
@@ -620,6 +632,8 @@ if __name__ == "__main__":
 #             "nombre_boton": "nombre_boton1",
 #             "rol_solicitado": Admin    Quiero trabajar con el rol de admin
 #             "roles_autorizados": "Admin" Añadir el rol de admin
+#               "alias": "alias",
+#               "descripcion": "descripcion"
 #         },
 #         {
 #             "nombre_boton": "nombre_boton2",

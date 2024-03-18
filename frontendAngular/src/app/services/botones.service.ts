@@ -19,8 +19,8 @@ export class BotonesService {
     return headers;
   }
 
-  consultarBoton(nombresBotones: string[]): Observable<any> {
-    return this.http.post(`${this.apiUrl}/consultar_boton`, {nombre_botones: nombresBotones}, { headers: this.getHeaders() });
+  consultarBoton(nombresBotones: string[], id:number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/consultar_boton/${id}`, {nombre_botones: nombresBotones}, { headers: this.getHeaders() });
   }
 
   listarBotones(): Observable<any> {
