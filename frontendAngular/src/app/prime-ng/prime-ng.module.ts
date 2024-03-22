@@ -11,6 +11,9 @@ import { RatingModule } from 'primeng/rating';
 import { DividerModule } from 'primeng/divider';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { CheckboxModule } from 'primeng/checkbox';
+import { SidebarModule } from 'primeng/sidebar';
+import { AccordionModule } from 'primeng/accordion';
+
 
 
 @NgModule({
@@ -29,7 +32,9 @@ import { CheckboxModule } from 'primeng/checkbox';
     RatingModule,
     DividerModule,
     SplitButtonModule,
-    CheckboxModule
+    CheckboxModule,
+    SidebarModule,
+    AccordionModule
    
   ]
 })

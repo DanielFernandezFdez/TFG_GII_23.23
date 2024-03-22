@@ -1,16 +1,15 @@
-<p-menubar [model]="elem_izq">
-    <ng-template pTemplate="start">
-        <img src="assets/images/principal-logo.png" height="40"  />
-    </ng-template>
-    <ng-template pTemplate="end">
-        <div *ngIf="authService.tokenValue!=null; else botonLogin">
-          <p-splitButton label="{{ authService.usuarioActualValue}}" icon="pi pi-user" [model]="items" styleClass="p-button-text p-button-secondary mr-2 mb-2"></p-splitButton>
-        </div>
-        <ng-template #botonLogin>
-          <p-button label="Identifiquese" icon="pi pi-sign-in" iconPos="right" [text]="true" severity="secondary" routerLink="/login"></p-button>
-        </ng-template>
+
+<p-menubar class="menu" [model]="elem_izq" >
+  <ng-template pTemplate="start">
+      <img src="assets/images/principal-logo.png" height="40"  />
+  </ng-template>
+  <ng-template pTemplate="end">
+      <div *ngIf="authService.tokenValue!=null; else botonLogin">
+        <p-splitButton label="{{ authService.usuarioActualValue}}" icon="pi pi-user" [model]="items" styleClass="p-button-text p-button-secondary mr-2 mb-2"></p-splitButton>
+      </div>
+      <ng-template #botonLogin>
+        <p-button label="Identifiquese" icon="pi pi-sign-in" iconPos="right" [text]="true" severity="secondary" routerLink="/login"></p-button>
       </ng-template>
-    </p-menubar>
-
-
+    </ng-template>
+  </p-menubar>
 

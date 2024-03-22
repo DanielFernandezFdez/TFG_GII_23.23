@@ -1,16 +1,21 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from '../../services/auth.service';
 import Swal from 'sweetalert2'
 import { Router } from '@angular/router';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css']
+  selector: 'app-menu-dashboard',
+  templateUrl: './menu-dashboard.component.html',
+  styleUrl: './menu-dashboard.component.css'
 })
-export class MenuComponent {
+export class MenuDashboardComponent {
+  @ViewChild(SidebarComponent) sidebar!: SidebarComponent;
+
   elem_izq: MenuItem[] =[];
+  visibleSidebar: boolean = false;
   
   isLoggedIn: boolean = false;
   userName: string | null = '';
@@ -27,8 +32,6 @@ export class MenuComponent {
     this.authService.logout();
   }
   ngOnInit() {
-    this.authService.tokenValor.subscribe(token => {
-      if (token) {
         this.items = [
           {
             label: 'Panel de Administrador',
@@ -41,45 +44,13 @@ export class MenuComponent {
             label: 'Cerrar Sesión',
             icon: 'pi pi-fw pi-sign-out',
             command: () => this.msgConfirmacionLogout()}];
-      } 
-    });
+            
     this.elem_izq = [
       {
-        label: 'Inicio',
-        icon: 'pi pi-fw pi-home',
-        routerLink: ['/']
+        icon: 'pi pi-fw pi-bars',
+        
       },
-      {
-        label: 'Catálogo',
-        icon: 'pi pi-fw pi-book',
-        routerLink: ['/catalogo']
-      },
-      {
-        label: 'Guía de análisis',
-        icon: 'pi pi-fw pi-info-circle',
-        routerLink: ['/'],
-      },
-      {
-        label: 'Decálogo',
-        icon: 'pi pi-bars',
-        routerLink: ['/'],
-      },
-      {
-        label: 'Referentes',
-        icon: 'pi pi-bookmark-fill',
-        routerLink: ['/'],
-      },
-      {
-        label: 'Guía de puntuación',
-        icon: 'pi pi-fw pi-info-circle',
-        routerLink: ['/'],
-      },
-      {
-        label: 'Valoración',
-        icon: 'pi pi-fw pi-calculator',
-        routerLink: ['/estimador'],
-      },
-     
+
     ];
     
     }
@@ -105,5 +76,14 @@ msgConfirmacionLogout=()=>{
       }
     });
   }
+
+
+
+
+
+
+
+
+
   }
 

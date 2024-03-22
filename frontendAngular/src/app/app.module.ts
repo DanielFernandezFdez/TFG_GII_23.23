@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { AplicacionModule } from './aplicacion/aplicacion.module';
 import { RouterModule } from '@angular/router';
+import { AdministracionModule } from './administracion/administracion.module';
 
 ;
 
@@ -21,6 +22,7 @@ import { RouterModule } from '@angular/router';
     SharedModule,
     AplicacionModule,
     HttpClientModule,
+    AdministracionModule
    
   ],
 
