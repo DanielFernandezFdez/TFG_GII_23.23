@@ -13,7 +13,6 @@ import json
 
 db = SQLAlchemy()
 
-
 # Modelos
 class Libros(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -63,6 +62,14 @@ class fecha_modificacion(db.Model):
     def __repr__(self):
         return f"<Fecha Modificación: {self.ultima_modificacion}>"
 
+class GestionEstimacion(db.Model): 
+    id = db.Column(db.Integer, primary_key=True)
+    actividades_produccion= db.Column(db.String(255), nullable=True)
+    actividades_poder = db.Column(db.String(255), nullable=True)
+    actividades_mantenimiento = db.Column(db.String(255), nullable=True)
+    actividades_hombre= db.Column(db.String(255), nullable=True)
+    actividades_mujer= db.Column(db.String(255), nullable=True)
+
 
 class Roles(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -111,7 +118,168 @@ jwt=JWTManager(app)
 
 
 
-class Listadoibros(Resource):
+
+# componentes para este json:
+
+# masculino generico ---> bool
+
+# numero_ninyas -----> int opcional
+# numero_ninyos -----> int opcional
+
+# numero_hombres ----> int
+# numero_mujeres ----> int 
+
+# actividades_hombre ----> int
+# actividades_mujer-----> int
+
+# comprobacion suma de todas listas minimo 1, evitamos 0/0
+
+
+
+class GenerarListados(Resource):
+    def post(self):
+        data=request.get_json()
+        listado_nuevo = GestionEstimacion(
+            actividades_produccion= json.dumps(data["actividades_produccion"] if "actividades_produccion" in data else []),
+            actividades_poder = json.dumps(data["actividades_poder"] if "actividades_poder" in data else []),
+            actividades_mantenimiento = json.dumps(data["actividades_mantenimiento"] if "actividades_mantenimiento" in data else []),
+            actividades_hombre= json.dumps(data["actividades_hombre"] if "actividades_hombre" in data else []),
+            actividades_mujer= json.dumps(data["actividades_mujer"] if "actividades_mujer" in data else []),
+            
+        )
+        db.session.add(listado_nuevo)
+        db.session.commit()
+        return jsonify(
+            {
+                "Ok":"OK"
+            }
+        )
+
+class ObtenerListados(Resource):
+    def get(self):
+        listados=GestionEstimacion.query.get_or_404(1)
+        return jsonify(
+            {
+                "actividades_produccion" : json.loads(listados.actividades_produccion),
+                "actividades_poder" : json.loads(listados.actividades_poder),
+                "actividades_mantenimiento" : json.loads(listados.actividades_mantenimiento),
+                "actividades_hombre":json.loads(listados.actividades_hombre),
+                "actividades_mujer":json.loads(listados.actividades_mujer)
+            }
+        )
+
+class BorrarListados(Resource):
+    def delete(self):
+        db.session.delete(GestionEstimacion.query.get_or_404(1))
+        db.session.delete(GestionEstimacion.query.get_or_404(2))
+        db.session.commit()
+        return jsonify(
+            {
+                "resultado":"OK"
+            }
+        )
+
+class CalcularEstimacion(Resource):
+    def post(self):
+        resultado=0
+        data=request.get_json();
+
+
+        ponderacion_adultos=0.15
+        ponderacion_ninyos = 0.15
+        ponderacion_actividad=0.3
+
+        #?Apartado de masculino generico
+        masculino_generico=data["masculino_generico"]
+        if masculino_generico==False:
+            resultado=20
+        
+        #? Apartado de calculos de niños
+        if "numero_ninyos" or "numero_ninyas" in data :
+            numero_ninyos = data["numero_ninyos"]
+            numero_ninyas = data["numero_ninyas"]
+            suma=numero_ninyos+numero_ninyas
+            if numero_ninyos> numero_ninyas:
+                proporcion= numero_ninyas/suma
+                sobre100_ninyos=proporcion*2 #50 seria lo ideal por lo tanto al hacer regla de 3 con multiplicar por 2 se saca
+                resultado+=ponderacion_ninyos*sobre100_ninyos*100
+            else:
+                proporcion= numero_ninyos/suma
+                sobre100_ninyos=proporcion*2 #50 seria lo ideal por lo tanto al hacer regla de 3 con multiplicar por 2 se saca
+                resultado+=ponderacion_ninyos*sobre100_ninyos*100
+
+        else:
+            ponderacion_adultos=0.3
+
+
+        #? Apartado calculos de adultos
+        numero_hombres=data["numero_hombres"]
+        numero_mujeres=data["numero_mujeres"]
+        suma=numero_hombres+numero_mujeres
+        if numero_hombres> numero_mujeres:
+            proporcion= numero_mujeres/suma
+            sobre100_adultos=proporcion*2 #50 seria lo ideal por lo tanto al hacer regla de 3 con multiplicar por 2 se saca
+            resultado+=ponderacion_adultos*sobre100_adultos*100
+        else:
+            proporcion= numero_hombres/suma
+            sobre100_adultos=proporcion*2 #50 seria lo ideal por lo tanto al hacer regla de 3 con multiplicar por 2 se saca
+            resultado+=ponderacion_adultos*sobre100_adultos*100
+
+
+        #?Apartado de listados de actividades
+        res_actividades_hombre = data.get("res_actividades_hombre",[])
+        res_actividades_mujer = data.get("res_actividades_mujer",[])
+
+        actividades = GestionEstimacion.query.get_or_404(1)
+        mejor_hombres = json.loads(actividades.actividades_hombre)
+        mejor_mujeres = json.loads(actividades.actividades_mujer)
+
+        contador_comun = 0
+        contador_total = 0
+
+        if len(res_actividades_hombre) != 0:
+            for actividad_hombre in res_actividades_hombre:
+
+                if actividad_hombre in mejor_hombres:
+                    contador_comun += 1
+                contador_total += 1
+
+        if len(res_actividades_mujer) != 0:
+            for actividad_mujer in res_actividades_mujer:
+
+                if actividad_mujer in mejor_mujeres:
+                    contador_comun += 1
+                contador_total += 1
+
+        proporcion = contador_comun / contador_total if contador_total != 0 else 0
+        resultado += proporcion * ponderacion_actividad * 100
+
+
+        #? Calculo de ubicacion, se pasa ya el valor correspondiente 0 a 100
+        #? RadioButton en angular. Con eso ya estaria 
+
+
+        resultado+=data["ubicacion"]*0.2
+
+
+        return jsonify(
+            {
+                "resultado": resultado,
+                "sobre100ninyos": sobre100_ninyos,
+                "sobre100adultos": sobre100_adultos,
+                "contador_total": contador_total,
+                "contador_comun": contador_comun
+            }
+        )
+
+
+
+
+
+
+
+
+class ListadoLibros(Resource):
    
     def get(self):
         libros = Libros.query.all()
@@ -331,7 +499,7 @@ class RegistroUsuario(Resource):
             usuario=data['usuario'],
             correo=data['correo'],
             contrasenya_encriptada=generate_password_hash(data['contrasenya']),
-            rol_id=data['rol'] if 'rol' in data else 1
+            rol_id=data['rol'] if 'rol' in data else 2 #!Aqui hay que crear el rol usuario base, para que por defecto tenga permisos limitados
         )
         db.session.add(nuevo_usuario)
         db.session.commit()
@@ -588,8 +756,14 @@ class BorrarBoton(Resource):
     
 # TODO: Crear un endpoint tanto para importar como para exportar los datos de la BD
 
+api.add_resource(GenerarListados, "/generarListados")
+api.add_resource(ObtenerListados, "/obtenerListados")
+api.add_resource(CalcularEstimacion, "/estimacion")
+api.add_resource(BorrarListados,"/borrarListados")
+
+
 api.add_resource(AgregarLibro, "/agregar_libro/<int:borrador>")
-api.add_resource(Listadoibros, "/libros")
+api.add_resource(ListadoLibros, "/libros")
 api.add_resource(BusquedaLibro, "/busqueda/<string:busqueda>")
 api.add_resource(InfoLibroID, "/infoLibro/<int:id>")
 api.add_resource(borrarLibro, "/borrarLibro/<int:id>")
@@ -629,6 +803,12 @@ if __name__ == "__main__":
 
 
 
+
+    
+
+
+
+
 # "botones": [
 #         {
 #             "nombre_boton": "nombre_boton1",
@@ -648,3 +828,18 @@ if __name__ == "__main__":
 #             "roles_autorizados": Admin
 #         }
 #     ]
+    
+
+
+
+
+# {
+#     "actividades_produccion": ["Cazar","Pescar","Producir herramientas", "Producir bienes inmuebles", "Transformar materias primas", "Recolectar", "Producir arte","Sembrar","Cosechar","Hacer fuego",
+#     "Usar herramientas"],
+#     "actividades_poder":["Controlar","Mandar","Luchar","Dominar","Deliberar"],
+#     "actividades_mantenimiento":["Limpiar","Cuidar","Cocinar","Curar","Remendar","Consolar","Criar","Aconsejar","Mantener el fuego","Coser","Curtir","Enseñar","Ayudar"],
+#     "actividades_hombre":["Recolectar","Sembrar","Cosechar","Limpiar","Cuidar","Cocinar","Curar","Remendar","Consolar","Criar","Aconsejar","Mantener el fuego","Coser","Curtir","Enseñar","Ayudar"],
+#     "actividades_mujer":["Cazar","Pescar","Producir herramientas", "Producir bienes inmuebles", "Transformar materias primas","Producir arte","Hacer fuego",
+#     "Usar herramientas","Controlar","Mandar","Luchar","Dominar","Deliberar"]
+
+# }
