@@ -7,8 +7,8 @@ import { PrimeNgModule } from '../prime-ng/prime-ng.module';
 import { SharedModule } from '../shared/shared.module';
 import { LoginComponent } from './pages/login/login.component';
 import { EstimadorComponent } from './pages/estimador/estimador.component';
-
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -22,7 +22,9 @@ import { EstimadorComponent } from './pages/estimador/estimador.component';
   imports: [
     CommonModule,
     PrimeNgModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   exports: [
   ],

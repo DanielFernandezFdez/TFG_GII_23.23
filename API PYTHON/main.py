@@ -162,16 +162,13 @@ class ObtenerListados(Resource):
             {
                 "actividades_produccion" : json.loads(listados.actividades_produccion),
                 "actividades_poder" : json.loads(listados.actividades_poder),
-                "actividades_mantenimiento" : json.loads(listados.actividades_mantenimiento),
-                "actividades_hombre":json.loads(listados.actividades_hombre),
-                "actividades_mujer":json.loads(listados.actividades_mujer)
+                "actividades_mantenimiento" : json.loads(listados.actividades_mantenimiento)
             }
         )
 
 class BorrarListados(Resource):
     def delete(self):
         db.session.delete(GestionEstimacion.query.get_or_404(1))
-        db.session.delete(GestionEstimacion.query.get_or_404(2))
         db.session.commit()
         return jsonify(
             {
@@ -195,7 +192,7 @@ class CalcularEstimacion(Resource):
             resultado=20
         
         #? Apartado de calculos de niños
-        if "numero_ninyos" or "numero_ninyas" in data :
+        if data["numero_ninyos"]!=0 or data["numero_ninyas"]!=0 in data :
             numero_ninyos = data["numero_ninyos"]
             numero_ninyas = data["numero_ninyas"]
             suma=numero_ninyos+numero_ninyas
@@ -264,11 +261,7 @@ class CalcularEstimacion(Resource):
 
         return jsonify(
             {
-                "resultado": resultado,
-                "sobre100ninyos": sobre100_ninyos,
-                "sobre100adultos": sobre100_adultos,
-                "contador_total": contador_total,
-                "contador_comun": contador_comun
+                "resultado": round(resultado),
             }
         )
 
@@ -684,7 +677,7 @@ class consultarBoton(Resource):
         for nombre_boton in data['nombre_botones']:
             boton = Botones.query.filter_by(nombre_boton=nombre_boton).first()
             if boton:
-                alias = boton.alias
+                alias = boton.alias if boton.alias else "Sin nombre"
                 descripcion = boton.descripcion
                 roles_autorizados = json.loads(boton.roles_autorizados if boton.roles_autorizados else '[]')
                 if roles_autorizados==[]:
@@ -695,8 +688,8 @@ class consultarBoton(Resource):
             botones_respuesta.append(
                 {
                 "nombre": nombre_boton,
-                "alias":alias,
-                "descripcion":descripcion, 
+                "alias":alias if alias else "Sin descripcion",
+                "descripcion":descripcion if descripcion else "Sin descripcion", 
                 "autorizado": autorizado
                 })
 
@@ -812,8 +805,8 @@ if __name__ == "__main__":
 # "botones": [
 #         {
 #             "nombre_boton": "nombre_boton1",
-#             "rol_solicitado": Admin    Quiero trabajar con el rol de admin
-#             "roles_autorizados": "Admin" Añadir el rol de admin
+#             "rol_solicitado": Admin   Borrar
+#             "roles_autorizados": "Admin" Añadir 
 #               "alias": "alias",
 #               "descripcion": "descripcion"
 #         },
@@ -833,13 +826,13 @@ if __name__ == "__main__":
 
 
 
-# {
-#     "actividades_produccion": ["Cazar","Pescar","Producir herramientas", "Producir bienes inmuebles", "Transformar materias primas", "Recolectar", "Producir arte","Sembrar","Cosechar","Hacer fuego",
-#     "Usar herramientas"],
-#     "actividades_poder":["Controlar","Mandar","Luchar","Dominar","Deliberar"],
-#     "actividades_mantenimiento":["Limpiar","Cuidar","Cocinar","Curar","Remendar","Consolar","Criar","Aconsejar","Mantener el fuego","Coser","Curtir","Enseñar","Ayudar"],
-#     "actividades_hombre":["Recolectar","Sembrar","Cosechar","Limpiar","Cuidar","Cocinar","Curar","Remendar","Consolar","Criar","Aconsejar","Mantener el fuego","Coser","Curtir","Enseñar","Ayudar"],
-#     "actividades_mujer":["Cazar","Pescar","Producir herramientas", "Producir bienes inmuebles", "Transformar materias primas","Producir arte","Hacer fuego",
-#     "Usar herramientas","Controlar","Mandar","Luchar","Dominar","Deliberar"]
+#  {
+#      "actividades_produccion": ["Cazar","Pescar","Producir herramientas", "Producir bienes inmuebles", "Transformar materias primas", "Recolectar", "Producir arte","Sembrar","Cosechar","Hacer fuego",
+#      "Usar herramientas"],
+#      "actividades_poder":["Controlar","Mandar","Luchar","Dominar","Deliberar"],
+#      "actividades_mantenimiento":["Limpiar","Cuidar","Cocinar","Curar","Remendar","Consolar","Criar","Aconsejar","Mantener el fuego","Coser","Curtir","Enseñar","Ayudar"],
+#      "actividades_hombre":["Recolectar","Sembrar","Cosechar","Limpiar","Cuidar","Cocinar","Curar","Remendar","Consolar","Criar","Aconsejar","Mantener el fuego","Coser","Curtir","Enseñar","Ayudar"],
+#      "actividades_mujer":["Cazar","Pescar","Producir herramientas", "Producir bienes inmuebles", "Transformar materias primas","Producir arte","Hacer fuego",
+#      "Usar herramientas","Controlar","Mandar","Luchar","Dominar","Deliberar"]
 
-# }
+#  }

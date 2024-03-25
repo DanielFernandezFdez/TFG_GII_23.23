@@ -23,7 +23,8 @@ const routes: Routes = [
   {
     path: 'catalogo',
     component: CatalogoComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
+    //canActivate: [AuthGuard]
   },
   {
     path: 'info_libro/:id',

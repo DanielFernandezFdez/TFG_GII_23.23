@@ -8,6 +8,7 @@ import { AplicacionModule } from './aplicacion/aplicacion.module';
 import { RouterModule } from '@angular/router';
 import { AdministracionModule } from './administracion/administracion.module';
 
+
 ;
 
 @NgModule({
@@ -22,7 +23,8 @@ import { AdministracionModule } from './administracion/administracion.module';
     SharedModule,
     AplicacionModule,
     HttpClientModule,
-    AdministracionModule
+    AdministracionModule,
+
    
   ],
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { BotonesService } from '../services/botones.service';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,11 @@ export class AuthGuard implements CanActivate {
         if (permitido == 1) {
           return true;
         } else {
-          this.router.navigate(['/login']);
+          Swal.fire({
+            title: "Acción denegada",
+            text: "No tiene permisos para acceder a esta página",
+            icon: "error"
+          });
           return false;
         }
       }).catch(error => {
@@ -51,4 +56,8 @@ export class AuthGuard implements CanActivate {
         );
     });
   }
+
+
+
+
 }

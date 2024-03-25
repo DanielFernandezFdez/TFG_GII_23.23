@@ -5,7 +5,11 @@
     <div class="p-inputgroup buscador-catalogo">
         <input pInputText type="text"  placeholder="Buscar por ISBN o Título" [(ngModel)]="busqueda">
         <button pButton icon="pi pi-search" (click)="cargaLibroBusqueda()"></button>
+       
+        <p-scrollTop></p-scrollTop>
     </div>
+
+   
 
 
     <div class="grid cards">

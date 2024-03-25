@@ -1,1 +1,70 @@
+<app-menu></app-menu>
+<p-card>
+  <form [formGroup]="estimacionForm">
+    <div class="p-grid">
+      <div class="p-col-12">
+        <div class="card">
+          <h5>Estimación</h5>
+          <div class="p-formgroup-inline">
+            <div class="p-field-checkbox">
+              <p-checkbox formControlName="masculino_generico" [binary]="true" label="Masculino Genérico"></p-checkbox>
+            </div>
+          </div>
 
+          <div class="grid">
+            <div class="col">
+              <label for="numeroHombres">Número de hombres</label>
+              <p-inputNumber formControlName="numero_hombres" [min]="0"></p-inputNumber>
+            </div>
+            <div class="col">
+              <label for="numeroMujeres">Número de mujeres</label>
+              <p-inputNumber formControlName="numero_mujeres" [min]="0"></p-inputNumber>
+            </div>
+            <div class="col">
+              <label for="numeroNinyos">Número de niños</label>
+              <p-inputNumber formControlName="numero_ninyos" [min]="0"></p-inputNumber>
+            </div>
+            <div class="col">
+              <label for="numeroNinyas">Número de niñas</label>
+              <p-inputNumber formControlName="numero_ninyas" [min]="0"></p-inputNumber>
+            </div>
+          </div>
+
+          <div class="p-grid">
+            <label>Actividades Hombre</label>
+            <div class="p-col-4">
+              <p-multiSelect formControlName="res_actividades_hombre_produccion" [options]="actividades_produccion" placeholder="Seleccionar actividades"></p-multiSelect>
+              <p-multiSelect formControlName="res_actividades_hombre_poder" [options]="actividades_poder" placeholder="Seleccionar actividades"></p-multiSelect>
+              <p-multiSelect formControlName="res_actividades_hombre_mantenimiento" [options]="actividades_mantenimiento" placeholder="Seleccionar actividades"></p-multiSelect>
+            </div>
+
+            <label>Actividades Mujer</label>
+            <div class="p-col-4">
+              <p-multiSelect formControlName="res_actividades_mujer_produccion" [options]="actividades_produccion" placeholder="Seleccionar actividades"></p-multiSelect>
+              <p-multiSelect formControlName="res_actividades_mujer_poder" [options]="actividades_poder" placeholder="Seleccionar actividades"></p-multiSelect>
+              <p-multiSelect formControlName="res_actividades_mujer_mantenimiento" [options]="actividades_mantenimiento" placeholder="Seleccionar actividades"></p-multiSelect>
+            </div>
+          </div>
+
+          <div class="flex flex-column gap-3">
+            <div>
+              <label for="ubicacion" class="block">Ubicación de las personas</label>
+              <p-dropdown formControlName="ubicacion" [options]="ubicacionOptions" placeholder="Selecciona una opción" optionLabel="label"></p-dropdown>
+            </div>
+          </div>
+
+          <div class="p-field">
+            <button pButton type="button" (click)="calcularEstimacion()" label="Calcular" class="p-button-success"></button>
+          </div>
+
+        </div>
+      </div>
+    
+    </div>
+  </form>
+     <!-- Knob para mostrar el resultado -->
+     <div *ngIf="resultadoEstimacion !== null" class="p-field">
+      <label>Resultado de la estimación:</label>
+      <p-knob [(ngModel)]="resultadoEstimacion"[readonly]="true"></p-knob>
+    </div>
+</p-card>

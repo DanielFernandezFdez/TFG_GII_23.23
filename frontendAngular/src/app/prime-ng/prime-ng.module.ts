@@ -13,7 +13,13 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { CheckboxModule } from 'primeng/checkbox';
 import { SidebarModule } from 'primeng/sidebar';
 import { AccordionModule } from 'primeng/accordion';
-
+import { KnobModule } from 'primeng/knob';
+import { StepsModule } from 'primeng/steps';
+import { MultiSelectModule } from 'primeng/multiselect';
+import {InputNumberModule} from 'primeng/inputnumber';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { DropdownModule } from 'primeng/dropdown';
+import { ScrollTopModule } from 'primeng/scrolltop';
 
 
 @NgModule({
@@ -34,8 +40,14 @@ import { AccordionModule } from 'primeng/accordion';
     SplitButtonModule,
     CheckboxModule,
     SidebarModule,
-    AccordionModule
-   
+    AccordionModule,
+    KnobModule,
+    StepsModule,
+    MultiSelectModule,
+    InputNumberModule,
+    RadioButtonModule,
+    DropdownModule,
+    ScrollTopModule
   ]
 })
 export class PrimeNgModule { }
