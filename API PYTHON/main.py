@@ -252,9 +252,7 @@ class CalcularEstimacion(Resource):
         resultado += proporcion * ponderacion_actividad * 100
 
 
-        #? Calculo de ubicacion, se pasa ya el valor correspondiente 0 a 100
-        #? RadioButton en angular. Con eso ya estaria 
-
+        #? Calculo de ubicacion, se pasa ya el valor correspondiente 0 a 100 
 
         resultado+=data["ubicacion"]*0.2
 
@@ -721,7 +719,7 @@ class EditarBoton(Resource):
         for boton_data in data['botones']:
             boton = Botones.query.filter_by(nombre_boton=boton_data['nombre_boton']).first()
             
-            roles_actuales = json.loads(boton.roles_autorizados)
+            roles_actuales = json.dumps(boton.roles_autorizados)
 
             if 'roles_autorizados' in boton_data:
                 rol = boton_data['roles_autorizados']

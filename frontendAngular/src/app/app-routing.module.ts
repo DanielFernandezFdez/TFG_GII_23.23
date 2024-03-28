@@ -69,12 +69,14 @@ const routes: Routes = [
   {
     path: 'estimador',
     component: EstimadorComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
+    //canActivate: [AuthGuard]
   },
   {
     path: 'panel-admin',
     component: PanelAdminComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
+    canActivate: [AuthGuard]
   }
 
 

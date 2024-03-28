@@ -15,7 +15,7 @@ export class MenuDashboardComponent {
   @ViewChild(SidebarComponent) sidebar!: SidebarComponent;
 
   elem_izq: MenuItem[] =[];
-  visibleSidebar: boolean = false;
+  sidebarVisible: boolean = false;
   
   isLoggedIn: boolean = false;
   userName: string | null = '';
@@ -31,28 +31,22 @@ export class MenuDashboardComponent {
   logout() {
     this.authService.logout();
   }
-  ngOnInit() {
-        this.items = [
-          {
-            label: 'Panel de Administrador',
-            icon: 'pi pi-fw pi-cog',
-            command: () => {
-              this.router.navigate(['/panel-admin'])
-            }
-          },
-          {
-            label: 'Cerrar Sesión',
-            icon: 'pi pi-fw pi-sign-out',
-            command: () => this.msgConfirmacionLogout()}];
-            
+  ngOnInit() {            
     this.elem_izq = [
       {
         icon: 'pi pi-fw pi-bars',
+        command: () => this.toggleSidebar()
         
+
+      
       },
 
     ];
     
+    }
+
+    toggleSidebar() {
+      this.sidebarVisible = !this.sidebarVisible;
     }
 
 msgConfirmacionLogout=()=>{

@@ -18,6 +18,10 @@ export class AuthGuard implements CanActivate {
   
     const nombre_boton = state.url.split('/')[1];
     const idusuario = parseInt(this.authService.idValue ?? "0");
+    if (nombre_boton == "panel-admin" && idusuario != 0){
+      return true;
+    }
+    
   
     return this.getCurrentButton(nombre_boton, idusuario)
       .then(permitido => {
