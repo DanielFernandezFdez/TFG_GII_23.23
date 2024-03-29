@@ -8,7 +8,8 @@ import { CombinarAutoComponent } from '../administracion/pages/combinar-auto/com
 import { PrimeNgModule } from '../prime-ng/prime-ng.module';
 import { SharedModule } from '../shared/shared.module';
 import { PanelAdminComponent } from './pages/panel-admin/panel-admin.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,11 +19,14 @@ import { PanelAdminComponent } from './pages/panel-admin/panel-admin.component';
     EditarAutoComponent,
     CombinarAutoComponent,
     PanelAdminComponent
+    
   ],
   imports: [
     CommonModule,
     PrimeNgModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class AdministracionModule { }

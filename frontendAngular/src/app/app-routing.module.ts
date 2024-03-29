@@ -76,7 +76,7 @@ const routes: Routes = [
     path: 'panel-admin',
     component: PanelAdminComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   }
 
 

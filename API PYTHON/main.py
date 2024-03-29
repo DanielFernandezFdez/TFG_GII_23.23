@@ -347,10 +347,10 @@ class AgregarLibro(Resource):
             isbn=data["isbn"],
             editorial=data["editorial"],
             descripcion=data["descripcion"],
-            anyo_publicacion=data["anyo_publicacion"],
-            puntuacion=data["puntuacion"],
+            anyo_publicacion=data["anyo_publicacion"] ,
+            puntuacion=data["puntuacion"] ,
             ubicacion_estudio=data["ubicacion_estudio"],
-            url_imagen=data["url_imagen"],
+            url_imagen=data["url_imagen"] ,
         )
         db.session.add(nuevo_libro)
         fecha_modificacion.actualizar_fecha_modificacion()
@@ -423,28 +423,8 @@ class buscarLibroAutomatico(Resource):
                 )
                 db.session.add(nuevo_libro)
                 db.session.commit()
-        return ListadoibrosAutomaticos.get(self)
+        return listarLibrosAutomaticos.get(self)
 
-
-class ListadoibrosAutomaticos(Resource):  #! Listado de libros automaticos que se manda al buscador ,para hacer una llamada
-
-    def get(self):
-        libros = Libros_automaticos.query.all()
-        return jsonify(
-            [
-                {
-                    "auto_id": libro.auto_id,
-                    "logo": libro.logo,
-                    "titulo": libro.titulo,
-                    "isbn": libro.isbn,
-                    "editorial": libro.editorial,
-                    "descripcion": libro.descripcion,
-                    "anyo_publicacion": libro.anyo_publicacion,
-                    "url_imagen": libro.url_imagen,
-                }
-                for libro in libros
-            ]
-        )
 
 
 class borrarTablaLibrosAutomaticos(Resource):

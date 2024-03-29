@@ -1,9 +1,10 @@
-import { Component,ViewChild } from '@angular/core';
+import { Component,OnInit, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from '../../services/auth.service';
 import Swal from 'sweetalert2'
 import { Router } from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { LibrosService } from '../../services/libros.service';
 
 
 @Component({
@@ -11,20 +12,16 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
   templateUrl: './menu-dashboard.component.html',
   styleUrl: './menu-dashboard.component.css'
 })
-export class MenuDashboardComponent {
+export class MenuDashboardComponent implements OnInit{
   @ViewChild(SidebarComponent) sidebar!: SidebarComponent;
 
   elem_izq: MenuItem[] =[];
   sidebarVisible: boolean = false;
   
-  isLoggedIn: boolean = false;
-  userName: string | null = '';
+  libros_resultado: any[] = [];
+  termino: string = '';
   
-  constructor(public authService: AuthService, private router: Router) {
-    if (this.authService.estaAutenticado()){
-      this.isLoggedIn = true;
-      this.userName = this.authService.usuarioActualValue;
-    }
+  constructor(public authService: AuthService, public libroService :LibrosService, private router: Router) {
     }
   items: any[]=[];
   
@@ -36,12 +33,20 @@ export class MenuDashboardComponent {
       {
         icon: 'pi pi-fw pi-bars',
         command: () => this.toggleSidebar()
-        
-
-      
-      },
-
+      }
     ];
+    this.items = [
+      {
+        label: 'Panel de Administrador',
+        icon: 'pi pi-fw pi-cog',
+        command: () => {
+          this.router.navigate(['/panel-admin'])
+        }
+      },
+      {
+        label: 'Cerrar Sesión',
+        icon: 'pi pi-fw pi-sign-out',
+        command: () => this.msgConfirmacionLogout()}];
     
     }
 
@@ -72,12 +77,21 @@ msgConfirmacionLogout=()=>{
   }
 
 
-
-
-
-
-
-
-
+  busqueda(event: any) {
+    const query = event.query;
+    this.libroService.buscarLibro(query).subscribe(data => {
+      this.libros_resultado = data.map((libro: any) => ({
+        titulo: libro.titulo, 
+        isbn: libro.isbn,  
+        id: libro.id
+      }));
+    });
   }
+
+  libroSeleccionado(event: any) {
+    const idLibro = event.value.id;
+    this.router.navigate(['/info_libro', idLibro]);
+  }
+}
+
 

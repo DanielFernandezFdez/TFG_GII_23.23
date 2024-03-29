@@ -72,9 +72,14 @@ export class SidebarComponent {
   ];
     catalogo: Pantalla[] = [
       {
-        nombre: 'Agregar Libro',
-        ruta: '/',
+        nombre: 'Agregar Libro manual',
+        ruta: '/agregar',
         icono: 'pi pi-plus',
+      },
+      {
+        nombre: 'Agregar Libro auto',
+        ruta: '/',
+        icono: 'pi pi-send',
       },
       {
         nombre: 'Gestionar Catálogo',

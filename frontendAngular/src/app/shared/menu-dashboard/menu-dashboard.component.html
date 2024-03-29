@@ -1,8 +1,22 @@
-
 <p-menubar [model]="elem_izq" class="menu">
-    <ng-template pTemplate="start">
-        <img src="../../../assets/images/letras-logo.png" height="30" class="mr-1">
-    </ng-template>
-    </p-menubar>
+  <ng-template pTemplate="start">
+    <img src="../../../assets/images/letras-logo.png" height="30" class="mr-1">
+  </ng-template>
+  <ng-template pTemplate="end">
+
+    <p-autoComplete [(ngModel)]="termino" [suggestions]="libros_resultado" (completeMethod)="busqueda($event)"
+      (onSelect)="libroSeleccionado($event)" field="titulo" placeholder="Información rápida libro">
+      <ng-template let-libro pTemplate="item">
+        <div class="suggestion-item">
+          <div>{{libro.titulo}}</div>
+          <div style="font-size: 0.75em; color: #757575;">{{libro.isbn}}</div>
+        </div>
+      </ng-template>
+    </p-autoComplete>
     
+    <p-splitButton label="{{ authService.usuarioActualValue}}" icon="pi pi-user" [model]="items"
+      styleClass="p-button-text p-button-secondary mr-2 mb-2"></p-splitButton>
+
+  </ng-template>
+</p-menubar>
 <app-sidebar [(visible)]="sidebarVisible"></app-sidebar>
