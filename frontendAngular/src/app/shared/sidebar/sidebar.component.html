@@ -1,10 +1,10 @@
-<p-sidebar [(visible)]="visible" [baseZIndex]="10000" [modal]="true">
+<p-sidebar [(visible)]="visible" [baseZIndex]="10000" [modal]="true" (onHide)="cerrarSidebar()">
   
     <ng-template pTemplate="headless">
       <div class="sidebar-container">
     <div class="sidebar-header">
         <img src="../../../assets/images/principal-logo.png" alt="Logo" class="logo-sidebar">
-      <button class="close-btn" (click)="closeSidebar()">
+      <button class="close-btn" (click)="cerrarSidebar()">
         <i class="pi pi-times"></i>
       </button>
     </div>

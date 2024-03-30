@@ -98,10 +98,10 @@ export class SidebarComponent {
 
   seleccionar(ruta: string) {
     this.router.navigate([ruta]);
-    this.closeSidebar();
+    this.cerrarSidebar();
   }
 
-  closeSidebar() {
+  cerrarSidebar() {
     this.visible = false;
     this.visibleChange.emit(this.visible);
   }
