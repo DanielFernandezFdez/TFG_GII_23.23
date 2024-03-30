@@ -1,0 +1,24 @@
+.columna-imagen { width: 120px; } 
+.columna-titulo { width: 200px; }
+.columna-isbn { width: 150px; }
+.columna-editorial { width: 150px; }
+.columna-acciones { width: 100px; }
+
+.p-datatable .p-datatable-thead > tr > th {
+    background: #fff;
+    position: sticky;
+    z-index: 1;
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+    vertical-align: middle; 
+}
+
+
+
+
+.container {
+    margin-top: 80px;
+    overflow-x: auto; 
+    padding-bottom: 2rem; 
+}

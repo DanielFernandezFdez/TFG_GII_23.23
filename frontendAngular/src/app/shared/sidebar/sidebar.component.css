@@ -23,10 +23,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem;
-  
-  }
-  
 
+  }
   
 .elementos-sidebar {
     padding: 0;
@@ -49,4 +47,10 @@
     background-color: var(--color-de-fondo-hover);
     cursor: pointer;
     outline: none;
+}
+.sidebar-container {
+    height: 100vh;
+    overflow-y: auto;
+    width: 320px; 
+    position: fixed;
 }

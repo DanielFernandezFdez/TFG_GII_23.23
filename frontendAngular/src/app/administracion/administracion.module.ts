@@ -10,6 +10,7 @@ import { SharedModule } from '../shared/shared.module';
 import { PanelAdminComponent } from './pages/panel-admin/panel-admin.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { GestionCatalogoComponent } from './pages/gestion-catalogo/gestion-catalogo.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { FormsModule } from '@angular/forms';
     AgregarAutoComponent,
     EditarAutoComponent,
     CombinarAutoComponent,
-    PanelAdminComponent
+    PanelAdminComponent,
+    GestionCatalogoComponent
     
   ],
   imports: [

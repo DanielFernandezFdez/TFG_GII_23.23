@@ -20,6 +20,8 @@ import {InputNumberModule} from 'primeng/inputnumber';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { DropdownModule } from 'primeng/dropdown';
 import { ScrollTopModule } from 'primeng/scrolltop';
+import { TableModule } from 'primeng/table';
+import { PaginatorModule } from 'primeng/paginator';
 
 
 @NgModule({
@@ -47,7 +49,9 @@ import { ScrollTopModule } from 'primeng/scrolltop';
     InputNumberModule,
     RadioButtonModule,
     DropdownModule,
-    ScrollTopModule
+    ScrollTopModule,
+    TableModule,
+    PaginatorModule
   ]
 })
 export class PrimeNgModule { }

@@ -1,12 +1,14 @@
 <p-sidebar [(visible)]="visible" [baseZIndex]="10000" [modal]="true">
+  
     <ng-template pTemplate="headless">
+      <div class="sidebar-container">
     <div class="sidebar-header">
         <img src="../../../assets/images/principal-logo.png" alt="Logo" class="logo-sidebar">
       <button class="close-btn" (click)="closeSidebar()">
         <i class="pi pi-times"></i>
       </button>
     </div>
-
+    
     <button type="button" class="boton-sidebar" routerLink="/panel-admin">
       <i class="pi pi-ellipsis-v"></i>
       Panel de administración
@@ -44,5 +46,8 @@
     </ul>
   </p-accordionTab>
     </p-accordion>
+  </div>
 </ng-template>
+
+
   </p-sidebar>

@@ -83,8 +83,13 @@ export class SidebarComponent {
       },
       {
         nombre: 'Gestionar Catálogo',
-        ruta: '/',
+        ruta: '/gestion-catalogo',
         icono: 'pi pi-book',
+      },
+      {
+        nombre: 'Importación y exportación',
+        ruta: '/',
+        icono: 'pi pi-upload',
       },
   ];
 
