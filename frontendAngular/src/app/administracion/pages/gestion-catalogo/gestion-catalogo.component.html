@@ -5,7 +5,7 @@
     <button pButton icon="pi pi-search" (click)="cargaLibroBusqueda()"></button>
     <p-scrollTop></p-scrollTop>
 </div>
-    <p-table [value]="libros" [paginator]="true" [rows]="10" [totalRecords]="totalRecords" [responsive]="true">
+    <p-table [value]="libros" [paginator]="true" [rows]="10" [totalRecords]="totalRecords" >
       <ng-template pTemplate="header">
           <tr>
             <th class="columna-imagen">Imagen</th>

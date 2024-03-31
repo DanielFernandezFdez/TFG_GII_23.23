@@ -1,1 +1,22 @@
-<p>editar-libro works!</p>
+<app-menu-dashboard></app-menu-dashboard>
+
+<div class="card">
+  <h1>Editar Libro</h1>
+  <form [formGroup]="libroForm" (ngSubmit)="guardarLibro()">
+    <input type="text" pInputText placeholder="Título" formControlName="titulo" />
+    <input type="text" pInputText placeholder="ISBN" formControlName="isbn" />
+    <input type="text" pInputText placeholder="Editorial" formControlName="editorial" />
+    <textarea pInputTextarea placeholder="Descripción" formControlName="descripcion"></textarea>
+    <input type="text" pInputText placeholder="Año de Publicación" formControlName="anyo_publicacion" />
+    <p-rating formControlName="puntuacion" [cancel]="false"></p-rating>
+    <input type="text" pInputText placeholder="Ubicación en el Estudio" formControlName="ubicacion_estudio" />
+    <input type="text" pInputText placeholder="URL de la imagen" formControlName="url_imagen" />
+
+    <button pButton type="submit" label="Guardar" [disabled]="!libroForm.valid"></button>
+  </form>
+
+  <div *ngIf="imagenPrevisualizada" class="previsualizacion">
+    <h2>Previsualización de la imagen</h2>
+    <img [src]="imagenPrevisualizada" alt="Previsualización del libro" />
+  </div>
+</div>

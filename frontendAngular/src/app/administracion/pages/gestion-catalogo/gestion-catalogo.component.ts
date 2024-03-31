@@ -94,7 +94,7 @@ export class GestionCatalogoComponent implements OnInit{
   }
 
   editar(id: number) {
-    
+    this.Router.navigate(['/editar', id]);
   }
 
   masinfo(id: number) {
