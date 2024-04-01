@@ -59,5 +59,21 @@ export class LibrosService {
     return this.http.delete(`${this.apiUrl}/borrar`, { headers: this.getHeaders() });
   }
 
+  exportarLibros(): Observable<Blob> {
+    return this.http.get(`${this.apiUrl}/exportar_csv`, {
+      headers: this.getHeaders(),
+      responseType: 'blob'
+    });
+  }
+
+  importarLibros(archivo: File): Observable<any> {
+    const formData: FormData = new FormData();
+    formData.append('archivo', archivo, archivo.name);
+  
+    const headers = this.getHeaders();
+  
+    return this.http.post(`${this.apiUrl}/importar_csv`, formData, { headers });
+  }
+
 
 }

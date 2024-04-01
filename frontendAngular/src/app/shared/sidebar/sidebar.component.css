@@ -5,11 +5,6 @@
     margin-right: 10px; 
 }
 
-.close-sidebar {
-    background: none;
-    border: none;
-    font-size: 1.5rem; 
-}
 
 
 .close-btn {
@@ -26,12 +21,7 @@
 
   }
   
-.elementos-sidebar {
-    padding: 0;
-    list-style-type: none;
-    margin-top: 10px;
-}
-  
+
 .boton-sidebar {
     background-color: var(--color-de-fondo);
     border: none;

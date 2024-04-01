@@ -22,6 +22,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
+import { PanelMenuModule } from 'primeng/panelmenu';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { PaginatorModule } from 'primeng/paginator';
     DropdownModule,
     ScrollTopModule,
     TableModule,
-    PaginatorModule
+    PaginatorModule,
+    PanelMenuModule
   ]
 })
 export class PrimeNgModule { }

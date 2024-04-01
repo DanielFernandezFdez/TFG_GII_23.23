@@ -45,7 +45,7 @@ const routes: Routes = [
     //canActivate: [AuthGuard]
   },
   {
-    path: 'agregar_auto',
+    path: 'agregar_auto/:titulo',
     component: AgregarAutoComponent,
     pathMatch: 'full',
     //canActivate: [AuthGuard]
