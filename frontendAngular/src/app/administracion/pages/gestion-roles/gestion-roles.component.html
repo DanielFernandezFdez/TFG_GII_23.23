@@ -1,1 +1,26 @@
-<p>gestion-roles works!</p>
+<app-menu-dashboard></app-menu-dashboard>
+<div class="container-btn">
+  <div class="placeholder"></div> <!-- Espaciador para mantener el título centrado -->
+    <h2 class="titulo-gestion">Gestión de Roles</h2>
+    <p-button label="Nuevo Rol" icon="pi pi-plus" [rounded]="true" [text]="true" severity="primary"></p-button>
+</div>
+<div class="container mt-5">
+  <p-table [value]="roles" [paginator]="true" [rows]="10" [responsive]="true">
+    <ng-template pTemplate="header">
+      <tr>
+        <th class="columna-rol">Rol</th>
+        <th class="columna-acciones">Acciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rol>
+      <tr>
+        <td>{{ rol.nombre_rol }}</td>
+        <td>
+          <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="success" (click)="editarRol(rol.id)"></p-button>
+          <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (click)="eliminarRol(rol.id)"></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+

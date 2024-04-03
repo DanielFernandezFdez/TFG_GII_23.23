@@ -93,7 +93,7 @@ export class SidebarComponent {
             label: 'Gestión de roles',
             icon: 'pi pi-eye-slash',
             command: () =>  {
-              this.router.navigate(['/']),
+              this.router.navigate(['/gestion-roles']),
              this.cerrarSidebar() }
           }
         ]

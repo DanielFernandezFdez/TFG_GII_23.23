@@ -536,6 +536,7 @@ class ListarUsuarios(Resource):
                     "usuario": usuario.usuario,
                     "correo": usuario.correo,
                     "rol": usuario.rol.nombre_rol if usuario.rol else None,
+                    "rol_id": usuario.rol_id if usuario.rol else None
                 }
                 for usuario in usuarios
             ]
@@ -561,7 +562,7 @@ class ObtenerRoles(Resource):
             [
                 {
                     "id": rol.id,
-                    "nombre_rol": rol.nombre_rol,
+                    "nombre_rol": rol.nombre_rol
                 }
                 for rol in roles
             ]

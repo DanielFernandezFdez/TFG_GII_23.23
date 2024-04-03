@@ -1,0 +1,36 @@
+.container-btn {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    margin-top: 70px; 
+    margin-right: 20px; 
+    margin-left: 180px; 
+  }
+  
+  .titulo-gestion {
+    flex-grow: 1; 
+    text-align: center;
+  }
+  
+  .columna-rol { width: 90%; }
+  .columna-acciones { width: 10%; }
+  
+  .p-datatable .p-datatable-thead > tr > th {
+      background: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+
+  }
+  
+  .p-datatable .p-datatable-tbody > tr > td {
+      vertical-align: middle; 
+  }
+  
+  .container {
+      margin-top: 5px;
+      overflow-x: auto; 
+      padding-bottom: 2rem; 
+      align-items: center;
+  }
+  
