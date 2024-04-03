@@ -11,6 +11,8 @@ import { PanelAdminComponent } from './pages/panel-admin/panel-admin.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { GestionCatalogoComponent } from './pages/gestion-catalogo/gestion-catalogo.component';
+import { GestionUsuarioComponent } from './pages/gestion-usuario/gestion-usuario.component';
+import { GestionRolesComponent } from './pages/gestion-roles/gestion-roles.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { GestionCatalogoComponent } from './pages/gestion-catalogo/gestion-catal
     EditarAutoComponent,
     CombinarAutoComponent,
     PanelAdminComponent,
-    GestionCatalogoComponent
+    GestionCatalogoComponent,
+    GestionUsuarioComponent,
+    GestionRolesComponent
     
   ],
   imports: [

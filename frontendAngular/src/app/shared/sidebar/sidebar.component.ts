@@ -86,7 +86,7 @@ export class SidebarComponent {
             label: 'Gestión de usuarios',
             icon: 'pi pi-user-edit',
             command: () =>  {
-              this.router.navigate(['/']),
+              this.router.navigate(['/gestion-usuarios']),
              this.cerrarSidebar() }
           },
           {
@@ -188,20 +188,18 @@ export class SidebarComponent {
 
   exportarLibros() {
     this.LibrosService.exportarLibros().subscribe((res) => {
-      // Crear un objeto Blob con los datos recibidos
+
       const blob = new Blob([res], { type: 'text/csv' });
   
-      // Crear una URL para el Blob
+
       const url = window.URL.createObjectURL(blob);
   
-      // Crear un elemento <a> temporal para realizar la descarga
+
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'libros.csv';  // Nombre del archivo a descargar
-      document.body.appendChild(a);  // Agregar el elemento al DOM
-      a.click();  // Iniciar la descarga
-  
-      // Limpiar y remover el elemento <a>
+      a.download = 'libros.csv'; 
+      document.body.appendChild(a);  
+      a.click(); 
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
     });

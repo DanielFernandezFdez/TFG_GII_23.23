@@ -1,0 +1,24 @@
+<app-menu-dashboard></app-menu-dashboard>
+<div class="container mt-5">
+  <p-table [value]="usuarios" [paginator]="true" [rows]="10" [responsive]="true">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Usuario</th>
+        <th>Correo</th>
+        <th>Rol</th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-usuario>
+      <tr>
+        <td>{{ usuario.usuario }}</td>
+        <td>{{ usuario.correo }}</td>
+        <td>{{ usuario.rol }}</td>
+        <td>
+            <p-button  icon="pi pi-pencil" [rounded]="true" [text]="true"  severity="success"  (click)="editarUsuario(usuario.id)"></p-button>
+            <p-button  icon="pi pi-trash" [rounded]="true" [text]="true"   severity="danger" (click)="eliminarUsuario(usuario.id)"></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

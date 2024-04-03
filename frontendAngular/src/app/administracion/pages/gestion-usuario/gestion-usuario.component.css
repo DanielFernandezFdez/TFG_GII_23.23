@@ -1,0 +1,21 @@
+.columna-usuario { width: 200px; }
+.columna-correo { width: 250px; }
+.columna-rol { width: 150px; }
+.columna-acciones { width: 120px; }
+
+.p-datatable .p-datatable-thead > tr > th {
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+    vertical-align: middle; 
+}
+
+.container {
+    margin-top: 80px;
+    overflow-x: auto; 
+    padding-bottom: 2rem; 
+}

@@ -13,6 +13,8 @@ import { EstimadorComponent } from './aplicacion/pages/estimador/estimador.compo
 import { AuthGuard } from './auth/auth.guard';
 import { PanelAdminComponent } from './administracion/pages/panel-admin/panel-admin.component';
 import { GestionCatalogoComponent } from './administracion/pages/gestion-catalogo/gestion-catalogo.component';
+import { GestionUsuarioComponent } from './administracion/pages/gestion-usuario/gestion-usuario.component';
+import { GestionRolesComponent } from './administracion/pages/gestion-roles/gestion-roles.component';
 
 
 const routes: Routes = [
@@ -25,7 +27,7 @@ const routes: Routes = [
     path: 'catalogo',
     component: CatalogoComponent,
     pathMatch: 'full',
-    //canActivate: [AuthGuard]  Solo para pruebas
+    //canActivate: [AuthGuard]  //Solo para pruebas
   },
   {
     path: 'info_libro/:id',
@@ -82,6 +84,18 @@ const routes: Routes = [
   {
     path:'gestion-catalogo',
     component: GestionCatalogoComponent,
+    pathMatch: 'full',
+    //canActivate: [AuthGuard]
+  },
+  {
+    path:'gestion-usuarios',
+    component: GestionUsuarioComponent,
+    pathMatch: 'full',
+    //canActivate: [AuthGuard]
+  },
+  {
+    path:'gestion-roles',
+    component: GestionRolesComponent,
     pathMatch: 'full',
     //canActivate: [AuthGuard]
   }
