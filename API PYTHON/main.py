@@ -470,7 +470,7 @@ class RegistroUsuario(Resource):
         nuevo_usuario = Usuarios(
             usuario=data['usuario'],
             correo=data['correo'],
-            contrasenya_encriptada=generate_password_hash(data['contrasenya']),
+            contrasenya_encriptada=generate_password_hash("1234l5678"),
             rol_id=data['rol'] if 'rol' in data else 2 #!Aqui hay que crear el rol usuario base, para que por defecto tenga permisos limitados
         )
         db.session.add(nuevo_usuario)
@@ -521,6 +521,11 @@ class EliminarUsuario(Resource):
             respuesta = jsonify({"mensaje": "No se puede eliminar el usuario administrador"})
             respuesta.status_code = 400
             return respuesta
+        if usuario.id == 2:
+            respuesta = jsonify({"mensaje": "No se puede eliminar el usuario base"})
+            respuesta.status_code = 400
+            return respuesta
+        
         db.session.delete(usuario)
         db.session.commit()
         return jsonify({"mensaje": "Usuario eliminado exitosamente"})   
@@ -591,10 +596,24 @@ class EditarRol(Resource):
         nombre_rol_existente = Roles.query.filter_by(nombre_rol=data['nombre_rol']).first()
         if nombre_rol_existente:
             json = jsonify({"mensaje": "El rol ya existe"})
-            json.status_code = 400
+            json.status_code = 406
             return json
         if 'nombre_rol' in data:
             rol.nombre_rol = data['nombre_rol']
+        db.session.commit()
+        
+        #Actualizacion de botones
+        botones = Botones.query.all()
+       
+        for boton in botones:
+            roles_actuales=[]
+            #!NO FUNCIONA
+            roles_actuales = json.loads(boton.roles_autorizados)
+            if rol.nombre_rol in roles_actuales:
+                roles_actuales.remove(rol.nombre_rol)
+                roles_actuales.append(data['nombre_rol'])
+                boton.roles_autorizados = json.dumps(roles_actuales)
+        
         db.session.commit()
         return jsonify({"mensaje": "Rol modificado exitosamente"})
 
@@ -620,6 +639,7 @@ class BorrarRol(Resource):
         #Actualizacion de botones
         botones = Botones.query.all()
         for boton in botones:
+            roles_actuales=[]
             roles_actuales = json.loads(boton.roles_autorizados)
             if rol.nombre_rol in roles_actuales:
                 roles_actuales.remove(rol.nombre_rol)
@@ -630,7 +650,7 @@ class BorrarRol(Resource):
         return jsonify({"mensaje": "Rol eliminado exitosamente"}) 
     
     
-class buscarBotones(Resource): #!Solo durante pruebas
+class buscarBotones(Resource):
     def get(self):
         botones = Botones.query.all()
         return jsonify(

@@ -14,6 +14,9 @@ import { GestionCatalogoComponent } from './pages/gestion-catalogo/gestion-catal
 import { GestionUsuarioComponent } from './pages/gestion-usuario/gestion-usuario.component';
 import { GestionRolesComponent } from './pages/gestion-roles/gestion-roles.component';
 
+import { EditarUsuarioComponent } from './pages/editar-usuario/editar-usuario.component';
+import { AgregarUsuarioComponent } from './pages/agregar-usuario/agregar-usuario.component';
+
 @NgModule({
   declarations: [
     AgregarLibroComponent,
@@ -24,7 +27,9 @@ import { GestionRolesComponent } from './pages/gestion-roles/gestion-roles.compo
     PanelAdminComponent,
     GestionCatalogoComponent,
     GestionUsuarioComponent,
-    GestionRolesComponent
+    GestionRolesComponent,
+    EditarUsuarioComponent,
+    AgregarUsuarioComponent
     
   ],
   imports: [

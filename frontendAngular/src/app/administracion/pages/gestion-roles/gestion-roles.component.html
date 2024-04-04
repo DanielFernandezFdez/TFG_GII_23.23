@@ -2,7 +2,7 @@
 <div class="container-btn">
   <div class="placeholder"></div> <!-- Espaciador para mantener el título centrado -->
     <h2 class="titulo-gestion">Gestión de Roles</h2>
-    <p-button label="Nuevo Rol" icon="pi pi-plus" [rounded]="true" [text]="true" severity="primary"></p-button>
+    <p-button label="Nuevo Rol" icon="pi pi-plus" [rounded]="true" [text]="true" severity="primary" (click)="agregarRol()"></p-button>
 </div>
 <div class="container mt-5">
   <p-table [value]="roles" [paginator]="true" [rows]="10" [responsive]="true">
@@ -17,6 +17,7 @@
         <td>{{ rol.nombre_rol }}</td>
         <td>
           <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="success" (click)="editarRol(rol.id)"></p-button>
+          <p-button icon="pi pi-eye-slash" [rounded]="true" [text]="true" severity="secondary" (click)="modificarPermisos()"></p-button>
           <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (click)="eliminarRol(rol.id)"></p-button>
         </td>
       </tr>

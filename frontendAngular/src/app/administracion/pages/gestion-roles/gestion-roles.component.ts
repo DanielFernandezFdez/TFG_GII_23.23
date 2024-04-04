@@ -4,6 +4,7 @@ import { RolesService } from '../../../services/roles.service';
 import { AuthService } from '../../../services/auth.service';
 
 
+
 @Component({
   selector: 'app-gestion-roles',
   templateUrl: './gestion-roles.component.html',
@@ -11,6 +12,7 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class GestionRolesComponent {
   roles: any[] = [];
+
 
   constructor(private RolesService: RolesService, private AuthService: AuthService) {}
 
@@ -29,8 +31,77 @@ export class GestionRolesComponent {
     });
   }
 
+  agregarRol(): void {
+    Swal.fire({
+      title: 'Agregar nuevo Rol',
+      text: 'Ingrese el nombre del nuevo rol',
+      inputPlaceholder: 'Mínimo 2 caracteres',
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Guardar',
+      showLoaderOnConfirm: true,
+      preConfirm: (nombreRol:string) => {
+        console.log(nombreRol);
+        if (!nombreRol) {
+          Swal.showValidationMessage("Debe ingresar un nombre para el rol");
+          return;
+        }
+        if (nombreRol.length < 2) {
+          Swal.showValidationMessage("El nombre del rol debe tener al menos 2 caracteres");
+          return;
+        }
+        const nuevoRol = { nombre_rol: nombreRol.toString() };
+  
+        return this.RolesService.crearRol(nuevoRol).toPromise().then(response => {
+          Swal.fire('Rol agregado', 'El Rol ha sido agregado correctamente', 'success');
+          this.cargarRoles();
+        }).catch(error => {
+          Swal.fire('Error', 'Ha ocurrido un error al agregar el rol', 'error');
+        });
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    });
+  }
+
   editarRol(id: number): void {
-    console.log('Editar usuario', id);
+    Swal.fire({
+      title: 'Editar Rol',
+      text: 'Ingrese el nuevo nombre del rol',
+      inputPlaceholder: 'Mínimo 2 caracteres',
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Guardar',
+      showLoaderOnConfirm: true,
+      preConfirm: (nombreRol) => {
+        if (!nombreRol) {
+          Swal.showValidationMessage("Debe ingresar un nombre para el rol");
+          return;
+        }
+        if (nombreRol.length < 2) {
+          Swal.showValidationMessage("El nombre del rol debe tener al menos 2 caracteres");
+          return;
+        }
+        const nuevoRol = { nombre_rol: nombreRol };
+  
+        return this.RolesService.editarRol(id, nuevoRol).toPromise().then(response => {
+          Swal.fire('Rol editado', 'El Rol ha sido editado correctamente', 'success');
+          this.cargarRoles();
+        }).catch(error => {
+          if (error.status == 406) {
+            Swal.fire('Error', 'Nombre de rol existente', 'error');
+            return;
+          }
+          Swal.fire('Error', 'Ha ocurrido un error al editar el rol', 'error');
+        });
+      },
+      allowOutsideClick: () => !Swal.isLoading()
+    });
   }
 
 
@@ -45,11 +116,12 @@ export class GestionRolesComponent {
       confirmButtonText: 'Sí, eliminar'
     }).then((result) => {
       if (result.isConfirmed) {
-        //!Hay que comprobar si existen usuarios con ese rol. Si los hay, no se puede eliminar
         this.AuthService.listarUsuarios().subscribe({
           next: (data) => {
             for (let i = 0; i < data.length; i++) {
-              if (data[i].rol_id === id) {
+              console.log(data[i].rol_id);
+              console.log(id);
+              if (data[i].rol_id == id) {
                 Swal.fire('Error', 'No se puede eliminar el rol porque hay usuarios con ese rol', 'error');
                 return;
               }
@@ -61,9 +133,18 @@ export class GestionRolesComponent {
             Swal.fire('Rol eliminado', 'El Rol ha sido eliminado correctamente', 'success');
             this.cargarRoles();
             return;
+          },
+          error: (error) => {
+           error.status == 400 ? Swal.fire('Error', 'Este rol no se puede eliminar', 'error') :
+            Swal.fire('Error', 'Ha ocurrido un error al borrar el rol', 'error');
           }
         });
       }
     });
   }
+
+  modificarPermisos(): void {
+    console.log('Modificar permisos');
+  }
+              
 }
