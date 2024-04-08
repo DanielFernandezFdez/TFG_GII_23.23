@@ -12,8 +12,8 @@
     text-align: center;
   }
   
-  .columna-rol { width: 90%; }
-  .columna-acciones { width: 10%; }
+  .columna-rol { width: 80%; }
+  .columna-acciones { width: 20%; }
   
   .p-datatable .p-datatable-thead > tr > th {
       background: #fff;
