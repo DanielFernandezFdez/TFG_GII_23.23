@@ -23,6 +23,7 @@ import { ScrollTopModule } from 'primeng/scrolltop';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
 import { PanelMenuModule } from 'primeng/panelmenu';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { PanelMenuModule } from 'primeng/panelmenu';
     ScrollTopModule,
     TableModule,
     PaginatorModule,
-    PanelMenuModule
+    PanelMenuModule,
+    OverlayPanelModule
   ]
 })
 export class PrimeNgModule { }

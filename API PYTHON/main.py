@@ -437,23 +437,23 @@ class borrarTablaLibrosAutomaticos(Resource):
 
 class listarLibrosAutomaticos(Resource):
 
-    def get(self):
-        libros = Libros_automaticos.query.all()
-        return jsonify(
-            [
-                {
-                    "auto_id": libro.auto_id,
-                    "logo": libro.logo,
-                    "titulo": libro.titulo,
-                    "isbn": libro.isbn,
-                    "editorial": libro.editorial,
-                    "descripcion": libro.descripcion,
-                    "anyo_publicacion": libro.anyo_publicacion,
-                    "url_imagen": libro.url_imagen,
-                }
-                for libro in libros
-            ]
-        )
+        def get(self):
+            libros = Libros_automaticos.query.all()
+            return jsonify(
+                [
+                    {
+                        "auto_id": libro.auto_id,
+                        "logo": libro.logo,
+                        "titulo": libro.titulo,
+                        "isbn": libro.isbn,
+                        "editorial": libro.editorial,
+                        "descripcion": libro.descripcion,
+                        "anyo_publicacion": libro.anyo_publicacion,
+                        "url_imagen": libro.url_imagen,
+                    }
+                    for libro in libros
+                ]
+            )
 
 
 
@@ -470,7 +470,7 @@ class RegistroUsuario(Resource):
         nuevo_usuario = Usuarios(
             usuario=data['usuario'],
             correo=data['correo'],
-            contrasenya_encriptada=generate_password_hash("1234l5678"),
+            contrasenya_encriptada=generate_password_hash("12345678"),
             rol_id=data['rol'] if 'rol' in data else 2 #!Aqui hay que crear el rol usuario base, para que por defecto tenga permisos limitados
         )
         db.session.add(nuevo_usuario)
@@ -503,14 +503,22 @@ class ModificarUsuario(Resource):
                 return respuesta
             usuario.contrasenya_encriptada = generate_password_hash(data['contrasenya_nueva'])
         if 'usuario' in data:
+            repetido=Usuarios.query.filter_by(correo=data['correo']).first()
+            if repetido.id != usuario.id:
+                respuesta = jsonify({"mensaje": "Ya existe un correo"})
+                respuesta.status_code = 400
+                return respuesta
             usuario.usuario = data['usuario']
-        if 'rol' in data:
+        if 'correo' in data:
+            usuario.correo=data['correo']
+        
+        if 'rol_id' in data and data['rol_id'] != usuario.rol:
             if usuario.id == 1:
                 respuesta = jsonify({"mensaje": "No se puede modificar el rol del usuario administrador"})
                 respuesta.status_code = 400
                 return respuesta
 
-            usuario.rol_id = data['rol']
+            usuario.rol_id = data['rol_id']
         db.session.commit()
         return jsonify({"mensaje": "Usuario modificado exitosamente"})
 
@@ -519,10 +527,6 @@ class EliminarUsuario(Resource):
         usuario = Usuarios.query.get_or_404(user_id)
         if usuario.id == 1:
             respuesta = jsonify({"mensaje": "No se puede eliminar el usuario administrador"})
-            respuesta.status_code = 400
-            return respuesta
-        if usuario.id == 2:
-            respuesta = jsonify({"mensaje": "No se puede eliminar el usuario base"})
             respuesta.status_code = 400
             return respuesta
         
@@ -594,20 +598,22 @@ class EditarRol(Resource):
         rol = Roles.query.get_or_404(rol)
         data = request.get_json()
         nombre_rol_existente = Roles.query.filter_by(nombre_rol=data['nombre_rol']).first()
-        if nombre_rol_existente:
-            json = jsonify({"mensaje": "El rol ya existe"})
-            json.status_code = 406
-            return json
+        
+        # Verifica si el rol existe y no es el mismo que se está editando
+        if nombre_rol_existente and nombre_rol_existente.id != rol.id:
+            response = jsonify({"mensaje": "El rol ya existe"})
+            response.status_code = 406
+            return response
+        
+        # Actualizar el nombre del rol si se proporciona
         if 'nombre_rol' in data:
             rol.nombre_rol = data['nombre_rol']
+        
         db.session.commit()
         
-        #Actualizacion de botones
+        # Actualización de botones
         botones = Botones.query.all()
-       
         for boton in botones:
-            roles_actuales=[]
-            #!NO FUNCIONA
             roles_actuales = json.loads(boton.roles_autorizados)
             if rol.nombre_rol in roles_actuales:
                 roles_actuales.remove(rol.nombre_rol)
@@ -739,7 +745,7 @@ class EditarBoton(Resource):
 
         return jsonify({"mensaje": "Botones actualizados exitosamente"})
     
-    
+#!Solo durante las pruebas. No es necesario cuando ya esten creados todos los botones
 class BorrarBoton(Resource):
     def delete(self, boton_id):
         boton = Botones.query.get_or_404(boton_id)
@@ -810,7 +816,6 @@ class ImportarCSV(Resource):
         fecha_modificacion.actualizar_fecha_modificacion()
 
         db.session.commit()
-        print('Datos importados')
         # Redireccionar o enviar una respuesta adecuada
         return jsonify({"mensaje": "Datos importados exitosamente"})
 
