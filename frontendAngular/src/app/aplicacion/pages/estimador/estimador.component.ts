@@ -106,10 +106,26 @@ export class EstimadorComponent implements OnInit {
     this.estimacionService.calcularEstimacion(valoresEstimacion).subscribe({
       next: (resultado) => {
         this.resultadoEstimacion = resultado.resultado;
-        console.log('Estimación calculada:', this.resultadoEstimacion);
+        Swal.fire({
+          title: "Resultado del estudio:"+ this.resultadoEstimacion,
+          text: "¿Le gustaría enviar los resultados para su estudio?",
+          icon: "info",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Enviar datos",
+          cancelButtonText:"No, gracias"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            //!Mostramos el formulario para guardar datos
+          }
+        });
       },
       error: (error) => {
-        console.error('Hubo un error al calcular la estimación', error);
+        Swal.fire({
+          title: "Ha ocurrido un error",
+          icon: "error",
+        })
       }
     });
   }

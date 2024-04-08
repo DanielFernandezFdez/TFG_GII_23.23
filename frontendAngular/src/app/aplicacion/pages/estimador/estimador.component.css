@@ -1,0 +1,112 @@
+
+
+
+.card {
+    padding: 10px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+
+.card label {
+    display: block;
+    margin-bottom: .5em;
+    font-weight: bold;
+    color: #333;
+}
+
+
+.grid, .p-grid {
+    margin-bottom: 1em;
+    justify-content: center;
+}
+
+.p-formgroup-inline .p-field-checkbox {
+    display: flex;
+    align-items: center;
+    margin-right: 1em;
+}
+
+.p-formgroup-inline .p-checkbox-label {
+    padding-left: .5em;
+}
+
+
+p-knob {
+    width: 200px;
+    display: block;
+    margin: 20px auto;
+}
+
+
+p-inputNumber {
+    width: 100%;
+    padding: .5em;
+}
+
+
+p-dropdown {
+    width: 100%;
+}
+
+
+p-multiSelect {
+    width: 100%;
+}
+
+
+button[pButton] {
+    margin-top: 1em;
+    width: auto;
+}
+
+@media screen and (max-width: 640px) {
+    .p-col-4 {
+        width: 100% !important;
+        justify-content: center;
+    }
+
+    .p-grid {
+        display: block;
+        justify-content: center;
+    }
+
+    .p-formgroup-inline {
+        display: block;
+        justify-content: center;
+    }
+}
+
+
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.gap-3 {
+    gap: 1rem;
+}
+
+.block {
+    display: block;
+}
+
+.act-hombre{
+    margin-bottom: 20px;
+}
+.act-mujer{
+    margin-bottom: 20px;
+}
+.mas-gen{
+    margin-bottom: 20px;
+    justify-content: center;
+}
+.contadores{
+    justify-content: center;
+}
+
