@@ -31,21 +31,28 @@ export class MenuDashboardComponent implements OnInit{
   ngOnInit() {            
     this.elem_izq = [
       {
-        icon: 'pi pi-fw pi-bars',
+        icon: 'pi pi-bars',
         command: () => this.toggleSidebar()
       }
     ];
     this.items = [
       {
         label: 'Panel de Administrador',
-        icon: 'pi pi-fw pi-cog',
+        icon: 'pi pi-cog',
+        command: () => {
+          this.router.navigate(['/panel-admin'])
+        }
+      },
+      {
+        label: 'Cambiar contraseña',
+        icon: 'pi pi-shield',
         command: () => {
           this.router.navigate(['/panel-admin'])
         }
       },
       {
         label: 'Cerrar Sesión',
-        icon: 'pi pi-fw pi-sign-out',
+        icon: 'pi pi-sign-out ',
         command: () => this.msgConfirmacionLogout()}];
     
     }
