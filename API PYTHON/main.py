@@ -33,6 +33,7 @@ class Libros(db.Model):
 class Libros_automaticos(db.Model):
     auto_id = db.Column(db.String(100), primary_key=True)
     logo = db.Column(db.String(300))
+    disponible=db.Column(db.Boolean)
     titulo = db.Column(db.String(100))
     isbn = db.Column(db.String(100))
     editorial = db.Column(db.String(100))
@@ -110,13 +111,14 @@ def creacion():
     db.init_app(app)
     with app.app_context():
         db.create_all()
+
+    
     return app
 
 
 app = creacion()
 api = Api(app)
 jwt=JWTManager(app)
-
 
 
 
@@ -415,6 +417,7 @@ class buscarLibroAutomatico(Resource):
                 nuevo_libro = Libros_automaticos(
                     auto_id=libro[0],
                     logo=libro[1],
+                    disponible=libro[2],
                     titulo=libro[3],
                     isbn=libro[4] + "," + libro[5],
                     editorial=libro[6],
@@ -422,8 +425,15 @@ class buscarLibroAutomatico(Resource):
                     descripcion=libro[8],
                     url_imagen=libro[9],
                 )
-                db.session.add(nuevo_libro)
-                db.session.commit()
+            else:
+                if libro[2] == True:
+                    nuevo_libro = Libros_automaticos(
+                        auto_id=libro[0],
+                        logo=libro[1],
+                        disponible=libro[2],
+                )
+            db.session.add(nuevo_libro)
+            db.session.commit()
         return listarLibrosAutomaticos.get(self)
 
 
@@ -445,6 +455,7 @@ class listarLibrosAutomaticos(Resource):
                         "auto_id": libro.auto_id,
                         "logo": libro.logo,
                         "titulo": libro.titulo,
+                        "disponible": libro.disponible,
                         "isbn": libro.isbn,
                         "editorial": libro.editorial,
                         "descripcion": libro.descripcion,

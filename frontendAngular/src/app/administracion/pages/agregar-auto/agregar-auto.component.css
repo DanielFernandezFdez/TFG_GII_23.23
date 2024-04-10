@@ -200,4 +200,48 @@
       transform: rotateY(0deg);
     }
   }
+
+
+
+
+.p-col {
+    flex: 1; 
+}
+
+.p-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+}
+
+  .logo-style {
+    height: 20px;
+}
+
+.card-title {
+    font-size: 2rem;
+}
+
+.card-text {
+    font-size: 1rem;
+}
+
+.p-card {
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+    transition: box-shadow .3s;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.p-button {
+    margin-right: 0.5em;
+}
+.imagen-libro {
+  width: 180px; /* Ancho estándar para la imagen */
+  height: auto; /* Altura automática para mantener la proporción */
+}
+
+.detalles-libro {
+  padding-left: 20px; /* Espacio entre la imagen y el texto */
+}
   

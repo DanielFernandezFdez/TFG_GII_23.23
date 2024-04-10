@@ -39,46 +39,53 @@
   
   <div *ngIf="!cargando">
     <div *ngFor="let libro of libros" class="mb-3">
-      <div class="d-flex justify-content-between align-items-center">
-        <h2 class="mb-0">{{ libro.titulo }}</h2>
-        <img [src]="libro.logo" class="logo-style-agregar-auto logo" alt="Logo de {{ libro.titulo }}"> 
+      <div class="p-grid p-nogutter p-align-center p-justify-between">
+        <div class="p-col align-left">
+          <h2>{{ libro.auto_id }}</h2>
       </div>
-    
-      <div class="card-style-agregar-auto card mb-4">
-        <div class="row g-0">
-          <div class="col-md-4">
-            <img [src]="libro.urlImagen" class="img-fluid rounded-start card-img" alt="{{ libro.titulo }}">
+      <div class="p-col align-right">
+          <img src="../../../../assets/images/{{ libro.logo }}" class="logo-style" alt="Logo de {{ libro.auto_id }}">
+      </div>
+      </div>
+      <div *ngIf="libro.disponible; else noInfo" class="p-card">
+          <div class="p-grid">
+              <div class="p-col-fixed" style="width:200px;">
+                  <img [src]="libro.url_imagen" class="img-fluid rounded-start imagen-libro" alt="{{ libro.titulo }}">
+              </div>
+              <div class="p-col-12 p-md-8 detalles-libro">
+                  <div class="card-body">
+                      <h3 class="card-title"><strong>{{ libro.titulo }}</strong></h3>
+                      <p class="card-text"><strong>ISBN-10:</strong> {{ libro.isbn }}</p>
+                      <p class="card-text"><strong>Editorial:</strong> {{ libro.editorial }}</p>
+                      <p class="card-text"><strong>Fecha de Publicación:</strong> {{ libro.anyo_publicacion }}</p>
+                      <p class="card-text"><strong>Descripción:</strong> {{ libro.descripcion }}</p>
+                  </div>
+              </div>
           </div>
-          <div class="col-md-8">
-            <div class="card-body">
-              <h5 class="card-title">{{ libro.titulo }}</h5>
-              <p class="card-text">ISBN-10: {{ libro.isbn10 }}</p>
-              <p class="card-text">ISBN-13: {{ libro.isbn13 }}</p>
-              <p class="card-text">Editorial: {{ libro.editorial }}</p>
-              <p class="card-text">Fecha de Publicación: {{ libro.fechaPublicacion }}</p>
-              <p class="card-text">Descripción: {{ libro.descripcion }}</p>
-            </div>
+      </div>
+      <ng-template #noInfo>
+          <h4>No se ha encontrado información en esta fuente</h4>
+      </ng-template>
+      <br>
+  </div>
+  
+  <div *ngIf="libros.length > 0" class="container my-4 text-center">
+      <h4 class="mb-4">Seleccione el proveedor de información deseado o personalizalo</h4>
+      <div class="p-grid p-justify-between p-align-center">
+          <button pButton label="Búsqueda Manual" class="p-button-primary"></button>
+          <div *ngFor="let libro of libros">
+              <button *ngIf="libro.disponible" pButton type="button" class="p-button-outlined">
+                  <img src="../../../../assets/images/{{libro.logo }}" alt="Logo" class="logo-style">
+              </button>
           </div>
-        </div>
+          <button pButton label="Combinar fuentes" class="p-button-primary"></button>
       </div>
-    
-      
-    </div>
-    
-    <div *ngIf="libros && libros.length">
-      <div class="container my-4 text-center">
-        <h4 class="mb-4">Seleccione el proveedor de información deseado o personalizalo</h4>
-        <div class="d-flex justify-content-between align-items-center">
-          <button pButton type="button" label="Búsqueda Manual" class="btn btn-primary" ></button>
-          <ng-container *ngFor="let libro of libros">
-            <button *ngIf="libro.disponible" pButton type="button" class="btn btn-outline-primary">
-              <img [src]="libro.logo" class="logo" alt="Logo de {{ libro.titulo }}" style="height: 20px;"> 
-            </button>
-          </ng-container>
-          <button pButton type="button" label="Combinar fuentes" class="btn btn-primary" ></button>
-        </div>
-      </div>
-    </div>
-    </div>
+  </div>
 
+  </div>
+
+
+
+
+   
 

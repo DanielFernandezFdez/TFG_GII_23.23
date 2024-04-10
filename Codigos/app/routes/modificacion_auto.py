@@ -9,7 +9,6 @@ import app.routes.script_adicionales.funciones_webscraping as fw
 modificacion_auto = Blueprint('modificacion_auto', __name__,template_folder='templates')
 
 @modificacion_auto.route('/agregar_auto', methods=['GET', 'POST'])
-@login_required
 def agregar_auto():
     db.session.query(Libros_automaticos).delete()
     db.session.commit()
@@ -35,7 +34,7 @@ def agregar_auto():
     
     
 @modificacion_auto.route('/edicion_auto/<string:auto_id>', methods=['GET', 'POST'])
-@login_required
+
 def editar_libro_auto(auto_id):
     libro = Libros_automaticos.query.get_or_404(auto_id)
     if request.method == 'POST':
@@ -60,7 +59,6 @@ def editar_libro_auto(auto_id):
 
 
 @modificacion_auto.route('/combinacion_auto', methods=['GET', 'POST'])
-@login_required
 def combinacion_auto():
     libros = Libros_automaticos.query.all()
     titulo=[]
