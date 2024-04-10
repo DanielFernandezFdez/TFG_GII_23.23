@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LibrosService } from '../../../services/libros.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-agregar-auto',
@@ -11,7 +12,7 @@ export class AgregarAutoComponent implements OnInit {
   libros: any[] = [];
   cargando: boolean = false;
 
-  constructor(private librosService: LibrosService, private route: ActivatedRoute) { }
+  constructor(private librosService: LibrosService, private route: ActivatedRoute,private router : Router) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -32,8 +33,22 @@ export class AgregarAutoComponent implements OnInit {
       },
       error: () => {
         this.cargando = false;
-        // Manejar error
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Ha ocurrido un error al buscar los libros'
+        });
       }
     });
+  }
+
+  elegirLibroParaAgregar(libro: any) {
+    this.librosService.conexionLibroInfo(libro);
+    this.router.navigate(['/agregar']);
+  }
+
+
+  irAgregarManual() {
+    this.router.navigate(['/agregar']);
   }
 }

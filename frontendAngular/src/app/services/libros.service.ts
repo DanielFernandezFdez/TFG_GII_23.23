@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LibrosService {
   private apiUrl = 'http://127.0.0.1:5000'; 
+
+  private libroInfoConexion = new BehaviorSubject<any>(null);
+  libroInfo = this.libroInfoConexion.asObservable();
+
   constructor(private http: HttpClient) { }
 
   private getHeaders() {
@@ -16,6 +20,10 @@ export class LibrosService {
       headers = headers.set('Authorization', `Bearer ${token}`);
     }
     return headers;
+  }
+
+  conexionLibroInfo(libro: any) {
+    this.libroInfoConexion.next(libro);
   }
 
   listarLibros(): Observable<any> {
@@ -30,8 +38,8 @@ export class LibrosService {
     return this.http.get(`${this.apiUrl}/infoLibro/${id}`, { headers: this.getHeaders() });
   }
 
-  agregarLibro(libro: any, borrador: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/agregar_libro/${borrador}`, libro, { headers: this.getHeaders() });
+  agregarLibro(libro: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/agregar_libro`, libro, { headers: this.getHeaders() });
   }
 
   editarLibro(id: number, libro: any): Observable<any> {

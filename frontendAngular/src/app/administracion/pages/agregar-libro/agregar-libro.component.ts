@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class AgregarLibroComponent {
   libroForm: FormGroup;
-  imagenPrevisualizada: string | ArrayBuffer | null = null;
+  imagenPrevisualizada: string | null = null;
 
   constructor(private fb: FormBuilder, private libroService: LibrosService, private router:Router) {
     this.libroForm = this.fb.group({
@@ -29,12 +29,31 @@ export class AgregarLibroComponent {
     this.libroForm.get('url_imagen')?.valueChanges.subscribe((url) => {
       this.previsualizarImagen(url);
     });
+
+    this.libroService.libroInfo.subscribe(libroInfo => {
+      if (libroInfo) {
+        this.prellenarFormulario(libroInfo);
+      }
+    });
+  }
+
+  prellenarFormulario(libroInfo: any) {
+    this.libroForm.patchValue({
+      titulo: libroInfo.titulo,
+      isbn: libroInfo.isbn,
+      editorial: libroInfo.editorial,
+      descripcion: libroInfo.descripcion,
+      anyo_publicacion: libroInfo.anyo_publicacion,
+      url_imagen: libroInfo.url_imagen
+
+    });
+    this.previsualizarImagen(libroInfo.url_imagen);
   }
 
   guardarLibro() {
     if (this.libroForm.valid) {
       const nuevoLibro = this.libroForm.value;
-      this.libroService.agregarLibro(nuevoLibro,0).subscribe(
+      this.libroService.agregarLibro(nuevoLibro).subscribe(
         (response) => {
         Swal.fire({
           icon: "success",
@@ -43,6 +62,7 @@ export class AgregarLibroComponent {
           timer: 1500
         });
         this.libroForm.reset();
+        this.imagenPrevisualizada = null;
         },
         (error) => {
           

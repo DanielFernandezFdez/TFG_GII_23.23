@@ -72,9 +72,9 @@
   <div *ngIf="libros.length > 0" class="container my-4 text-center">
       <h4 class="mb-4">Seleccione el proveedor de información deseado o personalizalo</h4>
       <div class="p-grid p-justify-between p-align-center">
-          <button pButton label="Búsqueda Manual" class="p-button-primary"></button>
+          <button pButton label="Búsqueda Manual" class="p-button-primary" (click)="irAgregarManual()"></button>
           <div *ngFor="let libro of libros">
-              <button *ngIf="libro.disponible" pButton type="button" class="p-button-outlined">
+              <button *ngIf="libro.disponible" pButton type="button" class="p-button-outlined" (click)="elegirLibroParaAgregar(libro)">
                   <img src="../../../../assets/images/{{libro.logo }}" alt="Logo" class="logo-style">
               </button>
           </div>

@@ -340,10 +340,7 @@ class InfoLibroID(Resource):
 
 class AgregarLibro(Resource):
 
-    def post(
-        self, borrador
-    ):  #! Borrador es un parametro que se envia para saber si se debe borrar la tabla de libros automaticos en vez de usar el de editar libros, este  se puede reutilizar. Combinar libros tb
-        #! esto se debe a que en el front ya guardo los libros disponibles, y si los necesito, los muevo ya alli
+    def post(self): 
         data = request.get_json()
         nuevo_libro = Libros(
             titulo=data["titulo"],
@@ -357,10 +354,6 @@ class AgregarLibro(Resource):
         )
         db.session.add(nuevo_libro)
         fecha_modificacion.actualizar_fecha_modificacion()
-        if (
-            borrador == 1
-        ):  #! 1 si se combinan libros auto o si se escoge solo 1, 0  si es agregar normal
-            db.session.query(Libros_automaticos).delete()
         db.session.commit()
         return jsonify({"mensaje": "Libro agregado exitosamente", "id": nuevo_libro.id})
 
@@ -836,7 +829,7 @@ api.add_resource(CalcularEstimacion, "/estimacion")
 api.add_resource(BorrarListados,"/borrarListados")
 
 
-api.add_resource(AgregarLibro, "/agregar_libro/<int:borrador>")
+api.add_resource(AgregarLibro, "/agregar_libro")
 api.add_resource(ListadoLibros, "/libros")
 api.add_resource(BusquedaLibro, "/busqueda/<string:busqueda>")
 api.add_resource(InfoLibroID, "/infoLibro/<int:id>")
