@@ -3,7 +3,7 @@
   margin: 2rem auto;
   padding: 1rem;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  text-align: center; /* Alinea el contenido del texto y los elementos al centro */
+  text-align: center; 
 }
 
 .card h1 {
@@ -20,5 +20,5 @@
   max-width: 100%;
   height: auto;
   display: block;
-  margin: 1rem auto; /* Centra la imagen horizontalmente */
+  margin: 1rem auto; 
 }

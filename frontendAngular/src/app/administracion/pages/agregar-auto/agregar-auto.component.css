@@ -237,11 +237,14 @@
     margin-right: 0.5em;
 }
 .imagen-libro {
-  width: 180px; /* Ancho estándar para la imagen */
-  height: auto; /* Altura automática para mantener la proporción */
+  width: 180px; 
+  height: auto; 
 }
 
 .detalles-libro {
-  padding-left: 20px; /* Espacio entre la imagen y el texto */
+  padding-left: 20px; 
+}
+.muestreo{
+  margin-top: 80px;
 }
   
