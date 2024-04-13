@@ -142,6 +142,8 @@ jwt=JWTManager(app)
 class GenerarListados(Resource):
     def post(self):
         data=request.get_json()
+        db.session.query(GestionEstimacion).delete()
+        db.session.commit()
         listado_nuevo = GestionEstimacion(
             actividades_produccion= json.dumps(data["actividades_produccion"] if "actividades_produccion" in data else []),
             actividades_poder = json.dumps(data["actividades_poder"] if "actividades_poder" in data else []),
@@ -165,7 +167,9 @@ class ObtenerListados(Resource):
             {
                 "actividades_produccion" : json.loads(listados.actividades_produccion),
                 "actividades_poder" : json.loads(listados.actividades_poder),
-                "actividades_mantenimiento" : json.loads(listados.actividades_mantenimiento)
+                "actividades_mantenimiento" : json.loads(listados.actividades_mantenimiento),
+                "actividades_hombre" : json.loads(listados.actividades_hombre),
+                "actividades_mujer" : json.loads(listados.actividades_mujer)
             }
         )
 

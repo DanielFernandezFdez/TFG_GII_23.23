@@ -152,7 +152,21 @@ export class SidebarComponent {
             ]
           }
         ]
-      }
+      },
+      {
+        label: 'Gestión del estimador',
+        expanded: true,
+        items: [
+          {
+            label: 'Gestión de actividades',
+            icon: 'pi pi-sitemap',
+            command: () =>  {
+              this.router.navigate(['/gestion-estimador']),
+             this.cerrarSidebar() }
+          }
+         
+        ]
+      },
     ];
   };
    

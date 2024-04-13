@@ -5,7 +5,6 @@ import { CatalogoComponent } from './aplicacion/pages/catalogo/catalogo.componen
 import { AgregarLibroComponent } from './administracion/pages/agregar-libro/agregar-libro.component';
 import { EditarLibroComponent } from './administracion/pages/editar-libro/editar-libro.component';
 import { AgregarAutoComponent } from './administracion/pages/agregar-auto/agregar-auto.component';
-import { EditarAutoComponent } from './administracion/pages/editar-auto/editar-auto.component';
 import { CombinarAutoComponent } from './administracion/pages/combinar-auto/combinar-auto.component';
 import { InfoLibroComponent } from './aplicacion/pages/info-libro/info-libro.component';
 import { LoginComponent } from './aplicacion/pages/login/login.component';
@@ -15,6 +14,8 @@ import { PanelAdminComponent } from './administracion/pages/panel-admin/panel-ad
 import { GestionCatalogoComponent } from './administracion/pages/gestion-catalogo/gestion-catalogo.component';
 import { GestionUsuarioComponent } from './administracion/pages/gestion-usuario/gestion-usuario.component';
 import { GestionRolesComponent } from './administracion/pages/gestion-roles/gestion-roles.component';
+import { CambiarContraComponent } from './administracion/pages/cambiar-contra/cambiar-contra.component';
+import { GestionEstimadorComponent } from './administracion/pages/gestion-estimador/gestion-estimador.component';
 
 
 const routes: Routes = [
@@ -49,12 +50,6 @@ const routes: Routes = [
   {
     path: 'agregar_auto/:elemento',
     component: AgregarAutoComponent,
-    pathMatch: 'full',
-    //canActivate: [AuthGuard]
-  },
-  {
-    path: 'editar_auto/:id',
-    component: EditarAutoComponent,
     pathMatch: 'full',
     //canActivate: [AuthGuard]
   },
@@ -98,7 +93,20 @@ const routes: Routes = [
     component: GestionRolesComponent,
     pathMatch: 'full',
     //canActivate: [AuthGuard]
+  },
+  {
+    path:'cambiar-contra',
+    component: CambiarContraComponent,
+    pathMatch: 'full',
+    //canActivate: [AuthGuard]
+  },
+  {
+    path:'gestion-estimador',
+    component: GestionEstimadorComponent,
+    pathMatch: 'full',
+    //canActivate: [AuthGuard]
   }
+
 
 
 ];

@@ -47,7 +47,7 @@ export class MenuDashboardComponent implements OnInit{
         label: 'Cambiar contraseña',
         icon: 'pi pi-shield',
         command: () => {
-          this.router.navigate(['/panel-admin'])
+          this.cambiarContrasena();
         }
       },
       {
@@ -99,6 +99,65 @@ msgConfirmacionLogout=()=>{
     const idLibro = event.value.id;
     this.router.navigate(['/info_libro', idLibro]);
   }
+
+  cambiarContrasena() {
+    Swal.fire({
+      title: 'Cambiar Contraseña',
+      html: `
+        <input type="password" id="currentPassword" class="swal2-input" placeholder="Contraseña actual">
+        <input type="password" id="password" class="swal2-input" placeholder="Nueva contraseña">
+        <input type="password" id="confirmPassword" class="swal2-input" placeholder="Confirmar nueva contraseña">
+      `,
+      confirmButtonText: 'Cambiar Contraseña',
+      focusConfirm: false,
+      preConfirm: () => {
+        const currentPassword = (Swal.getPopup()!.querySelector('#currentPassword') as HTMLInputElement).value;
+        const password = (Swal.getPopup()!.querySelector('#password') as HTMLInputElement).value;
+        const confirmPassword = (Swal.getPopup()!.querySelector('#confirmPassword') as HTMLInputElement).value;
+        
+        // Validaciones
+        if (!currentPassword || !password || !confirmPassword) {
+          Swal.showValidationMessage(`Por favor complete todos los campos`);
+        }
+        if (password !== confirmPassword) {
+          Swal.showValidationMessage(`Las contraseñas no coinciden`);
+        }
+        
+        return { currentPassword, password, confirmPassword };
+      }
+    }).then((result) => {
+      if (result.isConfirmed && result.value) {
+
+        this.authService.modificarUsuario(parseInt(this.authService.idValue!), {
+          contrasenya_actual: result.value.currentPassword,
+          contrasenya_nueva: result.value.password
+        }).subscribe({
+          next: (response) => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Contraseña cambiada',
+              text: 'Tu contraseña ha sido actualizada con éxito.'
+            });
+          },
+          error: (error) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error al cambiar la contraseña',
+              text: 'No se pudo cambiar la contraseña. Por favor, inténtelo de nuevo.'
+            });
+          }
+        });
+      }
+    });
+  }
+  
+  
+
+
+
+
+
+
 }
 
 
