@@ -1,1 +1,23 @@
-<p>combinar-auto works!</p>
+<app-menu-dashboard></app-menu-dashboard>
+
+<div class="card">
+  <h1>Combinar fuentes</h1>
+  <form [formGroup]="libroForm" (ngSubmit)="guardarLibro()">
+    <p-dropdown [options]="opcionesTitulos" formControlName="titulo" placeholder="Selecciona un título"></p-dropdown>
+    <p-dropdown [options]="opcionesISBNs" formControlName="isbn" placeholder="Selecciona un ISBN"></p-dropdown>
+    <p-dropdown [options]="opcionesEditoriales" formControlName="editorial" placeholder="Selecciona una editorial"></p-dropdown>
+    <p-dropdown [options]="opcionesDescripcion" formControlName="descripcion" placeholder="Selecciona una  descripción" class="descripcionespacio"></p-dropdown>
+    <p-dropdown [options]="opcionesAnyo_Publicacion" formControlName="anyo_publicacion" placeholder="Selecciona un Año de Publicación"></p-dropdown>
+    <p-rating formControlName="puntuacion" [cancel]="false"></p-rating>
+    <input type="text" pInputText placeholder="Ubicación en el Estudio" formControlName="ubicacion_estudio" />
+    <p-dropdown [options]="opcionesUrl_imagen" formControlName="url_imagen" placeholder="Selecciona una URL de la imagen"></p-dropdown>
+
+    <button pButton type="submit" label="Guardar" [disabled]="!libroForm.valid"></button>
+  </form>
+
+  <div *ngIf="imagenPrevisualizada" class="previsualizacion">
+    <h2>Previsualización de la imagen</h2>
+    <img [src]="imagenPrevisualizada" alt="Previsualización del libro" />
+  </div>
+</div>
+
