@@ -210,8 +210,9 @@
 
 .p-grid {
   display: flex;
-  justify-content: space-between;
+  justify-content:space-evenly;
   align-items: center; 
+  gap: 20px;
 }
 
   .logo-style {
@@ -239,6 +240,7 @@
 .imagen-libro {
   width: 180px; 
   height: auto; 
+  margin-right: 20px;
 }
 
 .detalles-libro {
@@ -247,4 +249,7 @@
 .muestreo{
   margin-top: 80px;
 }
-  
+
+.seleccionBoton{
+  text-align: center;
+}

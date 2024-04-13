@@ -47,7 +47,7 @@
           <img src="../../../../assets/images/{{ libro.logo }}" class="logo-style" alt="Logo de {{ libro.auto_id }}">
       </div>
       </div>
-      <div *ngIf="libro.disponible; else noInfo" class="p-card">
+      <div *ngIf="libro.disponible" class="p-card">
           <div class="p-grid">
               <div class="p-col-fixed" style="width:200px;">
                   <img [src]="libro.url_imagen" class="img-fluid rounded-start imagen-libro" alt="{{ libro.titulo }}">
@@ -63,14 +63,11 @@
               </div>
           </div>
       </div>
-      <ng-template #noInfo>
-          <h4>No se ha encontrado información en esta fuente</h4>
-      </ng-template>
       <br>
   </div>
   
   <div *ngIf="libros.length > 0" class="container my-4 text-center">
-      <h4 class="mb-4">Seleccione el proveedor de información deseado o personalizalo</h4>
+      <h4 class="mb-4 seleccionBoton">Seleccione el proveedor de información deseado o personalízalo</h4>
       <div class="p-grid p-justify-between p-align-center">
           <button pButton label="Búsqueda Manual" class="p-button-primary" (click)="irAgregarManual()"></button>
           <div *ngFor="let libro of libros">
@@ -78,7 +75,7 @@
                   <img src="../../../../assets/images/{{libro.logo }}" alt="Logo" class="logo-style">
               </button>
           </div>
-          <button pButton label="Combinar fuentes" class="p-button-primary"></button>
+          <button pButton label="Combinar fuentes" class="p-button-primary" (click)="combinarFuentes()"></button>
       </div>
   </div>
 

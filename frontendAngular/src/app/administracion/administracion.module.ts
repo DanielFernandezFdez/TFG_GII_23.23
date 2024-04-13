@@ -16,6 +16,8 @@ import { GestionRolesComponent } from './pages/gestion-roles/gestion-roles.compo
 
 import { EditarUsuarioComponent } from './pages/editar-usuario/editar-usuario.component';
 import { AgregarUsuarioComponent } from './pages/agregar-usuario/agregar-usuario.component';
+import { CambiarContraComponent } from './pages/cambiar-contra/cambiar-contra.component';
+import { GestionEstimadorComponent } from './pages/gestion-estimador/gestion-estimador.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { AgregarUsuarioComponent } from './pages/agregar-usuario/agregar-usuario
     GestionUsuarioComponent,
     GestionRolesComponent,
     EditarUsuarioComponent,
-    AgregarUsuarioComponent
+    AgregarUsuarioComponent,
+    CambiarContraComponent,
+    GestionEstimadorComponent
     
   ],
   imports: [

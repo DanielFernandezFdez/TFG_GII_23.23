@@ -51,4 +51,7 @@ export class AgregarAutoComponent implements OnInit {
   irAgregarManual() {
     this.router.navigate(['/agregar']);
   }
+  combinarFuentes(){
+    this.router.navigate(['/combinar_auto']);
+  }
 }
