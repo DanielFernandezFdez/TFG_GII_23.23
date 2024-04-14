@@ -585,8 +585,8 @@ class ObtenerRoles(Resource):
         )
         
 class ConsultarRol(Resource):
-    def post(self, rol_id):
-        rol = Roles.query.get_or_404(rol_id)
+    def post(self, id):
+        rol = Roles.query.get_or_404(id)
         return jsonify(
             {
                 "id": rol.id,
@@ -682,7 +682,7 @@ class buscarBotones(Resource):
                     "id": boton.id,
                     "nombre": boton.nombre_boton,
                     "alias": boton.alias,
-                    "roles": json.loads(boton.roles_autorizados if boton.roles_autorizados else []) 
+                    "roles_asociados": json.loads(boton.roles_autorizados if boton.roles_autorizados else []) 
                 }
                 for boton in botones
             ]
@@ -740,8 +740,8 @@ class EditarBoton(Resource):
         for boton_data in data['botones']:
             boton = Botones.query.filter_by(nombre_boton=boton_data['nombre_boton']).first()
             
-            roles_actuales = json.dumps(boton.roles_autorizados)
-
+            roles_actuales = json.loads(boton.roles_autorizados)
+            print(boton.nombre_boton)
             if 'roles_autorizados' in boton_data:
                 rol = boton_data['roles_autorizados']
                 if rol not in roles_actuales:
@@ -859,7 +859,7 @@ api.add_resource(EliminarUsuario, '/eliminar_usuario/<int:user_id>')
 api.add_resource(ListarUsuarios, '/usuarios')
 api.add_resource(InfoUsuario, '/info_usuario/<int:user_id>')
 api.add_resource(ObtenerRoles, '/roles')
-api.add_resource(ConsultarRol, '/consultar_rol/<int:rol>')
+api.add_resource(ConsultarRol, '/consultar_rol/<int:id>')
 api.add_resource(CrearRol, '/crear_rol')
 api.add_resource(EditarRol, '/editar_rol/<int:rol>')
 api.add_resource(BorrarRol, '/borrar_rol/<int:rol>')
@@ -890,21 +890,12 @@ if __name__ == "__main__":
 # "botones": [
 #         {
 #             "nombre_boton": "nombre_boton1",
-#             "rol_solicitado": Admin   Borrar
-#             "roles_autorizados": "Admin" Añadir 
-#               "alias": "alias",
-#               "descripcion": "descripcion"
+#             "roles_autorizados": "Admin"
 #         },
 #         {
 #             "nombre_boton": "nombre_boton2",
-#             "rol_solicitado": Admin   Quiero trabajar con el rol de admin
-#                                       No quiero trabajar con el rol de usuario
+#             "rol_solicitado": Admin 
 #         },
-#         {
-#             "nombre_boton": "nombre_boton3",
-#             "rol_solicitado": Admin
-#             "roles_autorizados": Admin
-#         }
 #     ]
     
 

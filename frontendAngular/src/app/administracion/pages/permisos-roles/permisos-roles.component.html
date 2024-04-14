@@ -1,5 +1,7 @@
-<app-menu-dashboard></app-menu-dashboard>        
+<app-menu-dashboard></app-menu-dashboard>
+
 <div class="permisos-container">
+  <p-button class="guardar" label="Guardar cambios" severity="info" (click)="guardarCambios()"></p-button> 
   <div *ngFor="let permiso of permisos" class="permiso-item p-grid p-align-center">
     <div class="p-col-11">
       <h4>{{ permiso.alias }}</h4>
@@ -7,7 +9,7 @@
     </div>
     <div class="p-col-1 toggle-button-cover">
       <div id="button-3" class="button r">
-        <input class="checkbox" type="checkbox" [checked]="permiso.activo" (change)="onToggle(permiso)">
+        <input class="checkbox" type="checkbox" [checked]="!permiso.permitido" (change)="onToggle(permiso)">
         <div class="knobs"></div>
         <div class="layer"></div>
       </div>
