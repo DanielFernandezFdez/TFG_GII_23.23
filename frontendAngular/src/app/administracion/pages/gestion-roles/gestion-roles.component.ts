@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import Swal from 'sweetalert2';
 import { RolesService } from '../../../services/roles.service';
 import { AuthService } from '../../../services/auth.service';
+import { Router } from '@angular/router';
 
 
 
@@ -12,9 +13,10 @@ import { AuthService } from '../../../services/auth.service';
 })
 export class GestionRolesComponent {
   roles: any[] = [];
+  Router: any;
 
 
-  constructor(private RolesService: RolesService, private AuthService: AuthService) {}
+  constructor(private RolesService: RolesService, private AuthService: AuthService, private router : Router) {}
 
   ngOnInit(): void {
     this.cargarRoles();
@@ -143,8 +145,8 @@ export class GestionRolesComponent {
     });
   }
 
-  modificarPermisos(): void {
-    console.log('Modificar permisos');
+  modificarPermisos(id:number): void {
+    this.router.navigate(['/gestion-permisos', id]);
   }
               
 }

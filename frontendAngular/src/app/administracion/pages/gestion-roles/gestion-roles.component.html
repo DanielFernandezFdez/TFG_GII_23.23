@@ -17,7 +17,7 @@
         <td>{{ rol.nombre_rol }}</td>
         <td>
           <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="success" (click)="editarRol(rol.id)"></p-button>
-          <p-button icon="pi pi-eye-slash" [rounded]="true" [text]="true" severity="secondary" (click)="modificarPermisos()"></p-button>
+          <p-button icon="pi pi-eye-slash" [rounded]="true" [text]="true" severity="secondary" (click)="modificarPermisos(rol.id)"></p-button>
           <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (click)="eliminarRol(rol.id)"></p-button>
         </td>
       </tr>

@@ -23,6 +23,10 @@ export class RolesService {
     return this.http.get(`${this.apiUrl}/roles`, { headers: this.getHeaders() });
   }
 
+  consulatarRol(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/consultar_rol/${id}`, { headers: this.getHeaders() });
+  }
+
   crearRol(datos: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/crear_rol`, datos, { headers: this.getHeaders() });
   }

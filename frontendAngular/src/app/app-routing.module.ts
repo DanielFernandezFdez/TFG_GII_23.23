@@ -14,8 +14,8 @@ import { PanelAdminComponent } from './administracion/pages/panel-admin/panel-ad
 import { GestionCatalogoComponent } from './administracion/pages/gestion-catalogo/gestion-catalogo.component';
 import { GestionUsuarioComponent } from './administracion/pages/gestion-usuario/gestion-usuario.component';
 import { GestionRolesComponent } from './administracion/pages/gestion-roles/gestion-roles.component';
-import { CambiarContraComponent } from './administracion/pages/cambiar-contra/cambiar-contra.component';
 import { GestionEstimadorComponent } from './administracion/pages/gestion-estimador/gestion-estimador.component';
+import { PermisosRolesComponent } from './administracion/pages/permisos-roles/permisos-roles.component';
 
 
 const routes: Routes = [
@@ -95,14 +95,14 @@ const routes: Routes = [
     //canActivate: [AuthGuard]
   },
   {
-    path:'cambiar-contra',
-    component: CambiarContraComponent,
+    path:'gestion-estimador',
+    component: GestionEstimadorComponent,
     pathMatch: 'full',
     //canActivate: [AuthGuard]
   },
   {
-    path:'gestion-estimador',
-    component: GestionEstimadorComponent,
+    path: 'gestion-permisos/:id',
+    component:PermisosRolesComponent,
     pathMatch: 'full',
     //canActivate: [AuthGuard]
   }

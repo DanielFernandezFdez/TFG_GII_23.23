@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
     }
     
   
-    return this.getCurrentButton(nombre_boton, idusuario)
+    return this.obtenerBotonActual(nombre_boton, idusuario)
       .then(permitido => {
         if (permitido == 1) {
           return true;
@@ -44,12 +44,11 @@ export class AuthGuard implements CanActivate {
  
   }
 
-  getCurrentButton(nombre_boton: string, idUsuario: number): Promise<number> {
+  obtenerBotonActual(nombre_boton: string, idUsuario: number): Promise<number> {
     return new Promise((resolve, reject) => {
       this.botonesService.consultarBoton([nombre_boton], idUsuario)
         .subscribe(
           (data) => {
-            console.log(data);
             const permitido = data[0]?.autorizado || 0; 
             resolve(permitido);
           },

@@ -1,0 +1,16 @@
+<app-menu-dashboard></app-menu-dashboard>        
+<div class="permisos-container">
+  <div *ngFor="let permiso of permisos" class="permiso-item p-grid p-align-center">
+    <div class="p-col-11">
+      <h4>{{ permiso.alias }}</h4>
+      <p>{{ permiso.descripcion }}</p>
+    </div>
+    <div class="p-col-1 toggle-button-cover">
+      <div id="button-3" class="button r">
+        <input class="checkbox" type="checkbox" [checked]="permiso.activo" (change)="onToggle(permiso)">
+        <div class="knobs"></div>
+        <div class="layer"></div>
+      </div>
+    </div>
+  </div>
+</div>
