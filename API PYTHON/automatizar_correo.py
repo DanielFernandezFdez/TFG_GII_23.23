@@ -10,7 +10,7 @@ def mandarCorreo(nombre,  apellidos, correo,titulo,  isbn):
     asunto = 'Solicitud de libro'
     espana = ZoneInfo("Europe/Madrid")
     fecha_espana = datetime.now(espana)
-    cuerpo = nombre + ' ' + apellidos + ' con Correo: ' + correo + ' ha sugerido el  siguiente libro:\n Titulo: ' + titulo + '\nISBN: ' + isbn  +  '\n Fecha de solicitud: ' + str(fecha_espana)
+    cuerpo = nombre + ' ' + apellidos + ' con Correo: ' + correo + ' ha sugerido el siguiente libro:\n Titulo: ' + titulo + '\nISBN: ' + isbn  +  '\n Fecha de solicitud: ' + str(fecha_espana)
     
     
     em = EmailMessage()
@@ -26,7 +26,5 @@ def mandarCorreo(nombre,  apellidos, correo,titulo,  isbn):
         servidor.quit()
         
         
-        
-mandarCorreo('Juan', 'Perez', 'aaaa', 'El señor', '1234567890')
     
     

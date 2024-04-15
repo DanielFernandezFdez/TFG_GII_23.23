@@ -90,6 +90,11 @@ export class EstimacionesGuardadasComponent implements OnInit {
       <p><strong>Ubicación:</strong> ${estimacion.ubicacion}</p>
       <p><strong>Actividades hombre:</strong> ${estimacion.res_actividades_hombre}</p>
       <p><strong>Actividades mujer:</strong> ${estimacion.res_actividades_mujer}</p>
+      <p><strong>Número de niños:</strong> ${estimacion.numero_ninyos}</p>
+      <p><strong>Número de niñas:</strong> ${estimacion.numero_ninyas}</p>
+      <p><strong>Número de hombres:</strong> ${estimacion.numero_hombres}</p>
+      <p><strong>Número de mujeres:</strong> ${estimacion.numero_mujeres}</p>
+      <p><strong>¿Masculino genérico?:</strong> ${estimacion.masculino_generico ? 'Sí' : 'No'}</p>
       `,
       icon: "info"
     });
