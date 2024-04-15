@@ -358,9 +358,7 @@ def buscar_libro(isbn_o_titulo):
     if re.match(r"\d{13}", isbn_o_titulo):
         descripcionAgapea = buscar_libro_agapea_isbn(isbn_o_titulo)
         descripcionAmazon = buscar_libro_amazon(isbn_o_titulo)
-        print(descripcionAmazon)
         descripcionGoogle = obtener_info_libro_google(isbn_o_titulo, "isbn")
-        print(descripcionGoogle)
     else:
         descripcionAgapea = buscar_libro_agapea_libro(isbn_o_titulo)
         descripcionAmazon = buscar_libro_amazon(isbn_o_titulo)

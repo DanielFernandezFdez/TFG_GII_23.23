@@ -339,12 +339,18 @@ class listarEstimaciones(Resource):
                     "apellido": estimacion.apellido,
                     "correo": estimacion.correo,
                     "institucion": estimacion.institucion,
+                    "resultado": estimacion.resultado
                 }
                 for estimacion in estimaciones
             ]
         )
-
-
+        
+class BorrarEstimacion(Resource):
+    def delete(self, id):
+        estimacion = Estimacion.query.get_or_404(id)
+        db.session.delete(estimacion)
+        db.session.commit()
+        return jsonify({"mensaje": "Estimación eliminada exitosamente"})
 
 
 
@@ -910,6 +916,7 @@ api.add_resource(CalcularEstimacion, "/estimacion")
 api.add_resource(BorrarListados,"/borrarListados")
 api.add_resource(guardarEstimacion, "/guardarEstimacion")
 api.add_resource(listarEstimaciones, "/listarEstimaciones")
+api.add_resource(BorrarEstimacion, "/borrarEstimacion/<int:id>")
 
 
 api.add_resource(AgregarLibro, "/agregar_libro")

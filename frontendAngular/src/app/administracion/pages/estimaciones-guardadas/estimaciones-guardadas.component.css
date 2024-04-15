@@ -1,0 +1,37 @@
+.container-btn {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    margin-top: 70px; 
+    margin-right: 20px; 
+    margin-left: 180px; 
+  }
+  
+  .titulo-gestion {
+    flex-grow: 1; 
+    text-align: center;
+  }
+  
+  .columna-titulo { width: 40%; }
+  .columna-ISBN { width: 30%; }
+  .columna-Resultado { width: 20%; }
+  .columna-acciones { width: 20%; }
+  
+  .p-datatable .p-datatable-thead > tr > th {
+      background: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+
+  }
+  
+  .p-datatable .p-datatable-tbody > tr > td {
+      vertical-align: middle; 
+  }
+  
+  .container {
+      margin-top: 5px;
+      overflow-x: auto; 
+      padding-bottom: 2rem; 
+      align-items: center;
+  }

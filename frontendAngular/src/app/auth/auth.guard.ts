@@ -30,7 +30,7 @@ export class AuthGuard implements CanActivate {
         } else {
           Swal.fire({
             title: "Acción denegada",
-            text: "No tiene permisos para acceder a esta página",
+            text: "No tiene permisos para acceder a esta página. Contacte con el administrador.",
             icon: "error"
           });
           return false;

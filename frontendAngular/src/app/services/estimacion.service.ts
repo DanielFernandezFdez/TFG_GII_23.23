@@ -38,6 +38,14 @@ export class EstimacionService {
     return this.http.post(`${this.apiUrl}/estimacion`,  valoresEstimacion , { headers: this.getHeaders() });
   }
 
+  listarEstimaciones(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/listarEstimaciones`, { headers: this.getHeaders() });
+  }
+
+  borrarEstimacion(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/borrarEstimacion/${id}`, { headers: this.getHeaders() });
+  }
+
 
 
 

@@ -163,6 +163,13 @@ export class SidebarComponent {
             command: () =>  {
               this.router.navigate(['/gestion-estimador']),
              this.cerrarSidebar() }
+          },
+          {
+            label: "Estimaciones guardadas",
+            icon: 'pi pi-save',
+            command: () =>  {
+              this.router.navigate(['/estimaciones-guardadas']),
+             this.cerrarSidebar() }
           }
          
         ]

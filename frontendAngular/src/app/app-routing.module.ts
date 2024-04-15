@@ -16,6 +16,7 @@ import { GestionUsuarioComponent } from './administracion/pages/gestion-usuario/
 import { GestionRolesComponent } from './administracion/pages/gestion-roles/gestion-roles.component';
 import { GestionEstimadorComponent } from './administracion/pages/gestion-estimador/gestion-estimador.component';
 import { PermisosRolesComponent } from './administracion/pages/permisos-roles/permisos-roles.component';
+import { EstimacionesGuardadasComponent } from './administracion/pages/estimaciones-guardadas/estimaciones-guardadas.component';
 
 
 const routes: Routes = [
@@ -103,6 +104,12 @@ const routes: Routes = [
   {
     path: 'gestion-permisos/:id',
     component:PermisosRolesComponent,
+    pathMatch: 'full',
+    //canActivate: [AuthGuard]
+  },
+  {
+    path : 'estimaciones-guardadas',
+    component: EstimacionesGuardadasComponent,
     pathMatch: 'full',
     //canActivate: [AuthGuard]
   }

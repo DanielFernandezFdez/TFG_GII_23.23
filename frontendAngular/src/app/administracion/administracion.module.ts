@@ -14,6 +14,7 @@ import { GestionUsuarioComponent } from './pages/gestion-usuario/gestion-usuario
 import { GestionRolesComponent } from './pages/gestion-roles/gestion-roles.component';
 import { GestionEstimadorComponent } from './pages/gestion-estimador/gestion-estimador.component';
 import { PermisosRolesComponent } from './pages/permisos-roles/permisos-roles.component';
+import { EstimacionesGuardadasComponent } from './pages/estimaciones-guardadas/estimaciones-guardadas.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { PermisosRolesComponent } from './pages/permisos-roles/permisos-roles.co
     GestionUsuarioComponent,
     GestionRolesComponent,
     GestionEstimadorComponent,
-    PermisosRolesComponent
+    PermisosRolesComponent,
+    EstimacionesGuardadasComponent
   ],
   imports: [
     CommonModule,
