@@ -119,6 +119,7 @@ export class GestionEstimadorComponent implements OnInit{
           '<option value="Mujer">Mujer</option>' +
         '</select>',
       showCancelButton: true,
+      cancelButtonText: 'Cancelar',
       confirmButtonText: 'Crear',
       preConfirm: () => {
         const nombre = (document.getElementById('nombre') as HTMLInputElement).value;
@@ -128,13 +129,13 @@ export class GestionEstimadorComponent implements OnInit{
         if (nombre === '') {
           Swal.showValidationMessage('El nombre de la actividad es obligatorio');
         }
-      this.añadirActividad(nombre, categoria, puntuacion_extra);
+        else{
+          this.añadirActividad(nombre, categoria, puntuacion_extra);
 
-      this.enviarListadosAlBackend(() => {
-        this.cargarActividades();
-      });
-      
-
+          this.enviarListadosAlBackend(() => {
+            this.cargarActividades();
+          });
+        }
       }
   })
 }
@@ -184,6 +185,7 @@ borrarActividad(actividad: Actividad): void {
     text: "No podrás revertir esto.",
     icon: 'warning',
     showCancelButton: true,
+    cancelButtonText: 'Cancelar',
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
     confirmButtonText: 'Sí, borrarlo.'
@@ -243,6 +245,7 @@ editarActividad(actividadOriginal: Actividad): void {
         `<option value="Mujer" ${actividadOriginal.Puntuacion_extra === 'Mujer' ? 'selected' : ''}>Mujer</option>` +
       `</select>`,
     showCancelButton: true,
+    cancelButtonText: 'Cancelar',
     confirmButtonText: 'Guardar Cambios',
     preConfirm: () => {
       const nombre = (document.getElementById('nombre') as HTMLInputElement).value;
