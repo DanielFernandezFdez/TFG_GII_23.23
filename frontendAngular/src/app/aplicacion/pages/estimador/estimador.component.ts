@@ -100,7 +100,7 @@ export class EstimadorComponent implements OnInit {
       Swal.fire("Error", "Debe seleccionar una ubicación", "error");
       return;
     }
-    console.log(valoresEstimacion);
+
 
 
     this.estimacionService.calcularEstimacion(valoresEstimacion).subscribe({
@@ -117,7 +117,7 @@ export class EstimadorComponent implements OnInit {
           cancelButtonText:"No, gracias"
         }).then((result) => {
           if (result.isConfirmed) {
-            //!Mostramos el formulario para guardar datos
+            this.guardarEstimacion(valoresEstimacion);
           }
         });
       },
@@ -128,6 +128,76 @@ export class EstimadorComponent implements OnInit {
         })
       }
     });
+  }
+
+
+
+
+
+
+  guardarEstimacion(valoresEstimacion:any):void{
+        Swal.fire({
+          title: 'Ingrese sus datos',
+          html: `
+          <label>Solo es obligatorio el título y el ISBN. Puede enviar los datos sin identificarse.</label>
+          <input id="nombre" class="swal2-input" placeholder="Nombre">
+          <input id="apellido" class="swal2-input" placeholder="Apellidos">
+          <input id="titulo" class="swal2-input" placeholder="Título">
+          <input id="isbn" class="swal2-input" placeholder="ISBN">
+          <input id="correo" class="swal2-input" placeholder="Correo electrónico">
+          <input id="institucion" class="swal2-input" placeholder="Institución">
+        `,
+        focusConfirm: false,
+        preConfirm: () => {
+          const nombre = (document.getElementById('nombre') as HTMLInputElement).value;
+          const apellido = (document.getElementById('apellido') as HTMLInputElement).value;
+          const titulo = (document.getElementById('titulo') as HTMLInputElement).value;
+          const isbn = (document.getElementById('isbn') as HTMLInputElement).value;
+          const correo = (document.getElementById('correo') as HTMLInputElement).value;
+          const institucion = (document.getElementById('institucion') as HTMLInputElement).value;
+
+          return { nombre, apellido, titulo, isbn, correo, institucion };
+        }
+          
+        }).then((formResult) => {
+          if (formResult.value?.titulo == "" || formResult.value?.isbn == "") {
+            Swal.fire({
+              icon: 'error',
+              title: 'Datos incompletos',
+              text: 'Debe introducir al menos el título y el ISBN del libro.'
+            });
+            return;
+          }
+          if (formResult.value) {
+            const datosEstimacion = {
+              ...valoresEstimacion,
+              titulo: formResult.value.titulo,
+              isbn: formResult.value.isbn,
+              nombre: formResult.value.nombre,
+              apellido: formResult.value.apellido,
+              correo: formResult.value.correo,
+              institucion: formResult.value.institucion,
+              resultado: this.resultadoEstimacion
+            };
+    
+            this.estimacionService.guardarEstimacion(datosEstimacion).subscribe({
+              next: (response) => {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Datos enviados',
+                  text: 'Sus datos han sido enviados con éxito.'
+                });
+              },
+              error: (error) => {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Error al enviar datos',
+                  text: 'Hubo un problema al enviar sus datos. Por favor, intente de nuevo.'
+                });
+              }
+            });
+          }
+        });
   }
 }
 

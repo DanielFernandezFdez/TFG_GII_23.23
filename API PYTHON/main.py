@@ -91,6 +91,25 @@ class Botones(db.Model):
     nombre_boton = db.Column(db.String(100), unique=True, nullable=False)
     alias = db.Column(db.String(255), nullable=True)
     roles_autorizados=db.Column(db.String(255), nullable=True)
+    
+    
+class Estimacion(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    masculino_generico = db.Column(db.Boolean, nullable=False)
+    numero_ninyas = db.Column(db.Integer, nullable=True)
+    numero_ninyos = db.Column(db.Integer, nullable=True)
+    numero_hombres = db.Column(db.Integer, nullable=False)
+    numero_mujeres = db.Column(db.Integer, nullable=False)
+    ubicacion = db.Column(db.Integer, nullable=False)
+    res_actividades_hombre = db.Column(db.String(255), nullable=True)
+    res_actividades_mujer = db.Column(db.String(255), nullable=True)
+    titulo = db.Column(db.String(100), nullable=False)
+    isbn = db.Column(db.String(100), nullable=False)
+    nombre = db.Column(db.String(100), nullable=False)
+    apellido = db.Column(db.String(100), nullable=False)
+    correo = db.Column(db.String(100), nullable=False)
+    institucion = db.Column(db.String(100), nullable=False)
+    resultado = db.Column(db.Integer, nullable=False)
        
 
     
@@ -110,6 +129,7 @@ def creacion():
     db.init_app(app)
     with app.app_context():
         db.create_all()
+
 
     
     return app
@@ -270,7 +290,59 @@ class CalcularEstimacion(Resource):
         )
 
 
+class guardarEstimacion(Resource):
+    def post(self):
+        data=request.get_json()
+        estimacion = Estimacion(
+            masculino_generico=data["masculino_generico"] if "masculino_generico" in data else False,
+            numero_ninyas=data["numero_ninyas"] if "numero_ninyas" in data else 0,
+            numero_ninyos=data["numero_ninyos"] if "numero_ninyos" in data else 0,
+            numero_hombres=data["numero_hombres"] if "numero_hombres" in data else 0,
+            numero_mujeres=data["numero_mujeres"] if "numero_mujeres" in data else 0,
+            ubicacion=data["ubicacion"] if "ubicacion" in data else 0,
+            res_actividades_hombre=json.dumps(data["res_actividades_hombre"] if "res_actividades_hombre" in data else []),
+            res_actividades_mujer=json.dumps(data["res_actividades_mujer"] if "res_actividades_mujer" in data else []),
+            titulo=data["titulo"] if "titulo" in data else "No disponible",
+            isbn=data["isbn"] if "isbn" in data else "No disponible",
+            nombre=data["nombre"] if "nombre" in data else "No disponible",
+            apellido=data["apellido"] if "apellido" in data else "No disponible",
+            correo=data["correo"] if "correo" in data else "No disponible",
+            institucion=data["institucion"] if "institucion" in data else "No disponible",
+            resultado=data["resultado"] if "resultado" in data else 0
+        )
+        db.session.add(estimacion)
+        db.session.commit()
+        return jsonify(
+            {
+                "Ok":"OK"
+            }
+        )
 
+class listarEstimaciones(Resource):
+    def get(self):
+        estimaciones = Estimacion.query.all()
+        return jsonify(
+            [
+                {
+                    "id": estimacion.id,
+                    "masculino_generico": estimacion.masculino_generico,
+                    "numero_ninyas": estimacion.numero_ninyas,
+                    "numero_ninyos": estimacion.numero_ninyos,
+                    "numero_hombres": estimacion.numero_hombres,
+                    "numero_mujeres": estimacion.numero_mujeres,
+                    "ubicacion": estimacion.ubicacion,
+                    "res_actividades_hombre": json.loads(estimacion.res_actividades_hombre),
+                    "res_actividades_mujer": json.loads(estimacion.res_actividades_mujer),
+                    "titulo": estimacion.titulo,
+                    "isbn": estimacion.isbn,
+                    "nombre": estimacion.nombre,
+                    "apellido": estimacion.apellido,
+                    "correo": estimacion.correo,
+                    "institucion": estimacion.institucion,
+                }
+                for estimacion in estimaciones
+            ]
+        )
 
 
 
@@ -434,10 +506,10 @@ class buscarLibroAutomatico(Resource):
 
 
 
-class borrarTablaLibrosAutomaticos(Resource):
+class borrarTabla(Resource):
 
     def delete(self):
-        Libros_automaticos.__table__.drop(db.engine)
+        Estimacion.__table__.drop(db.engine)
         db.session.commit()
 
 
@@ -836,6 +908,8 @@ api.add_resource(GenerarListados, "/generarListados")
 api.add_resource(ObtenerListados, "/obtenerListados")
 api.add_resource(CalcularEstimacion, "/estimacion")
 api.add_resource(BorrarListados,"/borrarListados")
+api.add_resource(guardarEstimacion, "/guardarEstimacion")
+api.add_resource(listarEstimaciones, "/listarEstimaciones")
 
 
 api.add_resource(AgregarLibro, "/agregar_libro")
@@ -845,7 +919,7 @@ api.add_resource(InfoLibroID, "/infoLibro/<int:id>")
 api.add_resource(borrarLibro, "/borrarLibro/<int:id>")
 api.add_resource(editarLibro, "/editarLibro/<int:id>")
 api.add_resource(buscarLibroAutomatico, "/buscar_libro_automatico")
-api.add_resource(borrarTablaLibrosAutomaticos, "/borrar")
+api.add_resource(borrarTabla, "/borrar")
 api.add_resource(listarLibrosAutomaticos, "/listar_libros_automaticos")
 api.add_resource(Fecha, "/fecha")
 

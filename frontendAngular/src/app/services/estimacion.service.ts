@@ -26,6 +26,9 @@ export class EstimacionService {
     return this.http.post(`${this.apiUrl}/generarListados`, listados, { headers: this.getHeaders() });
   }
 
+  guardarEstimacion(estimacion: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/guardarEstimacion`, estimacion, { headers: this.getHeaders() });
+  }
 
   borrarListados(): Observable<any> {
     return this.http.delete(`${this.apiUrl}/borrarListados`, { headers: this.getHeaders() });
