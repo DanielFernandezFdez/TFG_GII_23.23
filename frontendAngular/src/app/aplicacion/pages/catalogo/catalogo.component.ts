@@ -1,7 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { LibrosService } from '../../../services/libros.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
+import { SugerenciaService } from '../../../services/sugerencia.service';
 
+interface Sugerencia {
+  nombre: string,
+  apellidos: string,
+  correo: string,
+  titulo: string,
+  isbn: string
+}
 
 @Component({
   selector: 'app-catalogo',
@@ -13,7 +22,7 @@ export class CatalogoComponent implements OnInit{
   busqueda: string = '';
   fecha_modif: any;
 
-  constructor(private LibrosService: LibrosService, private router : Router, private activatedRouter: ActivatedRoute ) {}
+  constructor(private LibrosService: LibrosService, private router : Router, private activatedRouter: ActivatedRoute, private  SugerenciaService: SugerenciaService ) {}
 
   ngOnInit(): void {
     this.cargaLibros();
@@ -80,6 +89,55 @@ export class CatalogoComponent implements OnInit{
     });
   }
 
-  
 
+  crearSugerencia() {
+    Swal.fire({
+      title: 'Sugerir libro',
+      html: `
+      <input id="nombre" class="swal2-input" placeholder="Nombre">
+      <input id="apellidos" class="swal2-input" placeholder="Apellidos">
+      <input id="correo" class="swal2-input" placeholder="Correo">
+      <input id="titulo" class="swal2-input" placeholder="Título">
+      <input id="isbn" class="swal2-input" placeholder="ISBN">
+      `,
+      focusConfirm: false,
+      preConfirm: () => {
+        const nombre = (document.getElementById('nombre') as HTMLInputElement).value;
+        const apellidos = (document.getElementById('apellidos') as HTMLInputElement).value;
+        const correo = (document.getElementById('correo') as HTMLInputElement).value;
+        const titulo = (document.getElementById('titulo') as HTMLInputElement).value;
+        const isbn = (document.getElementById('isbn') as HTMLInputElement).value;
+
+        if (!nombre || !apellidos || !correo || !titulo || !isbn) {
+          Swal.showValidationMessage('Todos los campos son obligatorios');
+        }
+
+        return { nombre: nombre, apellidos: apellidos, correo: correo, titulo: titulo, isbn: isbn };
+      }
+    }).then((result) => {
+      if (result.value) {
+        const sugerencia: Sugerencia = result.value;
+        this.SugerenciaService.crearSugerencia(sugerencia).subscribe({
+          next: (data) => {
+            Swal.fire({
+              title: 'Sugerencia enviada',
+              text: 'Gracias por tu sugerencia',
+              icon: 'success'
+            });
+          },
+          error: (error) => {
+            console.error('Error al enviar la sugerencia', error);
+            Swal.fire({
+              title: 'Error',
+              text: 'No se ha podido enviar la sugerencia',
+              icon: 'error'
+            });
+          }
+        });
+      }
+    });
+
+
+  
+  }
 }

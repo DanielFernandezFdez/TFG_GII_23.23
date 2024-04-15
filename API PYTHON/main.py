@@ -8,9 +8,9 @@ import funciones_webscraping as fw
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required,JWTManager, get_jwt_identity
 import json
-import importar_exportar as ie
 import csv
 from io import StringIO
+import automatizar_correo as ac
 
 db = SQLAlchemy()
 
@@ -205,7 +205,7 @@ class BorrarListados(Resource):
 class CalcularEstimacion(Resource):
     def post(self):
         resultado=0
-        data=request.get_json();
+        data=request.get_json()
 
 
         ponderacion_adultos=0.15
@@ -909,6 +909,14 @@ class ImportarCSV(Resource):
         db.session.commit()
         # Redireccionar o enviar una respuesta adecuada
         return jsonify({"mensaje": "Datos importados exitosamente"})
+    
+    
+    
+class  CrearSugerencia(Resource):
+    def post(self):
+        data = request.get_json()
+        ac.mandarCorreo(data["nombre"],data["apellidos"],data["correo"],data["titulo"],data["isbn"])
+        return jsonify({"mensaje": "Sugerencia enviada exitosamente"})
 
 api.add_resource(GenerarListados, "/generarListados")
 api.add_resource(ObtenerListados, "/obtenerListados")
@@ -956,6 +964,10 @@ api.add_resource(BorrarBoton, '/borrar_boton/<int:boton_id>')
 
 api.add_resource(ExportarCSV, '/exportar_csv')
 api.add_resource(ImportarCSV, '/importar_csv')
+
+
+api.add_resource(CrearSugerencia, '/sugerencia')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
