@@ -11,6 +11,10 @@ import json
 import csv
 from io import StringIO
 import automatizar_correo as ac
+from werkzeug.utils import secure_filename
+from openpyxl import Workbook, load_workbook
+from io import BytesIO
+
 
 db = SQLAlchemy()
 
@@ -871,25 +875,58 @@ class ExportarCSV(Resource):
             headers={"Content-Disposition": "attachment;filename=libros.csv"}
         )
 
-class ImportarCSV(Resource):
+class ExportarExcel(Resource):
+    def get(self):
+        wb = Workbook()
+        ws = wb.active
+
+
+        ws.append(['ID', 'Título', 'ISBN', 'Editorial', 'Descripción', 'Año de publicación', 'Puntuación', 'Ubicación del estudio', 'URL de la imagen'])
+
+
+        libros = Libros.query.all()
+
+        for libro in libros:
+            ws.append([libro.id, libro.titulo, libro.isbn, libro.editorial, libro.descripcion, libro.anyo_publicacion, libro.puntuacion, libro.ubicacion_estudio, libro.url_imagen])
+
+
+        si = BytesIO()
+        wb.save(si)
+        si.seek(0)
+
+
+        return send_file(
+            si,
+            as_attachment=True,
+            download_name="libros.xlsx",
+            mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
+
+
+
+class ImportarArchivo(Resource):
     def post(self):
         if 'archivo' not in request.files:
             return {"mensaje": "No se envió el archivo."}, 400
 
         archivo = request.files['archivo']
+        filename = secure_filename(archivo.filename)
+        
+        if filename.endswith('.csv'):
+            return self.importar_csv(archivo)
+        elif filename.endswith('.xlsx'):
+            return self.importar_excel(archivo)
+        else:
+            return {"mensaje": "Formato de archivo no soportado."}, 400
+
+    def importar_csv(self, archivo):
         stream = StringIO(archivo.stream.read().decode("UTF-8"), newline=None)
-        csv_input = csv.reader(stream,delimiter=';')
+        csv_input = csv.reader(stream, delimiter=';')
 
-        # Borrar los datos existentes si es necesario
         Libros.query.delete()
-
-        # Recorrer cada fila del CSV y actualizar la base de datos
         for i, row in enumerate(csv_input):
-            if i == 0:
-                # Saltar la fila de encabezados
+            if i == 0:  
                 continue
-
-            # Crear una nueva instancia del modelo Libros por cada fila
             nuevo_libro = Libros(
                 titulo=row[1],
                 isbn=row[2],
@@ -900,17 +937,35 @@ class ImportarCSV(Resource):
                 ubicacion_estudio=row[7],
                 url_imagen=row[8]
             )
-
-
             db.session.add(nuevo_libro)
-            
+        
         fecha_modificacion.actualizar_fecha_modificacion()
-
         db.session.commit()
-        # Redireccionar o enviar una respuesta adecuada
-        return jsonify({"mensaje": "Datos importados exitosamente"})
-    
-    
+
+        return jsonify({"mensaje": "Datos importados exitosamente desde CSV"})
+
+    def importar_excel(self, archivo):
+        wb = load_workbook(filename=BytesIO(archivo.read()))
+        ws = wb.active
+
+        Libros.query.delete()
+        for row in ws.iter_rows(min_row=2):
+            nuevo_libro = Libros(
+                titulo=row[1].value,
+                isbn=row[2].value,
+                editorial=row[3].value,
+                descripcion=row[4].value,
+                anyo_publicacion=row[5].value,
+                puntuacion=row[6].value,
+                ubicacion_estudio=row[7].value,
+                url_imagen=row[8].value
+            )
+            db.session.add(nuevo_libro)
+
+        fecha_modificacion.actualizar_fecha_modificacion()
+        db.session.commit()
+
+        return jsonify({"mensaje": "Datos importados exitosamente desde Excel"})
     
 class  CrearSugerencia(Resource):
     def post(self):
@@ -963,8 +1018,8 @@ api.add_resource(BorrarBoton, '/borrar_boton/<int:boton_id>')
 
 
 api.add_resource(ExportarCSV, '/exportar_csv')
-api.add_resource(ImportarCSV, '/importar_csv')
-
+api.add_resource(ExportarExcel, '/exportar_excel')
+api.add_resource(ImportarArchivo, '/importar_archivo')
 
 api.add_resource(CrearSugerencia, '/sugerencia')
 

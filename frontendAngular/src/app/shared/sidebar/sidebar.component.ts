@@ -144,7 +144,7 @@ export class SidebarComponent {
                 label: 'Exportar',
                 icon: 'pi pi-upload',
                 command: () => {
-                  this.exportarLibros(), 
+                  this.decisionExtensionExportacion(), 
                   this.cerrarSidebar()
                   
                 }
@@ -205,31 +205,49 @@ export class SidebarComponent {
   }
 
 
-
-
-  exportarLibros() {
-    this.LibrosService.exportarLibros().subscribe((res) => {
-
-      const blob = new Blob([res], { type: 'text/csv' });
-  
-
-      const url = window.URL.createObjectURL(blob);
-  
-
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'libros.csv'; 
-      document.body.appendChild(a);  
-      a.click(); 
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
+  decisionExtensionExportacion():void {
+    Swal.fire({
+      title: "¿Qué formato desea exportar?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Excel",
+      cancelButtonText: "CSV"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.LibrosService.exportarLibrosEXCEL().subscribe((res) => {
+          const blob = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'libros.xlsx';
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+          document.body.removeChild(a);
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        this.LibrosService.exportarLibrosCSV().subscribe((res) => {
+          const blob = new Blob([res], { type: 'text/csv' });
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'libros.csv'; 
+          document.body.appendChild(a);  
+          a.click(); 
+          window.URL.revokeObjectURL(url);
+          document.body.removeChild(a);
+        });
+      }
     });
   }
+
 
   abrirDialogoArchivo(): void {
     const input = document.createElement('input');
     input.type = 'file';
-    input.accept = '.csv';
+    input.accept = '.xlsx, .csv';
     input.onchange = (event: any) => {
       this.archivoSeleccionado = event.target.files[0];
       if (this.archivoSeleccionado) {

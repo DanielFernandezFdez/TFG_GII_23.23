@@ -67,8 +67,15 @@ export class LibrosService {
     return this.http.delete(`${this.apiUrl}/borrar`, { headers: this.getHeaders() });
   }
 
-  exportarLibros(): Observable<Blob> {
+  exportarLibrosCSV(): Observable<Blob> {
     return this.http.get(`${this.apiUrl}/exportar_csv`, {
+      headers: this.getHeaders(),
+      responseType: 'blob'
+    });
+  }
+
+  exportarLibrosEXCEL(): Observable<Blob> {
+    return this.http.get(`${this.apiUrl}/exportar_excel`, {
       headers: this.getHeaders(),
       responseType: 'blob'
     });
@@ -80,7 +87,7 @@ export class LibrosService {
   
     const headers = this.getHeaders();
   
-    return this.http.post(`${this.apiUrl}/importar_csv`, formData, { headers });
+    return this.http.post(`${this.apiUrl}/importar_archivo`, formData, { headers });
   }
 
 
