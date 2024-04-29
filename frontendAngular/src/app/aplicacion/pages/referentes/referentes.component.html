@@ -1,1 +1,12 @@
-<p>referentes works!</p>
+<app-menu></app-menu>
+<div class="investigaciones-container">
+    <h1>Referentes de Investigaciones de Libros</h1>
+    <ul>
+      <li *ngFor="let investigacion of investigaciones">
+        <h2>{{ investigacion.titulo }}</h2>
+        <p>{{ investigacion.descripcion }}</p>
+        <a [href]="investigacion.url" target="_blank">Leer Más</a>
+      </li>
+    </ul>
+  </div>
+  

@@ -1,0 +1,35 @@
+.investigaciones-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  
+  .investigaciones-container h1 {
+    color: #333;
+    text-align: center;
+  }
+  
+  .investigaciones-container ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .investigaciones-container li {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+  }
+  
+  .investigaciones-container a {
+    color: #0066cc;
+    text-decoration: none;
+  }
+  
+  .investigaciones-container a:hover {
+    text-decoration: underline;
+  }
+  

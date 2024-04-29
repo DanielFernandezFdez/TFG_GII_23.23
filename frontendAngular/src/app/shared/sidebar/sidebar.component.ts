@@ -40,7 +40,7 @@ export class SidebarComponent {
             label: 'Guía de análisis',
             icon: 'pi pi-fw pi-info-circle',
             command: () =>  {
-              this.router.navigate(['/']),
+              this.router.navigate(['/guia-analisis']),
              this.cerrarSidebar() }
             
           },
@@ -48,7 +48,7 @@ export class SidebarComponent {
             label: 'Decálogo',
             icon: 'pi pi-bars',
             command: () =>  {
-              this.router.navigate(['/']),
+              this.router.navigate(['/decalogo']),
              this.cerrarSidebar() }
            
           },
@@ -56,7 +56,7 @@ export class SidebarComponent {
             label: 'Referentes',
             icon: 'pi pi-bookmark-fill',
             command: () =>  {
-              this.router.navigate(['/']),
+              this.router.navigate(['/referentes']),
              this.cerrarSidebar() }
       
           },
@@ -64,7 +64,7 @@ export class SidebarComponent {
             label: 'Guía de puntuación',
             icon: 'pi pi-fw pi-info-circle',
             command: () =>  {
-              this.router.navigate(['/']),
+              this.router.navigate(['/guia-puntuacion']),
              this.cerrarSidebar() }
       
           },

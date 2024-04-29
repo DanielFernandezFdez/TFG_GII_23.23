@@ -57,22 +57,22 @@ export class MenuComponent {
       {
         label: 'Guía de análisis',
         icon: 'pi pi-fw pi-info-circle',
-        routerLink: ['/'],
+        routerLink: ['/guia-analisis'],
       },
       {
         label: 'Decálogo',
         icon: 'pi pi-bars',
-        routerLink: ['/'],
+        routerLink: ['/decalogo'],
       },
       {
         label: 'Referentes',
         icon: 'pi pi-bookmark-fill',
-        routerLink: ['/'],
+        routerLink: ['/referentes'],
       },
       {
         label: 'Guía de puntuación',
         icon: 'pi pi-fw pi-info-circle',
-        routerLink: ['/'],
+        routerLink: ['/guia-puntuacion'],
       },
       {
         label: 'Valoración',

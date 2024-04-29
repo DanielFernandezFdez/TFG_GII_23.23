@@ -17,6 +17,10 @@ import { GestionRolesComponent } from './administracion/pages/gestion-roles/gest
 import { GestionEstimadorComponent } from './administracion/pages/gestion-estimador/gestion-estimador.component';
 import { PermisosRolesComponent } from './administracion/pages/permisos-roles/permisos-roles.component';
 import { EstimacionesGuardadasComponent } from './administracion/pages/estimaciones-guardadas/estimaciones-guardadas.component';
+import { DecalogoComponent } from './aplicacion/pages/decalogo/decalogo.component';
+import { GuiaPuntuacionComponent } from './aplicacion/pages/guia-puntuacion/guia-puntuacion.component';
+import { GuiaAnalisisComponent } from './aplicacion/pages/guia-analisis/guia-analisis.component';
+import { ReferentesComponent } from './aplicacion/pages/referentes/referentes.component';
 
 
 const routes: Routes = [
@@ -112,6 +116,26 @@ const routes: Routes = [
     component: EstimacionesGuardadasComponent,
     pathMatch: 'full',
     //canActivate: [AuthGuard]
+  },
+  {
+    path: 'decalogo',
+    component: DecalogoComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'guia-puntuacion',
+    component: GuiaPuntuacionComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'guia-analisis',
+    component: GuiaAnalisisComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'referentes',
+    component: ReferentesComponent,
+    pathMatch: 'full',
   }
 
 
