@@ -1,2 +1,40 @@
+<!-- panel-admin.component.html -->
 <app-menu-dashboard></app-menu-dashboard>
-
+<div class="content">
+    <div class="card">
+        <form [formGroup]="rangoForm">
+            <p-calendar formControlName="rangoFechas" selectionMode="range" [maxDate]="maxDateValue" [readonlyInput]="true"></p-calendar>
+            <p-button type="button" (click)="cargarEstadisticasFiltradas()">Filtrar</p-button>
+          </form>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-6">
+                <!-- Gráfico de Barras Verticales para Visitas -->
+                <p-chart type="bar" [data]="barData" styleClass="chart-card"></p-chart>
+            </div>
+            <div class="p-col-12 p-md-6">
+                <!-- Gráfico de Barras Simple para el Número de Usuarios -->
+                <p-chart type="bar" [data]="userData" styleClass="chart-card"></p-chart>
+            </div>
+            <div class="p-col-12 p-md-6">
+                <!-- Gráfico de Líneas para Sugerencias y Estimaciones -->
+                <p-chart type="line" [data]="lineData" styleClass="chart-card"></p-chart>
+            </div>
+            <div class="p-col-12 p-md-6">
+                <!-- Tarjeta para el Libro Más Visitado -->
+                <div *ngIf="libroMasVisitado">
+                    <p-card header="Libro Más Visitado" styleClass="ui-card-shadow">
+                        <div class="p-grid p-align-center p-mb-3">
+                            <div class="p-col-4">
+                                <img [src]="libroMasVisitado.url_imagen_libro_mas_visitado" alt="Portada" style="max-width: 100%;">
+                            </div>
+                            <div class="p-col-8">
+                                <h2>{{ libroMasVisitado.libro_mas_visitado }}</h2>
+                                <p>ISBN: {{ libroMasVisitado.isbn_libro_mas_visitado }}</p>
+                            </div>
+                        </div>
+                    </p-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

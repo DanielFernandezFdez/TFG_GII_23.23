@@ -9,6 +9,10 @@ import { LoginComponent } from './pages/login/login.component';
 import { EstimadorComponent } from './pages/estimador/estimador.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { GuiaAnalisisComponent } from './pages/guia-analisis/guia-analisis.component';
+import { DecalogoComponent } from './pages/decalogo/decalogo.component';
+import { ReferentesComponent } from './pages/referentes/referentes.component';
+import { GuiaPuntuacionComponent } from './pages/guia-puntuacion/guia-puntuacion.component';
 
 
 @NgModule({
@@ -17,7 +21,11 @@ import { FormsModule } from '@angular/forms';
     CatalogoComponent,
     InfoLibroComponent,
     LoginComponent,
-    EstimadorComponent
+    EstimadorComponent,
+    GuiaAnalisisComponent,
+    DecalogoComponent,
+    ReferentesComponent,
+    GuiaPuntuacionComponent
   ],
   imports: [
     CommonModule,

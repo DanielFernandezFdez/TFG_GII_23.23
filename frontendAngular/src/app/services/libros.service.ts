@@ -91,4 +91,14 @@ export class LibrosService {
   }
 
 
+  obtenerEstadisticas(): Observable<any> {
+    return this.http.post(`${this.apiUrl}/estadisticas`, {},{headers: this.getHeaders()});
+  }
+
+  obtenerEstadisticasFiltradas(mesInicio: number, anyoInicio: number, mesFin: number, anyoFin: number): Observable<any> {
+    const filtro = { mes_inicio: mesInicio, anyo_inicio: anyoInicio, mes_fin: mesFin, anyo_fin: anyoFin };
+    return this.http.post(`${this.apiUrl}/estadisticas`, filtro, { headers: this.getHeaders() });
+  }
+
+
 }

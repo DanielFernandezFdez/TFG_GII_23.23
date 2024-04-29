@@ -25,6 +25,8 @@ import { PaginatorModule } from 'primeng/paginator';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { ChartModule } from 'primeng/chart';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   declarations: [],
@@ -56,7 +58,9 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     PaginatorModule,
     PanelMenuModule,
     OverlayPanelModule,
-    InputSwitchModule
+    InputSwitchModule,
+    ChartModule,
+    CalendarModule
   ]
 })
 export class PrimeNgModule { }

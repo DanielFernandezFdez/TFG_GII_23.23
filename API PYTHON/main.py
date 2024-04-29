@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, send_file,Response
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import and_
 from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 from flask_cors import CORS
@@ -29,6 +30,10 @@ class Libros(db.Model):
     puntuacion = db.Column(db.Integer, nullable=True)
     ubicacion_estudio = db.Column(db.String(300))
     url_imagen = db.Column(db.String(300))
+    visitas_mensuales = db.Column(db.Integer, default=0)
+    visitas_totales = db.Column(db.Integer, default=0)
+    mes_creacion = db.Column(db.String(100), nullable=False, default=datetime.now().strftime("%m"))
+    anyo_creacion = db.Column(db.String(100), nullable=False, default=datetime.now().strftime("%Y"))
 
     def __repr__(self):
         return f"<Libros {self.titulo}>"
@@ -115,6 +120,21 @@ class Estimacion(db.Model):
     institucion = db.Column(db.String(100), nullable=False)
     resultado = db.Column(db.Integer, nullable=False)
        
+class EstadisticasPorMes(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    mes = db.Column(db.String(100), nullable=False)
+    anyo = db.Column(db.String(100), nullable=False)
+    numero_libros = db.Column(db.Integer, nullable=False)
+    numero_visitas_totales = db.Column(db.Integer, nullable=False)
+    numero_estimaciones = db.Column(db.Integer, nullable=False)
+    numero_usuarios = db.Column(db.Integer, nullable=False)
+    libro_mas_visitado = db.Column(db.String(100), nullable=False)
+    isbn_libro_mas_visitado = db.Column(db.String(100), nullable=False)
+    visitas_libro_mas_visitado = db.Column(db.Integer, nullable=False)
+    url_imagen_libro_mas_visitado = db.Column(db.String(300), nullable=False)
+    numero_sugerencias = db.Column(db.Integer, nullable = False)
+
+    
 
     
 
@@ -142,6 +162,106 @@ def creacion():
 app = creacion()
 api = Api(app)
 jwt=JWTManager(app)
+
+
+
+
+
+def  ActualizarEstadisticasMensuales():
+
+    estadistica_existente = EstadisticasPorMes.query.filter_by(mes=datetime.now().strftime("%m"), anyo=datetime.now().strftime("%Y")).first()
+    libros = Libros.query.all()
+    estimaciones = Estimacion.query.all()
+    usuarios = Usuarios.query.all()
+    numero_libros = len(libros)
+    numero_estimaciones = len(estimaciones)
+    numero_usuarios = len(usuarios)
+
+    maxVisitas=0
+    libro_mas_visitado = ""
+    isbn_mas_visitado = ""
+    url_imagen_mas_visitado = ""
+    visitasTotales = 0
+
+    for libro in libros :
+        visitasTotales = visitasTotales + libro.visitas_mensuales
+        if libro.visitas_mensuales >= maxVisitas:
+            maxVisitas = libro.visitas_mensuales
+            libro_mas_visitado = libro.titulo
+            isbn_mas_visitado = libro.isbn
+            url_imagen_mas_visitado = libro.url_imagen
+ 
+    if estadistica_existente:
+        estadistica_existente.numero_libros = numero_libros
+        estadistica_existente.numero_estimaciones = numero_estimaciones
+        estadistica_existente.numero_usuarios = numero_usuarios
+        estadistica_existente.libro_mas_visitado = libro_mas_visitado
+        estadistica_existente.isbn_libro_mas_visitado = isbn_mas_visitado
+        estadistica_existente.visitas_libro_mas_visitado = maxVisitas
+        estadistica_existente.url_imagen_libro_mas_visitado = url_imagen_mas_visitado
+        estadistica_existente.numero_visitas_totales = visitasTotales
+
+    else:
+        nuevaEstadistica = EstadisticasPorMes(
+            mes = datetime.now().strftime("%m"),
+            anyo = datetime.now().strftime("%Y"),
+            numero_libros = numero_libros,
+            numero_estimaciones = numero_estimaciones,
+            numero_usuarios = numero_usuarios,
+            libro_mas_visitado = libro_mas_visitado,
+            isbn_libro_mas_visitado = isbn_mas_visitado,
+            visitas_libro_mas_visitado = maxVisitas,
+            url_imagen_libro_mas_visitado = url_imagen_mas_visitado,
+            numero_visitas_totales = visitasTotales,
+            numero_sugerencias = 0
+        )
+        db.session.add(nuevaEstadistica)
+    db.session.commit()
+
+
+
+
+class ObtenerEstadisticasGraficosGenerales(Resource):
+    def post(self):
+        data = request.get_json()
+        ActualizarEstadisticasMensuales()
+        query = EstadisticasPorMes.query
+        if 'mes_inicio' in data and 'anyo_inicio' in data and 'mes_fin' in data and 'anyo_fin' in data:
+            mes_inicio = int(data['mes_inicio'])
+            anyo_inicio = int(data['anyo_inicio'])
+            mes_fin = int(data['mes_fin'])
+            anyo_fin = int(data['anyo_fin'])
+
+            query = query.filter(and_(
+                EstadisticasPorMes.anyo >= anyo_inicio,
+                EstadisticasPorMes.mes >= mes_inicio,
+                EstadisticasPorMes.anyo <= anyo_fin,
+                EstadisticasPorMes.mes <= mes_fin
+            ))
+        else:
+            query = query.filter(EstadisticasPorMes.anyo == datetime.now().strftime("%Y"))
+        estadisticas = query.all()
+
+        return jsonify([
+            {
+                "mes": estadistica.mes,
+                "anyo": estadistica.anyo,
+                "numero_libros": estadistica.numero_libros,
+                "numero_estimaciones": estadistica.numero_estimaciones,
+                "numero_usuarios": estadistica.numero_usuarios,
+                "libro_mas_visitado": estadistica.libro_mas_visitado,
+                "isbn_libro_mas_visitado": estadistica.isbn_libro_mas_visitado,
+                "visitas_libro_mas_visitado": estadistica.visitas_libro_mas_visitado,
+                "url_imagen_libro_mas_visitado": estadistica.url_imagen_libro_mas_visitado,
+                "numero_visitas_totales": estadistica.numero_visitas_totales,
+                "numero_sugerencias" : estadistica.numero_sugerencias
+
+            }
+            for estadistica in estadisticas
+        ])
+
+
+
 
 
 
@@ -408,6 +528,9 @@ class InfoLibroID(Resource):
 
     def get(self, id):
         libro = Libros.query.get_or_404(id)
+        libro.visitas_mensuales = libro.visitas_mensuales + 1
+        libro.visitas_totales = libro.visitas_totales + 1
+        db.session.commit()
         return jsonify(
             {
                 "id": libro.id,
@@ -519,7 +642,7 @@ class buscarLibroAutomatico(Resource):
 class borrarTabla(Resource):
 
     def delete(self):
-        Estimacion.__table__.drop(db.engine)
+        EstadisticasPorMes.__table__.drop(db.engine)
         db.session.commit()
 
 
@@ -850,50 +973,55 @@ class BorrarBoton(Resource):
     
 
 
-#Funcion de exportar a CSV
+
 class ExportarCSV(Resource):
     def get(self):
         si = StringIO()
         cw = csv.writer(si, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
-        # Escribe los encabezados en el archivo CSV
-        cw.writerow(['ID', 'Título', 'ISBN', 'Editorial', 'Descripción', 'Año de publicación',"Puntuación", 'Ubicación del estudio', 'URL de la imagen'])
+       
+        cw.writerow(['ID', 'Título', 'ISBN', 'Editorial', 'Descripción', 'Año de publicación', 'Puntuación', 'Ubicación del estudio', 'URL de la imagen', 'Visitas mensuales', 'Visitas totales', 'Mes de creación', 'Año de creación'])
 
-        # Obtiene todos los libros de la base de datos
+
         libros = Libros.query.all()
 
-        # Escribe los datos de cada libro en el archivo CSV
+
         for libro in libros:
-            cw.writerow([libro.id, libro.titulo, libro.isbn, libro.editorial, libro.descripcion, libro.anyo_publicacion,libro.puntuacion, libro.ubicacion_estudio, libro.url_imagen])
+            cw.writerow([
+                libro.id, libro.titulo, libro.isbn, libro.editorial, libro.descripcion, libro.anyo_publicacion,
+                libro.puntuacion, libro.ubicacion_estudio, libro.url_imagen, libro.visitas_mensuales, libro.visitas_totales,
+                libro.mes_creacion, libro.anyo_creacion
+            ])
 
         output = si.getvalue()
 
-        # Crea una respuesta HTTP con el archivo CSV
         return Response(
             output,
             mimetype="text/csv",
             headers={"Content-Disposition": "attachment;filename=libros.csv"}
         )
 
+
 class ExportarExcel(Resource):
     def get(self):
         wb = Workbook()
         ws = wb.active
 
-
-        ws.append(['ID', 'Título', 'ISBN', 'Editorial', 'Descripción', 'Año de publicación', 'Puntuación', 'Ubicación del estudio', 'URL de la imagen'])
-
+      
+        ws.append(['ID', 'Título', 'ISBN', 'Editorial', 'Descripción', 'Año de publicación', 'Puntuación', 'Ubicación del estudio', 'URL de la imagen', 'Visitas mensuales', 'Visitas totales', 'Mes de creación', 'Año de creación'])
 
         libros = Libros.query.all()
 
         for libro in libros:
-            ws.append([libro.id, libro.titulo, libro.isbn, libro.editorial, libro.descripcion, libro.anyo_publicacion, libro.puntuacion, libro.ubicacion_estudio, libro.url_imagen])
-
+            ws.append([
+                libro.id, libro.titulo, libro.isbn, libro.editorial, libro.descripcion, libro.anyo_publicacion,
+                libro.puntuacion, libro.ubicacion_estudio, libro.url_imagen, libro.visitas_mensuales, libro.visitas_totales,
+                libro.mes_creacion, libro.anyo_creacion
+            ])
 
         si = BytesIO()
         wb.save(si)
         si.seek(0)
-
 
         return send_file(
             si,
@@ -901,6 +1029,7 @@ class ExportarExcel(Resource):
             download_name="libros.xlsx",
             mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
+
 
 
 
@@ -933,9 +1062,13 @@ class ImportarArchivo(Resource):
                 editorial=row[3],
                 descripcion=row[4],
                 anyo_publicacion=row[5],
-                puntuacion=row[6],
+                puntuacion=row[6] if row[6] else 0,
                 ubicacion_estudio=row[7],
-                url_imagen=row[8]
+                url_imagen=row[8],
+                visitas_mensuales=row[9] if row[9] else 0,
+                visitas_totales=row[10] if row[10] else 0,
+                mes_creacion=row[11],
+                anyo_creacion=row[12]
             )
             db.session.add(nuevo_libro)
         
@@ -943,6 +1076,7 @@ class ImportarArchivo(Resource):
         db.session.commit()
 
         return jsonify({"mensaje": "Datos importados exitosamente desde CSV"})
+
 
     def importar_excel(self, archivo):
         wb = load_workbook(filename=BytesIO(archivo.read()))
@@ -956,14 +1090,21 @@ class ImportarArchivo(Resource):
                 editorial=row[3].value,
                 descripcion=row[4].value,
                 anyo_publicacion=row[5].value,
-                puntuacion=row[6].value,
+                puntuacion=int(row[6].value) if row[6].value else None,
                 ubicacion_estudio=row[7].value,
-                url_imagen=row[8].value
+                url_imagen=row[8].value,
+                visitas_mensuales=int(row[9].value) if row[9].value else 0,
+                visitas_totales=int(row[10].value) if row[10].value else 0,
+                mes_creacion=row[11].value or datetime.now().strftime("%m"),
+                anyo_creacion=row[12].value or datetime.now().strftime("%Y")
             )
             db.session.add(nuevo_libro)
 
         fecha_modificacion.actualizar_fecha_modificacion()
+        
+
         db.session.commit()
+
 
         return jsonify({"mensaje": "Datos importados exitosamente desde Excel"})
     
@@ -971,7 +1112,22 @@ class  CrearSugerencia(Resource):
     def post(self):
         data = request.get_json()
         ac.mandarCorreo(data["nombre"],data["apellidos"],data["correo"],data["titulo"],data["isbn"])
+        estadistica_existente = EstadisticasPorMes.query.filter_by(mes=datetime.now().strftime("%m"), anyo=datetime.now().strftime("%Y")).first()
+        if estadistica_existente:
+            estadistica_existente.numero_sugerencias = estadistica_existente.numero_sugerencias + 1
+        else:
+            nuevaEstadistica = EstadisticasPorMes(
+            mes = datetime.now().strftime("%m"),
+            anyo = datetime.now().strftime("%Y"),
+            numero_sugerencias = 1
+            )
+            db.session.add(nuevaEstadistica)
+        db.session.commit()
+
         return jsonify({"mensaje": "Sugerencia enviada exitosamente"})
+
+
+api.add_resource(ObtenerEstadisticasGraficosGenerales, "/estadisticas")
 
 api.add_resource(GenerarListados, "/generarListados")
 api.add_resource(ObtenerListados, "/obtenerListados")
