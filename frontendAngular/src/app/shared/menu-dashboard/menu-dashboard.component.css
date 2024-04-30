@@ -3,3 +3,14 @@
     z-index: 1000;
     
 }
+
+@media (max-width: 710px) {
+    .buscador {
+        display: none; 
+    }
+}
+@media (max-width: 710px) {
+    .menu img {
+        display: none; 
+    }
+}

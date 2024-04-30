@@ -4,7 +4,7 @@
   </ng-template>
   <ng-template pTemplate="end">
 
-    <p-autoComplete [(ngModel)]="termino" [suggestions]="libros_resultado" (completeMethod)="busqueda($event)"
+    <p-autoComplete [(ngModel)]="termino" [suggestions]="libros_resultado" (completeMethod)="busqueda($event)" class="buscador"
       (onSelect)="libroSeleccionado($event)" field="titulo" placeholder="Información rápida libro">
       <ng-template let-libro pTemplate="item">
         <div class="suggestion-item">
