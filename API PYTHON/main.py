@@ -979,21 +979,19 @@ class ExportarCSV(Resource):
         si = StringIO()
         cw = csv.writer(si, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
-       
         cw.writerow(['ID', 'Título', 'ISBN', 'Editorial', 'Descripción', 'Año de publicación', 'Puntuación', 'Ubicación del estudio', 'URL de la imagen', 'Visitas mensuales', 'Visitas totales', 'Mes de creación', 'Año de creación'])
 
-
         libros = Libros.query.all()
-
-
         for libro in libros:
             cw.writerow([
-                libro.id, libro.titulo, libro.isbn, libro.editorial, libro.descripcion, libro.anyo_publicacion,
+                libro.id, libro.titulo, f"'{libro.isbn}", libro.editorial, libro.descripcion, libro.anyo_publicacion,
                 libro.puntuacion, libro.ubicacion_estudio, libro.url_imagen, libro.visitas_mensuales, libro.visitas_totales,
                 libro.mes_creacion, libro.anyo_creacion
             ])
 
         output = si.getvalue()
+        output = '\ufeff' + output 
+        output = output.encode('utf-8')
 
         return Response(
             output,
@@ -1056,9 +1054,10 @@ class ImportarArchivo(Resource):
         for i, row in enumerate(csv_input):
             if i == 0:  
                 continue
+            isbn = row[2].lstrip("'")
             nuevo_libro = Libros(
                 titulo=row[1],
-                isbn=row[2],
+                isbn=isbn,
                 editorial=row[3],
                 descripcion=row[4],
                 anyo_publicacion=row[5],

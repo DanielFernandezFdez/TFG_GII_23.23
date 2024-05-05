@@ -70,7 +70,7 @@ export class GestionCatalogoComponent implements OnInit{
         this.LibrosService.borrarLibro(id).subscribe(
           () => {
             Swal.fire({
-              title: "Libro eliminaado con éxito",
+              title: "Libro eliminado con éxito",
               icon: "success"
             });
             this.obtenerLibros();
