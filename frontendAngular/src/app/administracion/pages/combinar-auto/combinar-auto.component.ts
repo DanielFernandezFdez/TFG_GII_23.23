@@ -42,7 +42,12 @@ export class CombinarAutoComponent implements OnInit{
       anyo_publicacion: ['', Validators.required],
       puntuacion: [null, Validators.required],
       ubicacion_estudio: ['', Validators.required],
-      url_imagen: ['', Validators.required]
+      url_imagen: ['', Validators.required],
+      puntuacion_masculino_generico: [0, Validators.required],
+      puntuacion_menores: [0, Validators.required],
+      puntuacion_adultos: [0, Validators.required],
+      puntuacion_ubicacion: [0, Validators.required],
+      puntuacion_actividades: [0, Validators.required]
     });
 
     this.libroForm.get('url_imagen')?.valueChanges.subscribe((url) => {

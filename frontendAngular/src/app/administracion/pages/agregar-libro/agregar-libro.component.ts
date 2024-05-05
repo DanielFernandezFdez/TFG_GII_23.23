@@ -14,6 +14,7 @@ export class AgregarLibroComponent {
   libroForm: FormGroup;
   imagenPrevisualizada: string | null = null;
 
+
   constructor(private fb: FormBuilder, private libroService: LibrosService, private router:Router) {
     this.libroForm = this.fb.group({
       titulo: ['', Validators.required],
@@ -23,7 +24,12 @@ export class AgregarLibroComponent {
       anyo_publicacion: ['', Validators.required],
       puntuacion: [null, Validators.required],
       ubicacion_estudio: ['', Validators.required],
-      url_imagen: ['', Validators.required]
+      url_imagen: ['', Validators.required],
+      puntuacion_masculino_generico: [0, Validators.required],
+      puntuacion_menores: [0, Validators.required],
+      puntuacion_adultos: [0, Validators.required],
+      puntuacion_ubicacion: [0, Validators.required],
+      puntuacion_actividades: [0, Validators.required]
     });
 
     this.libroForm.get('url_imagen')?.valueChanges.subscribe((url) => {
@@ -44,7 +50,8 @@ export class AgregarLibroComponent {
       editorial: libroInfo.editorial,
       descripcion: libroInfo.descripcion,
       anyo_publicacion: libroInfo.anyo_publicacion,
-      url_imagen: libroInfo.url_imagen
+      url_imagen: libroInfo.url_imagen,
+      
 
     });
     this.previsualizarImagen(libroInfo.url_imagen);

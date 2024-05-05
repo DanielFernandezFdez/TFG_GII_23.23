@@ -10,8 +10,17 @@
     <input type="text" pInputText placeholder="Año de Publicación" formControlName="anyo_publicacion" />
     <p-rating formControlName="puntuacion" [cancel]="false"></p-rating>
     <input type="text" pInputText placeholder="Ubicación en el Estudio" formControlName="ubicacion_estudio" />
+    <h5>Puntuación Masculino Genérico</h5>
+    <input type="number" pInputText placeholder="Puntuación Masculino Genérico" formControlName="puntuacion_masculino_generico" min="0" class="w-full mb-3"/>
+    <h5>Puntuación Menores</h5>
+    <input type="number" pInputText placeholder="Puntuación Menores" formControlName="puntuacion_menores" min="0" class="w-full mb-3"/>
+    <h5>Puntuación Adultos</h5>
+    <input type="number" pInputText placeholder="Puntuación Adultos" formControlName="puntuacion_adultos" min="0" class="w-full mb-3"/>
+    <h5>Puntuación Ubicación</h5>
+    <input type="number" pInputText placeholder="Puntuación Ubicación" formControlName="puntuacion_ubicacion" min="0" class="w-full mb-3"/>
+    <h5>Puntuación Actividades</h5>
+    <input type="number" pInputText placeholder="Puntuación Actividades" formControlName="puntuacion_actividades" min="0" class="w-full mb-3"/>
     <input type="text" pInputText placeholder="URL de la imagen" formControlName="url_imagen" />
-
     <button pButton type="submit" label="Guardar" [disabled]="!libroForm.valid"></button>
   </form>
 

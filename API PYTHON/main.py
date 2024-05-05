@@ -34,6 +34,11 @@ class Libros(db.Model):
     visitas_totales = db.Column(db.Integer, default=0)
     mes_creacion = db.Column(db.String(100), nullable=False, default=datetime.now().strftime("%m"))
     anyo_creacion = db.Column(db.String(100), nullable=False, default=datetime.now().strftime("%Y"))
+    puntuacion_masculino_generico = db.Column(db.Integer, nullable=True)
+    puntuacion_menores = db.Column(db.Integer, nullable=True)
+    puntuacion_adultos = db.Column(db.Integer, nullable=True)
+    puntuacion_ubicacion = db.Column(db.Integer, nullable=True)
+    puntuacion_actividades = db.Column(db.Integer, nullable=True)
 
     def __repr__(self):
         return f"<Libros {self.titulo}>"
@@ -542,6 +547,11 @@ class InfoLibroID(Resource):
                 "puntuacion": libro.puntuacion,
                 "ubicacion_estudio": libro.ubicacion_estudio,
                 "url_imagen": libro.url_imagen,
+                "puntuacion_masculino_generico": libro.puntuacion_masculino_generico,
+                "puntuacion_menores": libro.puntuacion_menores,
+                "puntuacion_adultos": libro.puntuacion_adultos,
+                "puntuacion_ubicacion": libro.puntuacion_ubicacion,
+                "puntuacion_actividades": libro.puntuacion_actividades
             }
         )
 
@@ -558,7 +568,13 @@ class AgregarLibro(Resource):
             anyo_publicacion=data["anyo_publicacion"] ,
             puntuacion=data["puntuacion"] ,
             ubicacion_estudio=data["ubicacion_estudio"],
-            url_imagen=data["url_imagen"] ,
+            url_imagen=data["url_imagen"],
+            puntuacion_masculino_generico=data["puntuacion_masculino_generico"],
+            puntuacion_menores=data["puntuacion_menores"],
+            puntuacion_adultos=data["puntuacion_adultos"],
+            puntuacion_ubicacion=data["puntuacion_ubicacion"],
+            puntuacion_actividades=data["puntuacion_actividades"]
+            
         )
         db.session.add(nuevo_libro)
         fecha_modificacion.actualizar_fecha_modificacion()
@@ -589,6 +605,11 @@ class editarLibro(Resource):
         libro.puntuacion = data.get("puntuacion", libro.puntuacion)
         libro.ubicacion_estudio = data.get("ubicacion_estudio", libro.ubicacion_estudio)
         libro.url_imagen = data.get("url_imagen", libro.url_imagen)
+        libro.puntacion_masculino_generico = data.get("puntuacion_masculino_generico", libro.puntuacion_masculino_generico)
+        libro.puntuacion_menores = data.get("puntuacion_menores", libro.puntuacion_menores)
+        libro.puntuacion_adultos = data.get("puntuacion_adultos", libro.puntuacion_adultos)
+        libro.puntuacion_ubicacion = data.get("puntuacion_ubicacion", libro.puntuacion_ubicacion)
+        libro.puntuacion_actividades = data.get("puntuacion_actividades", libro.puntuacion_actividades)
         fecha_modificacion.actualizar_fecha_modificacion()
         db.session.commit()
         return jsonify({"mensaje": "Libro editado exitosamente"})
@@ -642,7 +663,7 @@ class buscarLibroAutomatico(Resource):
 class borrarTabla(Resource):
 
     def delete(self):
-        EstadisticasPorMes.__table__.drop(db.engine)
+        Libros.__table__.drop(db.engine)
         db.session.commit()
 
 

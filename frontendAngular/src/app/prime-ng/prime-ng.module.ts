@@ -27,6 +27,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ChartModule } from 'primeng/chart';
 import { CalendarModule } from 'primeng/calendar';
+import { MeterGroupModule } from 'primeng/metergroup';
 
 @NgModule({
   declarations: [],
@@ -60,7 +61,8 @@ import { CalendarModule } from 'primeng/calendar';
     OverlayPanelModule,
     InputSwitchModule,
     ChartModule,
-    CalendarModule
+    CalendarModule,
+    MeterGroupModule
   ]
 })
 export class PrimeNgModule { }
