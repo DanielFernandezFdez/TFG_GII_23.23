@@ -1,24 +1,27 @@
 <app-menu></app-menu>
 
-
 <div class="container margen">
-    <div class="columna">
-      <img [src]="libro?.url_imagen" (error)="imagenPorDefecto($event)" class="img-fluid-info-libro" alt="Portada del libro">
-    </div>
-    <div class="columna">
-      <h1>{{ libro?.titulo }}</h1>
-      <p><strong>ISBN:</strong> {{ libro?.isbn }}</p>
-      <p><strong>Editorial:</strong> {{ libro?.editorial }}</p>
-      <p><strong>Año de publicación:</strong> {{ libro?.anyo_publicacion }}</p>
-      <p *ngIf="libro?.ubicacion_estudio">
-        <strong>Ubicación del Estudio: </strong> <a [href]="libro?.ubicacion_estudio" target="_blank">Enlace al estudio</a>
-      </p>
-      <p *ngIf="!libro?.ubicacion_estudio"><strong>Ubicación del Estudio: </strong> No disponible</p>
-      <h2>Descripción del libro</h2>
-      <p>{{ libro?.descripcion || 'Descripción no proporcionada' }}</p>
-      <h2>Puntuación del libro</h2>
-      <p-rating [(ngModel)]="puntuacion" [readonly]="true" [cancel]="false"></p-rating>
+  <div class="columna">
+    <img [src]="libro?.url_imagen" (error)="imagenPorDefecto($event)" class="img-fluid-info-libro" alt="Portada del libro">
+  </div>
+  <div class="columna">
+    <h1>{{ libro?.titulo }}</h1>
+    <p><strong>ISBN:</strong> {{ libro?.isbn }}</p>
+    <p><strong>Editorial:</strong> {{ libro?.editorial }}</p>
+    <p><strong>Año de publicación:</strong> {{ libro?.anyo_publicacion }}</p>
+    <p *ngIf="libro?.ubicacion_estudio">
+      <strong>Ubicación del Estudio: </strong> <a [href]="libro?.ubicacion_estudio" target="_blank">Enlace al estudio</a>
+    </p>
+    <p *ngIf="!libro?.ubicacion_estudio"><strong>Ubicación del Estudio: </strong> No disponible</p>
+    <h2>Descripción del libro</h2>
+    <p>{{ libro?.descripcion || 'Descripción no proporcionada' }}</p>
+    <h2>Puntuación del libro</h2>
+    <p-rating [(ngModel)]="puntuacion" [readonly]="true" [cancel]="false"></p-rating>
+    <div class="puntuacion-meter">
+      <p-meterGroup [value]="valoresPuntuaciones"  labelPosition="start" labelOrientation="vertical"></p-meterGroup>
     </div>
   </div>
+</div>
+
 
 

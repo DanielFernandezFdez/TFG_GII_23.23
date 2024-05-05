@@ -100,7 +100,6 @@ export class GestionUsuarioComponent implements OnInit {
     
   }
   guardarCambiosModificacion(): void {
-    console.log(this.usuarioEditado);
     this.authService.modificarUsuario(this.usuarioEditado.id, this.usuarioEditado).subscribe({
       next: () => {
         Swal.fire({

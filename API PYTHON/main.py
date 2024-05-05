@@ -605,7 +605,7 @@ class editarLibro(Resource):
         libro.puntuacion = data.get("puntuacion", libro.puntuacion)
         libro.ubicacion_estudio = data.get("ubicacion_estudio", libro.ubicacion_estudio)
         libro.url_imagen = data.get("url_imagen", libro.url_imagen)
-        libro.puntacion_masculino_generico = data.get("puntuacion_masculino_generico", libro.puntuacion_masculino_generico)
+        libro.puntuacion_masculino_generico = data.get("puntuacion_masculino_generico", libro.puntuacion_masculino_generico)
         libro.puntuacion_menores = data.get("puntuacion_menores", libro.puntuacion_menores)
         libro.puntuacion_adultos = data.get("puntuacion_adultos", libro.puntuacion_adultos)
         libro.puntuacion_ubicacion = data.get("puntuacion_ubicacion", libro.puntuacion_ubicacion)
@@ -737,7 +737,7 @@ class ModificarUsuario(Resource):
             usuario.contrasenya_encriptada = generate_password_hash(data['contrasenya_nueva'])
         if 'usuario' in data:
             repetido=Usuarios.query.filter_by(correo=data['correo']).first()
-            if repetido.id != usuario.id:
+            if repetido and repetido.id != usuario.id:
                 respuesta = jsonify({"mensaje": "Ya existe un correo"})
                 respuesta.status_code = 400
                 return respuesta
@@ -746,7 +746,8 @@ class ModificarUsuario(Resource):
             usuario.correo=data['correo']
         
         if 'rol_id' in data and data['rol_id'] != usuario.rol:
-            if usuario.id == 1:
+            if usuario.id == 1  and data['rol_id'] != 1:
+                
                 respuesta = jsonify({"mensaje": "No se puede modificar el rol del usuario administrador"})
                 respuesta.status_code = 400
                 return respuesta
