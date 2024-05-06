@@ -103,7 +103,6 @@ class Usuarios(db.Model):
 class Botones(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre_boton = db.Column(db.String(100), unique=True, nullable=False)
-    alias = db.Column(db.String(255), nullable=True)
     roles_autorizados=db.Column(db.String(255), nullable=True)
     
     
@@ -663,7 +662,7 @@ class buscarLibroAutomatico(Resource):
 class borrarTabla(Resource):
 
     def delete(self):
-        Libros.__table__.drop(db.engine)
+        Botones.__table__.drop(db.engine)
         db.session.commit()
 
 
@@ -718,7 +717,7 @@ class Login(Resource):
             respuesta = jsonify({"mensaje": "Usuario o contraseña incorrectos"})
             respuesta.status_code = 401
             return respuesta
-        access_token = create_access_token(identity=usuario.id) #Con esto puedo obtener el id de  ususario ya que se contiene en el jwt
+        access_token = create_access_token(identity=usuario.id)
         return jsonify({
             "token": access_token,
             "nombre": usuario.usuario,
@@ -908,7 +907,6 @@ class buscarBotones(Resource):
                 {
                     "id": boton.id,
                     "nombre": boton.nombre_boton,
-                    "alias": boton.alias,
                     "roles_asociados": json.loads(boton.roles_autorizados if boton.roles_autorizados else []) 
                 }
                 for boton in botones
@@ -926,7 +924,6 @@ class consultarBoton(Resource):
         for nombre_boton in data['nombre_botones']: #! En teoria solo viene 1
             boton = Botones.query.filter_by(nombre_boton=nombre_boton).first()
             if boton:
-                alias = boton.alias if boton.alias else "Sin nombre"
                 roles_autorizados = json.loads(boton.roles_autorizados if boton.roles_autorizados else '[]')
                 if roles_autorizados==[]:
                     autorizado = 1
@@ -936,7 +933,6 @@ class consultarBoton(Resource):
             botones_respuesta.append(
                 {
                 "nombre": nombre_boton,
-                "alias":alias if alias else "Sin alias",
                 "autorizado": autorizado
                 })
 
@@ -952,7 +948,6 @@ class CrearBoton(Resource): #!Solo durante pruebas
             return respuesta
         nuevo_boton = Botones(
             nombre_boton=data['nombre_boton'],
-            alias=data['alias'] if 'alias' in data else "Sin nombre",
             roles_autorizados=json.dumps(data['roles_autorizados'] if 'roles_autorizados' in data else []) 
         )
         db.session.add(nuevo_boton)

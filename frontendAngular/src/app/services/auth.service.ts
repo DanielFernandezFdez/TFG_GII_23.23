@@ -75,12 +75,11 @@ export class AuthService {
       .pipe(map(respuesta => {
         if (respuesta && respuesta.token) {
 
-          // Almacenamos el token y el nombre del usuario en localStorage
+
           localStorage.setItem('token', respuesta.token);
           localStorage.setItem('usuarioActual', respuesta.nombre);
           localStorage.setItem('id', respuesta.id);
   
-          // Actualizamos el estado actual del usuario en el servicio
           this.usuarioActual.next(respuesta.nombre);
           this.token.next(respuesta.token);
           this.id.next(respuesta.id);
@@ -137,7 +136,7 @@ export class AuthService {
 
 
 
-  // Mensaje de inicio de sesión correcto SweetAlert2
+
   msgInicioCorrecto= () => {
     const Toast = Swal.mixin({
       toast: true,

@@ -36,7 +36,17 @@ export class PermisosRolesComponent implements OnInit{
   botones : Boton[] = []; 
   permisos: Permiso[] = [
     { alias: 'Gestión de usuarios', descripcion: 'Permite gestionar a los usuarios.', permitido: false ,  nombre: 'gestion-usuarios' },
-    //!Meter mas permisos
+    { alias: 'Gestión de roles', descripcion: 'Permite gestionar los roles.', permitido: false ,  nombre: 'gestion-roles' },
+    { alias: 'Gestión de catálogo', descripcion: 'Permite gestionar el catálogo.', permitido: false ,  nombre: 'gestion-catalogo' },
+    { alias: 'Gestión de actividades', descripcion: 'Permite gestionar las actividades del estimador.', permitido: false ,  nombre: 'gestion-estimador' },
+    { alias: 'Gestión de permisos', descripcion: 'Permite gestionar los permisos.', permitido: false ,  nombre: 'gestion-permisos' },
+    { alias: 'Gestión de estimaciones', descripcion: 'Permite gestionar las estimaciones.', permitido: false ,  nombre: 'estimaciones-guardadas' },
+    { alias: 'Agregar Libro', descripcion: 'Permite agregar un libro manualmente.', permitido: false ,  nombre: 'agregar' },
+    { alias: 'Editar Libro', descripcion: 'Permite editar un libro manualmente.', permitido: false ,  nombre: 'editar' },
+    { alias: 'Agregar libro automáticamente', descripcion: 'Permite agregar un libro automáticamente.', permitido: false ,  nombre: 'agregar_auto' },
+    { alias: 'Combinar libros', descripcion: 'Permite combinar varios libros obtenidos automáticamente.', permitido: false ,  nombre: 'combinar_auto' },
+
+    
   ];
 
 

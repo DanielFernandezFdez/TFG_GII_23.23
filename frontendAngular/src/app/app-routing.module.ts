@@ -33,7 +33,6 @@ const routes: Routes = [
     path: 'catalogo',
     component: CatalogoComponent,
     pathMatch: 'full',
-    //canActivate: [AuthGuard]  //Solo para pruebas
   },
   {
     path: 'info_libro/:id',
@@ -44,25 +43,25 @@ const routes: Routes = [
     path: 'agregar',
     component: AgregarLibroComponent,
     pathMatch: 'full',
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'editar/:id',
     component: EditarLibroComponent,
     pathMatch: 'full',
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'agregar_auto/:elemento',
     component: AgregarAutoComponent,
     pathMatch: 'full',
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'combinar_auto',
     component: CombinarAutoComponent,
     pathMatch: 'full',
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
@@ -73,19 +72,18 @@ const routes: Routes = [
     path: 'estimador',
     component: EstimadorComponent,
     pathMatch: 'full',
-    //canActivate: [AuthGuard]
+
   },
   {
     path: 'panel-admin',
     component: PanelAdminComponent,
     pathMatch: 'full',
-    //canActivate: [AuthGuard]
   },
   {
     path:'gestion-catalogo',
     component: GestionCatalogoComponent,
     pathMatch: 'full',
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path:'gestion-usuarios',
@@ -97,25 +95,25 @@ const routes: Routes = [
     path:'gestion-roles',
     component: GestionRolesComponent,
     pathMatch: 'full',
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path:'gestion-estimador',
     component: GestionEstimadorComponent,
     pathMatch: 'full',
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'gestion-permisos/:id',
     component:PermisosRolesComponent,
     pathMatch: 'full',
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path : 'estimaciones-guardadas',
     component: EstimacionesGuardadasComponent,
     pathMatch: 'full',
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'decalogo',
