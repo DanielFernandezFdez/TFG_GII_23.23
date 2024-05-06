@@ -7,7 +7,7 @@ from zoneinfo import ZoneInfo
 from flask_cors import CORS
 import funciones_webscraping as fw
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import create_access_token, jwt_required,JWTManager, get_jwt_identity
+from flask_jwt_extended import create_access_token, jwt_required,JWTManager
 import json
 import csv
 from io import StringIO
@@ -153,7 +153,7 @@ def creacion():
     )
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config['JWT_SECRET_KEY'] = '9.gbPCDn!Ufm&o-a)k-nbEcSImx+.Rkef#{s=AjFsIUeZWr!'
-    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = 3600  # Token expira después de 1 hora
+    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = False
     db.init_app(app)
     with app.app_context():
         db.create_all()
@@ -287,6 +287,7 @@ class ObtenerEstadisticasGraficosGenerales(Resource):
 
 
 class GenerarListados(Resource):
+    @jwt_required()
     def post(self):
         data=request.get_json()
         db.session.query(GestionEstimacion).delete()
@@ -321,6 +322,7 @@ class ObtenerListados(Resource):
         )
 
 class BorrarListados(Resource):
+    @jwt_required()
     def delete(self):
         db.session.delete(GestionEstimacion.query.get_or_404(1))
         db.session.commit()
@@ -447,6 +449,7 @@ class guardarEstimacion(Resource):
         )
 
 class listarEstimaciones(Resource):
+    @jwt_required()
     def get(self):
         estimaciones = Estimacion.query.all()
         return jsonify(
@@ -474,6 +477,7 @@ class listarEstimaciones(Resource):
         )
         
 class BorrarEstimacion(Resource):
+    @jwt_required()
     def delete(self, id):
         estimacion = Estimacion.query.get_or_404(id)
         db.session.delete(estimacion)
@@ -483,7 +487,7 @@ class BorrarEstimacion(Resource):
 
 
 class ListadoLibros(Resource):
-   
+    
     def get(self):
         libros = Libros.query.all()
         return jsonify(
@@ -556,7 +560,7 @@ class InfoLibroID(Resource):
 
 
 class AgregarLibro(Resource):
-
+    @jwt_required()
     def post(self): 
         data = request.get_json()
         nuevo_libro = Libros(
@@ -582,7 +586,7 @@ class AgregarLibro(Resource):
 
 
 class borrarLibro(Resource):
-
+    @jwt_required()
     def delete(self, id):
         libro = Libros.query.get_or_404(id)
         db.session.delete(libro)
@@ -592,7 +596,7 @@ class borrarLibro(Resource):
 
 
 class editarLibro(Resource):
-
+    @jwt_required()
     def put(self, id):
         libro = Libros.query.get_or_404(id)
         data = request.get_json()
@@ -627,7 +631,7 @@ class Fecha(Resource):
 
 
 class buscarLibroAutomatico(Resource):
-
+    @jwt_required()
     def post(self):
         db.session.query(Libros_automaticos).delete()
         db.session.commit()
@@ -660,14 +664,14 @@ class buscarLibroAutomatico(Resource):
 
 
 class borrarTabla(Resource):
-
+    @jwt_required()
     def delete(self):
         Botones.__table__.drop(db.engine)
         db.session.commit()
 
 
 class listarLibrosAutomaticos(Resource):
-
+        @jwt_required()
         def get(self):
             libros = Libros_automaticos.query.all()
             return jsonify(
@@ -692,6 +696,7 @@ class listarLibrosAutomaticos(Resource):
 
 
 class RegistroUsuario(Resource):
+    @jwt_required()
     def post(self):
         data = request.get_json()
         usuario = Usuarios.query.filter_by(correo=data['correo']).first()
@@ -725,6 +730,7 @@ class Login(Resource):
     
     
 class ModificarUsuario(Resource):
+    @jwt_required()
     def put(self, user_id):
         usuario = Usuarios.query.get_or_404(user_id)
         data = request.get_json()
@@ -756,6 +762,7 @@ class ModificarUsuario(Resource):
         return jsonify({"mensaje": "Usuario modificado exitosamente"})
 
 class EliminarUsuario(Resource):
+    @jwt_required()
     def delete(self, user_id):
         usuario = Usuarios.query.get_or_404(user_id)
         if usuario.id == 1:
@@ -769,6 +776,7 @@ class EliminarUsuario(Resource):
     
 
 class ListarUsuarios(Resource):
+    @jwt_required()
     def get(self):
         usuarios = Usuarios.query.all()
         return jsonify(
@@ -785,6 +793,7 @@ class ListarUsuarios(Resource):
         )
 
 class InfoUsuario(Resource):
+    @jwt_required()
     def get(self, user_id):
         usuario = Usuarios.query.get_or_404(user_id)
         return jsonify(
@@ -821,6 +830,7 @@ class ConsultarRol(Resource):
         )
         
 class CrearRol(Resource):
+    @jwt_required()
     def post(self):
         data = request.get_json()
         rol = Roles.query.filter_by(nombre_rol=data['nombre_rol']).first()
@@ -837,6 +847,7 @@ class CrearRol(Resource):
 
 
 class EditarRol(Resource):
+    @jwt_required()
     def put(self, rol):
         rol = Roles.query.get_or_404(rol)
         data = request.get_json()
@@ -868,6 +879,7 @@ class EditarRol(Resource):
 
 
 class BorrarRol(Resource):
+    @jwt_required()
     def delete(self, rol):
         rol = Roles.query.get_or_404(rol)
         if rol.id == 1:
@@ -939,6 +951,7 @@ class consultarBoton(Resource):
         return jsonify(botones_respuesta)
 
 class CrearBoton(Resource): #!Solo durante pruebas
+    @jwt_required()
     def post(self):
         data = request.get_json()
         boton_existente=Botones.query.filter_by(nombre_boton=data['nombre_boton']).first()
@@ -957,6 +970,7 @@ class CrearBoton(Resource): #!Solo durante pruebas
 
 
 class EditarBoton(Resource):
+    @jwt_required()
     def put(self):
         data = request.get_json()
         for boton_data in data['botones']:
@@ -982,6 +996,7 @@ class EditarBoton(Resource):
     
 #!Solo durante las pruebas. No es necesario cuando ya esten creados todos los botones
 class BorrarBoton(Resource):
+    @jwt_required()
     def delete(self, boton_id):
         boton = Botones.query.get_or_404(boton_id)
         db.session.delete(boton)
@@ -992,6 +1007,7 @@ class BorrarBoton(Resource):
 
 
 class ExportarCSV(Resource):
+    @jwt_required()
     def get(self):
         si = StringIO()
         cw = csv.writer(si, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
@@ -1018,6 +1034,7 @@ class ExportarCSV(Resource):
 
 
 class ExportarExcel(Resource):
+    @jwt_required()
     def get(self):
         wb = Workbook()
         ws = wb.active
@@ -1049,6 +1066,7 @@ class ExportarExcel(Resource):
 
 
 class ImportarArchivo(Resource):
+    @jwt_required()
     def post(self):
         if 'archivo' not in request.files:
             return {"mensaje": "No se envió el archivo."}, 400
@@ -1062,7 +1080,7 @@ class ImportarArchivo(Resource):
             return self.importar_excel(archivo)
         else:
             return {"mensaje": "Formato de archivo no soportado."}, 400
-
+    @jwt_required()
     def importar_csv(self, archivo):
         stream = StringIO(archivo.stream.read().decode("UTF-8"), newline=None)
         csv_input = csv.reader(stream, delimiter=';')
@@ -1093,7 +1111,7 @@ class ImportarArchivo(Resource):
 
         return jsonify({"mensaje": "Datos importados exitosamente desde CSV"})
 
-
+    @jwt_required()
     def importar_excel(self, archivo):
         wb = load_workbook(filename=BytesIO(archivo.read()))
         ws = wb.active

@@ -111,6 +111,5 @@ export class PermisosRolesComponent implements OnInit{
 
   onToggle(permiso: Permiso) {
     permiso.permitido = !permiso.permitido;
-    console.log(permiso)
   }
 }
