@@ -168,11 +168,11 @@ private enviarListadosAlBackend(callback: () => void) {
   };
   this.estimadorService.GenerarListados(listados).subscribe({
     next: (respuesta) => {
-      Swal.fire('¡Éxito!', 'La actividad ha sido creada.', 'success');
+      Swal.fire('¡Éxito!', 'Se han actualizado los listados de actividades.', 'success');
       callback();
     },
     error: (error) => {
-      Swal.fire('Error', 'Hubo un problema al crear la actividad.', 'error');
+      Swal.fire('Error', 'Hubo un problema al actualizar las actividades.', 'error');
     }
   });
 
@@ -195,12 +195,7 @@ borrarActividad(actividad: Actividad): void {
       this.eliminarActividad(actividad);
       this.enviarListadosAlBackend(() => {
         this.cargarActividades();
-      });
-      Swal.fire(
-        '¡Borrado!',
-        'La actividad ha sido eliminada.',
-        'success'
-      )
+       });
     }
   })
 }

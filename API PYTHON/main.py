@@ -264,28 +264,6 @@ class ObtenerEstadisticasGraficosGenerales(Resource):
             for estadistica in estadisticas
         ])
 
-
-
-
-
-
-# componentes para este json:
-
-# masculino generico ---> bool
-
-# numero_ninyas -----> int opcional
-# numero_ninyos -----> int opcional
-
-# numero_hombres ----> int
-# numero_mujeres ----> int 
-
-# actividades_hombre ----> int
-# actividades_mujer-----> int
-
-# comprobacion suma de todas listas minimo 1, evitamos 0/0
-
-
-
 class GenerarListados(Resource):
     @jwt_required()
     def post(self):
@@ -1012,18 +990,20 @@ class ExportarCSV(Resource):
         si = StringIO()
         cw = csv.writer(si, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
-        cw.writerow(['ID', 'Título', 'ISBN', 'Editorial', 'Descripción', 'Año de publicación', 'Puntuación', 'Ubicación del estudio', 'URL de la imagen', 'Visitas mensuales', 'Visitas totales', 'Mes de creación', 'Año de creación'])
+        # Incluir nuevas columnas
+        cw.writerow(['ID', 'Título', 'ISBN', 'Editorial', 'Descripción', 'Año de publicación', 'Puntuación', 'Ubicación del estudio', 'URL de la imagen', 'Visitas mensuales', 'Visitas totales', 'Mes de creación', 'Año de creación', 'Puntuación Masculino Genérico', 'Puntuación Menores', 'Puntuación Adultos', 'Puntuación Ubicación', 'Puntuación Actividades'])
 
         libros = Libros.query.all()
         for libro in libros:
             cw.writerow([
-                libro.id, libro.titulo, f"'{libro.isbn}", libro.editorial, libro.descripcion, libro.anyo_publicacion,
+                libro.id, libro.titulo, libro.isbn, libro.editorial, libro.descripcion, libro.anyo_publicacion,
                 libro.puntuacion, libro.ubicacion_estudio, libro.url_imagen, libro.visitas_mensuales, libro.visitas_totales,
-                libro.mes_creacion, libro.anyo_creacion
+                libro.mes_creacion, libro.anyo_creacion, libro.puntuacion_masculino_generico, libro.puntuacion_menores,
+                libro.puntuacion_adultos, libro.puntuacion_ubicacion, libro.puntuacion_actividades
             ])
 
         output = si.getvalue()
-        output = '\ufeff' + output 
+        output = '\ufeff' + output  # BOM para que Excel maneje correctamente utf-8
         output = output.encode('utf-8')
 
         return Response(
@@ -1032,23 +1012,22 @@ class ExportarCSV(Resource):
             headers={"Content-Disposition": "attachment;filename=libros.csv"}
         )
 
-
 class ExportarExcel(Resource):
     @jwt_required()
     def get(self):
         wb = Workbook()
         ws = wb.active
 
-      
-        ws.append(['ID', 'Título', 'ISBN', 'Editorial', 'Descripción', 'Año de publicación', 'Puntuación', 'Ubicación del estudio', 'URL de la imagen', 'Visitas mensuales', 'Visitas totales', 'Mes de creación', 'Año de creación'])
+        # Incluir nuevas columnas
+        ws.append(['ID', 'Título', 'ISBN', 'Editorial', 'Descripción', 'Año de publicación', 'Puntuación', 'Ubicación del estudio', 'URL de la imagen', 'Visitas mensuales', 'Visitas totales', 'Mes de creación', 'Año de creación', 'Puntuación Masculino Genérico', 'Puntuación Menores', 'Puntuación Adultos', 'Puntuación Ubicación', 'Puntuación Actividades'])
 
         libros = Libros.query.all()
-
         for libro in libros:
             ws.append([
                 libro.id, libro.titulo, libro.isbn, libro.editorial, libro.descripcion, libro.anyo_publicacion,
                 libro.puntuacion, libro.ubicacion_estudio, libro.url_imagen, libro.visitas_mensuales, libro.visitas_totales,
-                libro.mes_creacion, libro.anyo_creacion
+                libro.mes_creacion, libro.anyo_creacion, libro.puntuacion_masculino_generico, libro.puntuacion_menores,
+                libro.puntuacion_adultos, libro.puntuacion_ubicacion, libro.puntuacion_actividades
             ])
 
         si = BytesIO()
@@ -1102,7 +1081,12 @@ class ImportarArchivo(Resource):
                 visitas_mensuales=row[9] if row[9] else 0,
                 visitas_totales=row[10] if row[10] else 0,
                 mes_creacion=row[11],
-                anyo_creacion=row[12]
+                anyo_creacion=row[12],
+                puntuacion_masculino_generico=int(row[13]),
+                puntuacion_menores=int(row[14]),
+                puntuacion_adultos=int(row[15]),
+                puntuacion_ubicacion=int(row[16]),
+                puntuacion_actividades=int(row[17])
             )
             db.session.add(nuevo_libro)
         
@@ -1130,7 +1114,12 @@ class ImportarArchivo(Resource):
                 visitas_mensuales=int(row[9].value) if row[9].value else 0,
                 visitas_totales=int(row[10].value) if row[10].value else 0,
                 mes_creacion=row[11].value or datetime.now().strftime("%m"),
-                anyo_creacion=row[12].value or datetime.now().strftime("%Y")
+                anyo_creacion=row[12].value or datetime.now().strftime("%Y"),
+                puntuacion_masculino_generico=int(row[13]),
+                puntuacion_menores=int(row[14]),
+                puntuacion_adultos=int(row[15]),
+                puntuacion_ubicacion=int(row[16]),
+                puntuacion_actividades=int(row[17])
             )
             db.session.add(nuevo_libro)
 
@@ -1217,36 +1206,3 @@ api.add_resource(CrearSugerencia, '/sugerencia')
 if __name__ == "__main__":
     app.run(debug=True)
 
-
-
-
-    
-
-
-
-
-# "botones": [
-#         {
-#             "nombre_boton": "nombre_boton1",
-#             "roles_autorizados": "Admin"
-#         },
-#         {
-#             "nombre_boton": "nombre_boton2",
-#             "rol_solicitado": Admin 
-#         },
-#     ]
-    
-
-
-
-
-#  {
-#      "actividades_produccion": ["Cazar","Pescar","Producir herramientas", "Producir bienes inmuebles", "Transformar materias primas", "Recolectar", "Producir arte","Sembrar","Cosechar","Hacer fuego",
-#      "Usar herramientas"],
-#      "actividades_poder":["Controlar","Mandar","Luchar","Dominar","Deliberar"],
-#      "actividades_mantenimiento":["Limpiar","Cuidar","Cocinar","Curar","Remendar","Consolar","Criar","Aconsejar","Mantener el fuego","Coser","Curtir","Enseñar","Ayudar"],
-#      "actividades_hombre":["Recolectar","Sembrar","Cosechar","Limpiar","Cuidar","Cocinar","Curar","Remendar","Consolar","Criar","Aconsejar","Mantener el fuego","Coser","Curtir","Enseñar","Ayudar"],
-#      "actividades_mujer":["Cazar","Pescar","Producir herramientas", "Producir bienes inmuebles", "Transformar materias primas","Producir arte","Hacer fuego",
-#      "Usar herramientas","Controlar","Mandar","Luchar","Dominar","Deliberar"]
-
-#  }
