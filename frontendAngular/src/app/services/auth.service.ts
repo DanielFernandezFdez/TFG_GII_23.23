@@ -71,7 +71,7 @@ export class AuthService {
 
 
   login(datos: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/login`, datos)
+    return this.http.post<any>(`${this.apiUrl}/usuarios/login`, datos)
       .pipe(map(respuesta => {
         if (respuesta && respuesta.token) {
 
@@ -112,23 +112,23 @@ export class AuthService {
   }
 
   registrarUsuario(datos: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/registro`, datos);
+    return this.http.post(`${this.apiUrl}/usuarios/registro`, datos);
   }
 
   modificarUsuario(id: number, datos: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/modificar_usuario/${id}`, datos);
+    return this.http.put(`${this.apiUrl}/usuarios/modificar_usuario/${id}`, datos);
   }
 
   eliminarUsuario(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/eliminar_usuario/${id}`);
+    return this.http.delete(`${this.apiUrl}/usuarios/eliminar_usuario/${id}`);
   }
 
   obtenerInfoUsuario(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/info_usuario/${id}`);
+    return this.http.get(`${this.apiUrl}/usuarios/info_usuario/${id}`);
   }
 
   listarUsuarios(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/usuarios`, { headers: this.getHeaders() });
+    return this.http.get(`${this.apiUrl}/usuarios/usuarios`, { headers: this.getHeaders() });
   }
 
 

@@ -27,55 +27,52 @@ export class LibrosService {
   }
 
   listarLibros(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/libros`, { headers: this.getHeaders() });
+    return this.http.get(`${this.apiUrl}/gestion-libros/listadoLibros`, { headers: this.getHeaders() });
   }
 
   buscarLibro(busqueda: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/busqueda/${busqueda}`, { headers: this.getHeaders() });
+    return this.http.get(`${this.apiUrl}/gestion-libros/busquedaLibro/${busqueda}`, { headers: this.getHeaders() });
   }
 
   obtenerInfoLibro(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/infoLibro/${id}`, { headers: this.getHeaders() });
+    return this.http.get(`${this.apiUrl}/gestion-libros/infoLibro/${id}`, { headers: this.getHeaders() });
   }
 
   agregarLibro(libro: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/agregar_libro`, libro, { headers: this.getHeaders() });
+    return this.http.post(`${this.apiUrl}/gestion-libros/agregarLibro`, libro, { headers: this.getHeaders() });
   }
 
   editarLibro(id: number, libro: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/editarLibro/${id}`, libro, { headers: this.getHeaders() });
+    return this.http.put(`${this.apiUrl}/gestion-libros/editarLibro/${id}`, libro, { headers: this.getHeaders() });
   }
 
   borrarLibro(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/borrarLibro/${id}`, { headers: this.getHeaders() });
+    return this.http.delete(`${this.apiUrl}/gestion-libros/borrarLibro/${id}`, { headers: this.getHeaders() });
   }
   
   fecha(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/fecha`, { headers: this.getHeaders() });
+    return this.http.get(`${this.apiUrl}/gestion-libros/fecha`, { headers: this.getHeaders() });
   }
 
   
   buscarLibroAutomatico(elemento: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/buscar_libro_automatico`, { elemento }, { headers: this.getHeaders() });
+    return this.http.post(`${this.apiUrl}/gestion-libros/buscarLibroAutomatico`, { elemento }, { headers: this.getHeaders() });
   }
 
   listarLibrosAutomaticos(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/listar_libros_automaticos`, { headers: this.getHeaders() });
+    return this.http.get(`${this.apiUrl}/gestion-libros/listarLibrosAutomaticos`, { headers: this.getHeaders() });
   }
 
-  borrarTablaLibrosAutomaticos(): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/borrar`, { headers: this.getHeaders() });
-  }
 
   exportarLibrosCSV(): Observable<Blob> {
-    return this.http.get(`${this.apiUrl}/exportar_csv`, {
+    return this.http.get(`${this.apiUrl}/import-export/exportar_csv`, {
       headers: this.getHeaders(),
       responseType: 'blob'
     });
   }
 
   exportarLibrosEXCEL(): Observable<Blob> {
-    return this.http.get(`${this.apiUrl}/exportar_excel`, {
+    return this.http.get(`${this.apiUrl}/import-export/exportar_excel`, {
       headers: this.getHeaders(),
       responseType: 'blob'
     });
@@ -87,17 +84,17 @@ export class LibrosService {
   
     const headers = this.getHeaders();
   
-    return this.http.post(`${this.apiUrl}/importar_archivo`, formData, { headers });
+    return this.http.post(`${this.apiUrl}/import-export/importar_archivo`, formData, { headers });
   }
 
 
   obtenerEstadisticas(): Observable<any> {
-    return this.http.post(`${this.apiUrl}/estadisticas`, {},{headers: this.getHeaders()});
+    return this.http.post(`${this.apiUrl}/gestion-estimacion/obtenerEstadisticasGraficosGenerales`, {},{headers: this.getHeaders()});
   }
 
   obtenerEstadisticasFiltradas(mesInicio: number, anyoInicio: number, mesFin: number, anyoFin: number): Observable<any> {
     const filtro = { mes_inicio: mesInicio, anyo_inicio: anyoInicio, mes_fin: mesFin, anyo_fin: anyoFin };
-    return this.http.post(`${this.apiUrl}/estadisticas`, filtro, { headers: this.getHeaders() });
+    return this.http.post(`${this.apiUrl}/gestion-estimacion/obtenerEstadisticasGraficosGenerales`, filtro, { headers: this.getHeaders() });
   }
 
 

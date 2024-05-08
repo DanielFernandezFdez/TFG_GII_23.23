@@ -20,22 +20,22 @@ export class RolesService {
   }
 
   obtenerRoles(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/roles`, { headers: this.getHeaders() });
+    return this.http.get(`${this.apiUrl}/roles/roles`, { headers: this.getHeaders() });
   }
 
   consulatarRol(id: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/consultar_rol/${id}`, { headers: this.getHeaders() });
+    return this.http.post(`${this.apiUrl}/roles/consultar_rol/${id}`, { headers: this.getHeaders() });
   }
 
   crearRol(datos: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/crear_rol`, datos, { headers: this.getHeaders() });
+    return this.http.post(`${this.apiUrl}/roles/crear_rol`, datos, { headers: this.getHeaders() });
   }
 
   editarRol(id: number, datos: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/editar_rol/${id}`, datos, { headers: this.getHeaders() });
+    return this.http.put(`${this.apiUrl}/roles/editar_rol/${id}`, datos, { headers: this.getHeaders() });
   }
 
   borrarRol(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/borrar_rol/${id}`, { headers: this.getHeaders() });
+    return this.http.delete(`${this.apiUrl}/roles/borrar_rol/${id}`, { headers: this.getHeaders() });
   }
 }

@@ -20,22 +20,22 @@ export class BotonesService {
   }
 
   consultarBoton(nombresBotones: string[], id:number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/consultar_boton/${id}`, {nombre_botones: nombresBotones}, { headers: this.getHeaders() });
+    return this.http.post(`${this.apiUrl}/botones/consultar_boton/${id}`, {nombre_botones: nombresBotones}, { headers: this.getHeaders() });
   }
 
   listarBotones(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/botones`, { headers: this.getHeaders() });
+    return this.http.get(`${this.apiUrl}/botones/buscar_botones`, { headers: this.getHeaders() });
   }
 
   crearBoton(datos: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/crear_boton`, datos, { headers: this.getHeaders() });
+    return this.http.post(`${this.apiUrl}/botones/crear_boton`, datos, { headers: this.getHeaders() });
   }
 
   editarBoton(datos: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/editar_boton`, datos, { headers: this.getHeaders() });
+    return this.http.put(`${this.apiUrl}/botones/editar_boton`, datos, { headers: this.getHeaders() });
   }
 
   borrarBoton(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/borrar_boton/${id}`, { headers: this.getHeaders() });
+    return this.http.delete(`${this.apiUrl}/botones/borrar_boton/${id}`, { headers: this.getHeaders() });
   }
 }

@@ -22,6 +22,6 @@ export class SugerenciaService {
 
 
   crearSugerencia(sugerencia: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/sugerencia`, sugerencia, { headers: this.getHeaders() });
+    return this.http.post(`${this.apiUrl}/sugerencias/crear_sugerencia`, sugerencia, { headers: this.getHeaders() });
   }
 }
