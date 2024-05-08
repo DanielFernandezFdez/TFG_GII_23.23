@@ -115,7 +115,6 @@ msgConfirmacionLogout=()=>{
         const password = (Swal.getPopup()!.querySelector('#password') as HTMLInputElement).value;
         const confirmPassword = (Swal.getPopup()!.querySelector('#confirmPassword') as HTMLInputElement).value;
         
-        // Validaciones
         if (!currentPassword || !password || !confirmPassword) {
           Swal.showValidationMessage(`Por favor complete todos los campos`);
         }

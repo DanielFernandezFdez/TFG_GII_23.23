@@ -92,7 +92,7 @@ export class GestionUsuarioComponent implements OnInit {
 
   editarUsuario(id: number, event:MouseEvent): void {
     const usuario = this.usuarios.find(u => u.id === id);
-    this.usuarioEditado = JSON.parse(JSON.stringify(usuario)); //Evita que se reflejen los cambios en la tabla
+    this.usuarioEditado = JSON.parse(JSON.stringify(usuario));
 
     if(this.modificar){
       this.modificar.toggle(event);

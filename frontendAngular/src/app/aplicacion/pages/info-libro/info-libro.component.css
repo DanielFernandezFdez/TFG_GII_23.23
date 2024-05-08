@@ -44,7 +44,7 @@
   }
 
   .puntuacion-meter {
-    max-width: 100%; /* Ajustar ancho en dispositivos muy pequeños */
+    max-width: 100%; 
   }
 }
 
@@ -55,6 +55,6 @@
   }
 
   .puntuacion-meter {
-    max-width: 100%; /* Ajustar ancho en dispositivos muy pequeños */
+    max-width: 100%; 
   }
 }

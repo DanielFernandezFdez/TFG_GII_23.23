@@ -47,6 +47,6 @@
     }
 
     .columna-nombre, .columna-categoria, .columna-puntuacion, .columna-acciones {
-        width: auto;  /* Hace que las columnas sean fluidas en dispositivos más pequeños */
+        width: auto; 
     }
 }
