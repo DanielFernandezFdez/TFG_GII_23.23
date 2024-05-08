@@ -9,7 +9,7 @@ import Swal from 'sweetalert2'
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://127.0.0.1:5000';
+  private apiUrl = 'https://tfg-gii-23-23.onrender.com';
   private usuarioActual = new BehaviorSubject<string | null>(null);
   usuarioActualValor = this.usuarioActual.asObservable();
   private token = new BehaviorSubject<string | null>(null);
@@ -112,19 +112,19 @@ export class AuthService {
   }
 
   registrarUsuario(datos: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/usuarios/registro`, datos);
+    return this.http.post(`${this.apiUrl}/usuarios/registro`, datos, { headers: this.getHeaders() });
   }
 
   modificarUsuario(id: number, datos: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/usuarios/modificar_usuario/${id}`, datos);
+    return this.http.put(`${this.apiUrl}/usuarios/modificar_usuario/${id}`, datos, { headers: this.getHeaders() });
   }
 
   eliminarUsuario(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/usuarios/eliminar_usuario/${id}`);
+    return this.http.delete(`${this.apiUrl}/usuarios/eliminar_usuario/${id}`, { headers: this.getHeaders() });
   }
 
   obtenerInfoUsuario(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/usuarios/info_usuario/${id}`);
+    return this.http.get(`${this.apiUrl}/usuarios/info_usuario/${id}`, { headers: this.getHeaders() });
   }
 
   listarUsuarios(): Observable<any> {

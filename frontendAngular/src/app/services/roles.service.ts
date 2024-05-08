@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RolesService {
-  private apiUrl = 'http://127.0.0.1:5000'; 
+  private apiUrl = 'https://tfg-gii-23-23.onrender.com'; 
 
   constructor(private http: HttpClient) { }
 
