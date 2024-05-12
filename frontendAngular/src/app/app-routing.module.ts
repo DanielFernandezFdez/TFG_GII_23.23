@@ -89,7 +89,7 @@ const routes: Routes = [
     path:'gestion-usuarios',
     component: GestionUsuarioComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   },
   {
     path:'gestion-roles',
