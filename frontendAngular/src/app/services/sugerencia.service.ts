@@ -6,8 +6,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SugerenciaService {
-  //private apiUrl = 'https://tfg-gii-23-23.onrender.com'; 
-  private apiUrl = 'http://127.0.0.1:5000';
+  private apiUrl = 'https://tfg-gii-23-23.onrender.com'; 
+  //private apiUrl = 'http://127.0.0.1:5000';
   constructor(private http: HttpClient) { }
 
   private getHeaders() {

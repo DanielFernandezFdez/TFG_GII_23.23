@@ -10,8 +10,8 @@ import Swal from 'sweetalert2'
 })
 export class AuthService {
 
-  private apiUrl = 'http://127.0.0.1:5000';
-  //private apiUrl = 'https://tfg-gii-23-23.onrender.com';
+  //private apiUrl = 'http://127.0.0.1:5000';
+  private apiUrl = 'https://tfg-gii-23-23.onrender.com';
   private usuarioActual = new BehaviorSubject<string | null>(null);
   usuarioActualValor = this.usuarioActual.asObservable();
   private token = new BehaviorSubject<string | null>(null);
