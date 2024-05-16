@@ -111,7 +111,7 @@ export class SidebarComponent {
             
           },
           {
-            label: 'Agregar Libro auto',
+            label: 'Agregar Libro automáticamente',
             icon: 'pi pi-send',
             command: () =>{
               this.obtenerNombreLibroAuto(), 

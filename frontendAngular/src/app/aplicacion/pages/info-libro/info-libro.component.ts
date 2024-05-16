@@ -52,7 +52,7 @@ export class InfoLibroComponent implements OnInit {
         { label: 'Masculino genérico Max 20% :', color: '#34d399', value: this.libro.puntuacion_masculino_generico },
         { label: 'Puntuación adultos Max 30% :', color: '#60a5fa', value: this.libro.puntuacion_adultos },
         { label: 'Puntuación ubicación Max 20% :', color: '#c084fc', value: this.libro.puntuacion_ubicacion },
-        { label: 'Puntuación actividades Max 30% :', color: '#c084fc', value: this.libro.puntuacion_actividades }
+        { label: 'Puntuación actividades Max 30% :', color: '#FF5733', value: this.libro.puntuacion_actividades }
       ]
     }
     else{
@@ -61,7 +61,7 @@ export class InfoLibroComponent implements OnInit {
         { label: 'Puntuación menores Max 15% :', color: '#fbbf24', value: this.libro.puntuacion_menores },
         { label: 'Puntuación adultos Max 15% :', color: '#60a5fa', value: this.libro.puntuacion_adultos },
         { label: 'Puntuación ubicación Max 20% :', color: '#c084fc', value: this.libro.puntuacion_ubicacion },
-        { label: 'Puntuación actividades Max 30% :', color: '#c084fc', value: this.libro.puntuacion_actividades }
+        { label: 'Puntuación actividades Max 30% :', color: '#FF5733', value: this.libro.puntuacion_actividades }
       ]
     }
   }
