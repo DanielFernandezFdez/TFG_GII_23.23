@@ -154,7 +154,7 @@ export class SidebarComponent {
         ]
       },
       {
-        label: 'Gestión del estimador',
+        label: 'Gestión de las valoraciones',
         expanded: true,
         items: [
           {
@@ -165,7 +165,7 @@ export class SidebarComponent {
              this.cerrarSidebar() }
           },
           {
-            label: "Estimaciones guardadas",
+            label: "Valoraciones guardadas",
             icon: 'pi pi-save',
             command: () =>  {
               this.router.navigate(['/estimaciones-guardadas']),
@@ -184,7 +184,7 @@ export class SidebarComponent {
 
   obtenerNombreLibroAuto() {
     Swal.fire({
-      title: 'Introduce el nombre del libro',
+      title: 'Introduce el nombre o ISBN del libro',
       input: 'text',
       inputAttributes: {
         autocapitalize: 'off'

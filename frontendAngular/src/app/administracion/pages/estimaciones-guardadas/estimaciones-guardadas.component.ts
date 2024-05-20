@@ -47,7 +47,7 @@ export class EstimacionesGuardadasComponent implements OnInit {
       error: (error) => {
        Swal.fire({
           title: "Error",
-          text: "No se han podido cargar las estimaciones",
+          text: "No se han podido cargar las valoraciones",
           icon: "error"
         });
       }
@@ -59,8 +59,8 @@ export class EstimacionesGuardadasComponent implements OnInit {
     this.EstimacionService.borrarEstimacion(id).subscribe({
       next: (data) => {
         Swal.fire({
-          title: "Estimación eliminada",
-          text: "La estimación ha sido eliminada correctamente",
+          title: "Valoración eliminada",
+          text: "La valoración ha sido eliminada correctamente",
           icon: "success"
         });
         this.cargarEstimaciones();
@@ -69,7 +69,7 @@ export class EstimacionesGuardadasComponent implements OnInit {
       error: (error) => {
         Swal.fire({
           title: "Error",
-          text: "No se ha podido eliminar la estimación",
+          text: "No se ha podido eliminar la valoración",
           icon: "error"
         });
       }
@@ -79,7 +79,7 @@ export class EstimacionesGuardadasComponent implements OnInit {
 
   masInformacion(estimacion: Estimacion): void {
     Swal.fire({
-      title: "Información de la estimación",
+      title: "Información de la valoración",
       html: `
       <p><strong>Título:</strong> ${estimacion.titulo}</p>
       <p><strong>ISBN:</strong> ${estimacion.isbn}</p>

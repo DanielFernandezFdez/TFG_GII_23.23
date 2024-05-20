@@ -23,7 +23,7 @@ export class AgregarLibroComponent {
       descripcion: ['', Validators.required],
       anyo_publicacion: ['', Validators.required],
       puntuacion: [null, Validators.required],
-      ubicacion_estudio: ['', Validators.required],
+      ubicacion_estudio: [''],
       url_imagen: ['', Validators.required],
       puntuacion_masculino_generico: [0, Validators.required],
       puntuacion_menores: [0, Validators.required],

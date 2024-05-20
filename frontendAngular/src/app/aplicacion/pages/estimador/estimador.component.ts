@@ -4,6 +4,7 @@ import { EstimacionService } from '../../../services/estimacion.service';
 import { MenuItem } from 'primeng/api';
 import { SelectItem } from 'primeng/api';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-estimador',
@@ -19,7 +20,7 @@ export class EstimadorComponent implements OnInit {
   activeIndex: number = 0;
   items: MenuItem[] = [];
 
-  constructor(private fb: FormBuilder, private estimacionService: EstimacionService) {
+  constructor(private fb: FormBuilder, private estimacionService: EstimacionService, private router: Router) {
     this.estimacionForm = this.fb.group({
       masculino_generico: [false],
       numero_ninyos: [0],
@@ -106,18 +107,25 @@ export class EstimadorComponent implements OnInit {
     this.estimacionService.calcularEstimacion(valoresEstimacion).subscribe({
       next: (resultado) => {
         this.resultadoEstimacion = resultado.resultado;
+        this.estimacionForm.reset();
         Swal.fire({
           title: "Resultado del estudio:"+ this.resultadoEstimacion,
           text: "¿Le gustaría enviar los resultados para su estudio?",
           icon: "info",
+          showDenyButton: true,
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
           cancelButtonColor: "#d33",
           confirmButtonText: "Enviar datos",
-          cancelButtonText:"No, gracias"
+          cancelButtonText:"No, gracias",
+          denyButtonColor: "#AF0064",
+          denyButtonText: "Ir a guía de análisis"
         }).then((result) => {
           if (result.isConfirmed) {
             this.guardarEstimacion(valoresEstimacion);
+          }
+          if(result.isDenied){
+            this.router.navigate(['/guia-analisis']);
           }
         });
       },

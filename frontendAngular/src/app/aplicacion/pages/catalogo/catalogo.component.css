@@ -41,73 +41,68 @@
 
 }
 
-
-
-.editBtn {
-    width: 55px;
-    height: 55px;
-    border-radius: 20px;
-    border: none;
-    background-color: rgb(93, 93, 116);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.123);
-    cursor: pointer;
-    overflow: hidden;
-    transition: all 0.3s;
+  .plusButton {
+    /* Config start */
+    --plus_sideLength: 2.5rem;
+    --plus_topRightTriangleSideLength: 0.9rem;
+    /* Config end */
     position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid white;
+    width: var(--plus_sideLength);
+    height: var(--plus_sideLength);
+    background-color: #000000;
+    overflow: hidden;
     bottom: 20px;    
     left: 20px;     
     z-index: 900; 
   }
-  .editBtn::before {
-    content: "";
-    width: 200%;
-    height: 200%;
-    background-color: rgb(102, 102, 141);
+  
+  .plusButton::before {
     position: absolute;
-    z-index: 1;
-    transform: scale(0);
-    transition: all 0.3s;
-    border-radius: 50%;
-    filter: blur(10px);
-  }
-  .editBtn:hover::before {
-    transform: scale(1);
-  }
-  .editBtn:hover {
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.336);
+    content: "";
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-width: 0 var(--plus_topRightTriangleSideLength) var(--plus_topRightTriangleSideLength) 0;
+    border-style: solid;
+    border-color: transparent white transparent transparent;
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.2s;
   }
   
-  .editBtn svg {
-    height: 17px;
+  .plusButton:hover {
+    cursor: pointer;
+  }
+  
+  .plusButton:hover::before {
+    --plus_topRightTriangleSideLength: calc(var(--plus_sideLength) * 2);
+  }
+  
+  .plusButton:focus-visible::before {
+    --plus_topRightTriangleSideLength: calc(var(--plus_sideLength) * 2);
+  }
+  
+  .plusButton>.plusIcon {
     fill: white;
-    z-index: 3;
-    transition: all 0.2s;
-    transform-origin: bottom;
+    width: calc(var(--plus_sideLength) * 0.7);
+    height: calc(var(--plus_sideLength) * 0.7);
+    z-index: 1;
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.2s;
   }
-  .editBtn:hover svg {
-    transform: rotate(-15deg) translateX(5px);
+  
+  .plusButton:hover>.plusIcon {
+    fill: black;
+    transform: rotate(180deg);
   }
-  .editBtn::after {
-    content: "";
-    width: 25px;
-    height: 1.5px;
-    position: absolute;
-    bottom: 19px;
-    left: -5px;
-    background-color: white;
-    border-radius: 2px;
-    z-index: 2;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.5s ease-out;
-  }
-  .editBtn:hover::after {
-    transform: scaleX(1);
-    left: 0px;
-    transform-origin: right;
+  
+  .plusButton:focus-visible>.plusIcon {
+    fill: black;
+    transform: rotate(180deg);
   }
   
 
