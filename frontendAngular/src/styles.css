@@ -6,3 +6,8 @@
     left: 0;
     position: fixed;
 }
+
+.swal2-input-estimador {
+    width: 70% !important;
+    box-sizing: border-box;
+  }

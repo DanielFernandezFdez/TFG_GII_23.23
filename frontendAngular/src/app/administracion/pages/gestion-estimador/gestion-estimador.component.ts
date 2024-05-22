@@ -108,13 +108,13 @@ export class GestionEstimadorComponent implements OnInit{
     Swal.fire({
       title: 'Crear Actividad',
       html:
-        '<input id="nombre" class="swal2-input" placeholder="Nombre de la actividad">' +
-        '<select id="categoria" class="swal2-input">' +
+        '<input id="nombre" class="swal2-input swal2-input-estimador " placeholder="Nombre de la actividad">' +
+        '<select id="categoria" class="swal2-input swal2-input-estimador ">' +
           '<option value="Producción">Producción</option>' +
           '<option value="Poder">Poder</option>' +
           '<option value="Mantenimiento">Mantenimiento</option>' +
         '</select>' +
-        '<select id="puntuacion_extra" class="swal2-input">' +
+        '<select id="puntuacion_extra" class="swal2-input swal2-input-estimador">' +
           '<option value="Hombre">Hombre</option>' +
           '<option value="Mujer">Mujer</option>' +
         '</select>',
@@ -229,13 +229,13 @@ editarActividad(actividadOriginal: Actividad): void {
   Swal.fire({
     title: 'Editar Actividad',
     html:
-      `<input id="nombre" class="swal2-input" value="${actividadOriginal.nombre}" placeholder="Nombre de la actividad">` +
-      `<select id="categoria" class="swal2-input">` +
+      `<input id="nombre" class="swal2-input swal2-input-estimador" value="${actividadOriginal.nombre}" placeholder="Nombre de la actividad">` +
+      `<select id="categoria" class="swal2-input swal2-input-estimador">` +
         `<option value="Producción" ${actividadOriginal.categoria === 'Producción' ? 'selected' : ''}>Producción</option>` +
         `<option value="Poder" ${actividadOriginal.categoria === 'Poder' ? 'selected' : ''}>Poder</option>` +
         `<option value="Mantenimiento" ${actividadOriginal.categoria === 'Mantenimiento' ? 'selected' : ''}>Mantenimiento</option>` +
       `</select>` +
-      `<select id="puntuacion_extra" class="swal2-input">` +
+      `<select id="puntuacion_extra" class="swal2-input swal2-input-estimador">` +
         `<option value="Hombre" ${actividadOriginal.Puntuacion_extra === 'Hombre' ? 'selected' : ''}>Hombre</option>` +
         `<option value="Mujer" ${actividadOriginal.Puntuacion_extra === 'Mujer' ? 'selected' : ''}>Mujer</option>` +
       `</select>`,

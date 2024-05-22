@@ -42,10 +42,8 @@
 }
 
   .plusButton {
-    /* Config start */
     --plus_sideLength: 2.5rem;
     --plus_topRightTriangleSideLength: 0.9rem;
-    /* Config end */
     position: fixed;
     display: flex;
     justify-content: center;
