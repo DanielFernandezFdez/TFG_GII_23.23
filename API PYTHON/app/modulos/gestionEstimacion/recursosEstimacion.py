@@ -10,6 +10,8 @@ from app.modelos import db, EstadisticasPorMes, Estimacion, GestionEstimacion, L
 import json
 
 def  ActualizarEstadisticasMensuales():
+    db.create_all()
+    db.session.commit()
     estadistica_existente = EstadisticasPorMes.query.filter_by(mes=datetime.now().strftime("%m"), anyo=datetime.now().strftime("%Y")).first()
     libros = Libros.query.all()
     estimaciones = Estimacion.query.all()

@@ -182,11 +182,11 @@ class buscarLibroAutomatico(Resource):
 
 
 class borrarTabla(Resource):
-    #@jwt_required()
+    @jwt_required()
     def delete(self):
         print("No tan rápido")
-        EstadisticasPorMes.__table__.drop(db.engine)
-        db.session.commit()
+        #EstadisticasPorMes.__table__.drop(db.engine)
+        #db.session.commit()
 
 
 class listarLibrosAutomaticos(Resource):
