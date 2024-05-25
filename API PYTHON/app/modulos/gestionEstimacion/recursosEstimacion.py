@@ -10,8 +10,6 @@ from app.modelos import db, EstadisticasPorMes, Estimacion, GestionEstimacion, L
 import json
 
 def  ActualizarEstadisticasMensuales():
-    db.create_all()
-    db.session.commit()
     estadistica_existente = EstadisticasPorMes.query.filter_by(mes=datetime.now().strftime("%m"), anyo=datetime.now().strftime("%Y")).first()
     libros = Libros.query.all()
     estimaciones = Estimacion.query.all()
@@ -69,8 +67,6 @@ class ObtenerEstadisticasGraficosGenerales(Resource):
         data = request.get_json()
         ActualizarEstadisticasMensuales()
         query = EstadisticasPorMes.query
-        print("aaaaaaaa")
-        print(data)
         if 'mes_inicio' in data and 'anyo_inicio' in data and 'mes_fin' in data and 'anyo_fin' in data:
             mes_inicio = int(data['mes_inicio'])
             anyo_inicio = int(data['anyo_inicio'])
