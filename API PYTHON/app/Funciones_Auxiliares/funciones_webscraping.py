@@ -204,7 +204,8 @@ def buscar_libro_agapea_libro(info):
         instancia = BeautifulSoup(respuesta.content, "html.parser")
 
         primer_resultado = instancia.find("div", {"class": "resultados"})
-        primer_resultado = primer_resultado.find("li", {"class": "resumen-mini"})
+        if primer_resultado:
+            primer_resultado = primer_resultado.find("li", {"class": "resumen-mini"})
 
         if primer_resultado:
             primer_resultado = primer_resultado.find("div", {"class": "info1"})
