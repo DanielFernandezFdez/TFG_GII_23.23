@@ -319,7 +319,7 @@ class DescargarEstimacionCSV(Resource):
         ])
         
         output = si.getvalue()
-        output = '\ufeff' + output  # BOM para que Excel maneje correctamente utf-8
+        output = '\ufeff' + output
         output = output.encode('utf-8')
 
         return Response(
