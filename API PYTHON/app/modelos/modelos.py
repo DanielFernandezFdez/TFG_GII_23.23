@@ -108,8 +108,8 @@ class Estimacion(db.Model):
        
 class EstadisticasPorMes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    mes = db.Column(db.String(100), nullable=False)
-    anyo = db.Column(db.String(100), nullable=False)
+    mes = db.Column(db.Integer, nullable=False)
+    anyo = db.Column(db.Integer, nullable=False)
     numero_libros = db.Column(db.Integer, nullable=False)
     numero_visitas_totales = db.Column(db.Integer, nullable=False)
     numero_estimaciones = db.Column(db.Integer, nullable=False)

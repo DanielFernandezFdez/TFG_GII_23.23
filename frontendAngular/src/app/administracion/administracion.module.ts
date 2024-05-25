@@ -15,6 +15,7 @@ import { GestionRolesComponent } from './pages/gestion-roles/gestion-roles.compo
 import { GestionEstimadorComponent } from './pages/gestion-estimador/gestion-estimador.component';
 import { PermisosRolesComponent } from './pages/permisos-roles/permisos-roles.component';
 import { EstimacionesGuardadasComponent } from './pages/estimaciones-guardadas/estimaciones-guardadas.component';
+import { PrimeNGConfig } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,21 @@ import { EstimacionesGuardadasComponent } from './pages/estimaciones-guardadas/e
     SharedModule,
     ReactiveFormsModule,
     FormsModule
-  ]
+  ],
+  providers: [PrimeNGConfig]
 })
-export class AdministracionModule { }
+export class AdministracionModule {
+  constructor(private primengConfig: PrimeNGConfig) {
+    this.primengConfig.setTranslation({
+      firstDayOfWeek: 1,
+      dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+      dayNamesShort: ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"],
+      dayNamesMin: ["D", "L", "M", "X", "J", "V", "S"],
+      monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+      monthNamesShort: ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"],
+      today: 'Hoy',
+      clear: 'Limpiar',
+      dateFormat: 'dd/mm/yy'
+    });
+ }
+}

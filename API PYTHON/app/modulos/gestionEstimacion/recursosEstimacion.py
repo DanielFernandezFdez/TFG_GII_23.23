@@ -10,7 +10,6 @@ from app.modelos import db, EstadisticasPorMes, Estimacion, GestionEstimacion, L
 import json
 
 def  ActualizarEstadisticasMensuales():
-
     estadistica_existente = EstadisticasPorMes.query.filter_by(mes=datetime.now().strftime("%m"), anyo=datetime.now().strftime("%Y")).first()
     libros = Libros.query.all()
     estimaciones = Estimacion.query.all()
@@ -45,8 +44,8 @@ def  ActualizarEstadisticasMensuales():
 
     else:
         nuevaEstadistica = EstadisticasPorMes(
-            mes = datetime.now().strftime("%m"),
-            anyo = datetime.now().strftime("%Y"),
+            mes = int(datetime.now().strftime("%m")),
+            anyo = int(datetime.now().strftime("%Y")),
             numero_libros = numero_libros,
             numero_estimaciones = numero_estimaciones,
             numero_usuarios = numero_usuarios,
@@ -68,6 +67,8 @@ class ObtenerEstadisticasGraficosGenerales(Resource):
         data = request.get_json()
         ActualizarEstadisticasMensuales()
         query = EstadisticasPorMes.query
+        print("aaaaaaaa")
+        print(data)
         if 'mes_inicio' in data and 'anyo_inicio' in data and 'mes_fin' in data and 'anyo_fin' in data:
             mes_inicio = int(data['mes_inicio'])
             anyo_inicio = int(data['anyo_inicio'])
@@ -83,7 +84,6 @@ class ObtenerEstadisticasGraficosGenerales(Resource):
         else:
             query = query.filter(EstadisticasPorMes.anyo == datetime.now().strftime("%Y"))
         estadisticas = query.all()
-
         return jsonify([
             {
                 "mes": estadistica.mes,

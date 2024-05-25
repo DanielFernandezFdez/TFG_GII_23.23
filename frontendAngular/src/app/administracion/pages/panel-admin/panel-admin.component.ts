@@ -18,10 +18,22 @@ export class PanelAdminComponent implements OnInit {
     rangoFechas: [null]
   });
   maxDateValue: Date = new Date(); 
+  es: any;
 
   constructor(private librosService: LibrosService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
+    this.es = {
+      firstDayOfWeek: 1,
+      dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+      dayNamesShort: ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"],
+      dayNamesMin: ["D", "L", "M", "X", "J", "V", "S"],
+      monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+      monthNamesShort: ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"],
+      today: 'Hoy',
+      clear: 'Limpiar',
+      dateFormat: 'dd/mm/yy'
+    };
     this.cargarEstadisticas();
     this.rangoForm = this.fb.group({
       rangoFechas: [null]
@@ -95,15 +107,19 @@ export class PanelAdminComponent implements OnInit {
       if (this.rangoForm.value.rangoFechas) {
         const { rangoFechas } = this.rangoForm.value;
         const mesInicio = rangoFechas[0].getMonth() + 1;
+        console.log(mesInicio)
         const anyoInicio = rangoFechas[0].getFullYear();
+        console.log(anyoInicio)
         const mesFin = rangoFechas[1].getMonth() + 1;
+        console.log(mesFin)
         const anyoFin = rangoFechas[1].getFullYear();
+        console.log(anyoFin)
 
         const fechaInicio = new Date(anyoInicio, mesInicio - 1);
         const fechaFin = new Date(anyoFin, mesFin - 1);
         const diffTime = Math.abs(fechaFin.getTime() - fechaInicio.getTime());
         const diffMonths = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 30));
-  
+        console.log(diffMonths)
         if (diffMonths > 12) {
           alert('El rango no puede exceder los 12 meses.');
           return;

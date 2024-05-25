@@ -3,7 +3,7 @@
 <div class="content">
     <div class="card">
         <form [formGroup]="rangoForm">
-            <p-calendar formControlName="rangoFechas" selectionMode="range" [maxDate]="maxDateValue" [readonlyInput]="true"></p-calendar>
+            <p-calendar formControlName="rangoFechas" selectionMode="range" [maxDate]="maxDateValue" [locale]="es" dateFormat="dd/mm/yy" [readonlyInput]="true"></p-calendar>
             <p-button type="button" (click)="cargarEstadisticasFiltradas()">Filtrar</p-button>
           </form>
         <div class="p-grid">
