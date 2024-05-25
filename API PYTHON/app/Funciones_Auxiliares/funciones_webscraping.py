@@ -236,8 +236,10 @@ def buscar_libro_agapea_isbn(info):
     if respuesta.status_code == 200:
 
         instancia_libro = BeautifulSoup(respuesta.content, "html.parser")
+        info_libro = instancia_libro.find("div", {"id": "cnt-busqueda"})
+        if info_libro:
+            return None
         info = buscar_libro_agapea_generico(instancia_libro)
-
         return info
     return None
 
@@ -365,4 +367,9 @@ def buscar_libro(isbn_o_titulo):
         descripcionAmazon = buscar_libro_amazon(isbn_o_titulo)
         descripcionGoogle = obtener_info_libro_google(isbn_o_titulo, "titulo")
     return [descripcionAgapea, descripcionAmazon, descripcionGoogle]
+
+
+
+
+buscar_libro("9798321713754")
 
