@@ -46,8 +46,9 @@ export class EstimacionService {
   borrarEstimacion(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/gestion-estimacion/borrarEstimacion/${id}`, { headers: this.getHeaders() });
   }
-
-
+  descargarEstimacion(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/gestion-estimacion/descargarEstimacionCSV/${id}`, { headers: this.getHeaders(), responseType: 'blob' });
+  }
 
 
 

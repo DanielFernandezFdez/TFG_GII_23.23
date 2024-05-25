@@ -102,6 +102,31 @@ export class EstimacionesGuardadasComponent implements OnInit {
 
 
 
+  descargarEstimacion(id: number): void {
+    this.EstimacionService.descargarEstimacion(id).subscribe({
+      next: (data) => {
+        const blob = new Blob([data], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `estimacion-${id}.csv`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      },
+      error: (error) => {
+        console.log(error);
+        Swal.fire({
+          title: "Error",
+          text: "No se ha podido descargar la valoración",
+          icon: "error"
+        });
+      }
+    });
+  }
+
+
+
 
 
 

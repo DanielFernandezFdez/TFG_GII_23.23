@@ -1,9 +1,10 @@
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required
-from flask import jsonify, request
+from flask import jsonify, request, Response
 from datetime import datetime
 from sqlalchemy import and_
-
+from io import StringIO, BytesIO
+import csv
 from app.modelos import db, EstadisticasPorMes, Estimacion, GestionEstimacion, Libros, Usuarios
 
 import json
@@ -298,3 +299,32 @@ class BorrarEstimacion(Resource):
         db.session.delete(estimacion)
         db.session.commit()
         return jsonify({"mensaje": "Estimación eliminada exitosamente"})
+    
+    
+class DescargarEstimacionCSV(Resource):
+    @jwt_required()
+    def get(self, id):
+        estimacion = Estimacion.query.get_or_404(id)
+        si = StringIO()
+        cw = csv.writer(si, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        cw.writerow(['Masculino Genérico', 'Numero de niñas', 'Numero de niños', 'Número de hombres', 'Número de mujeres', 
+                     'Ubicación', 'Resultado actividades hombre', 'Resultado actividades mujer', 'Título', 'ISBN', 
+                     'Nombre', 'Apellido', 'Correo', 'Institución', 'Resultado'])
+        
+        cw.writerow([
+            estimacion.masculino_generico, estimacion.numero_ninyas, estimacion.numero_ninyos, estimacion.numero_hombres,
+            estimacion.numero_mujeres, estimacion.ubicacion, estimacion.res_actividades_hombre, estimacion.res_actividades_mujer,
+            estimacion.titulo, estimacion.isbn, estimacion.nombre, estimacion.apellido, estimacion.correo, estimacion.institucion,
+            estimacion.resultado
+        ])
+        
+        output = si.getvalue()
+        output = '\ufeff' + output  # BOM para que Excel maneje correctamente utf-8
+        output = output.encode('utf-8')
+
+        return Response(
+            output,
+            mimetype="text/csv",
+            headers={"Content-Disposition": "attachment;filename=estimacion.csv"}
+        )
+        

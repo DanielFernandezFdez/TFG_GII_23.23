@@ -20,6 +20,7 @@
         <td>{{ estimacion.resultado }}</td>
         <td>
           <p-button icon="pi pi-info-circle" [rounded]="true" [text]="true" severity="info" (click)="masInformacion(estimacion)"></p-button>
+          <p-button icon="pi pi-download" [rounded]="true" [text]="true" severity="success" (click)="descargarEstimacion(estimacion.id)"></p-button>
             <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (click)="eliminarEstimacion(estimacion.id)"></p-button>
         </td>
       </tr>
