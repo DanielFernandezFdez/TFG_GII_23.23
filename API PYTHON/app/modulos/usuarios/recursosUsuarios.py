@@ -75,7 +75,7 @@ class EliminarUsuario(Resource):
     @jwt_required()
     def delete(self, user_id):
         usuario = Usuarios.query.get_or_404(user_id)
-        if usuario.id != 1:
+        if usuario.id == 1:
             respuesta = jsonify({"mensaje": "No se puede eliminar el usuario administrador"})
             respuesta.status_code = 400
             return respuesta
