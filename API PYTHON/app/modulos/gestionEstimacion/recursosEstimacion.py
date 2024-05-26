@@ -2,7 +2,7 @@ from flask_restful import Resource
 from flask_jwt_extended import jwt_required
 from flask import jsonify, request, Response
 from datetime import datetime
-from sqlalchemy import and_
+from sqlalchemy import and_, or_
 from io import StringIO, BytesIO
 import csv
 from app.modelos import db, EstadisticasPorMes, Estimacion, GestionEstimacion, Libros, Usuarios
@@ -10,8 +10,8 @@ from app.modelos import db, EstadisticasPorMes, Estimacion, GestionEstimacion, L
 import json
 
 def  ActualizarEstadisticasMensuales():
-    estadistica_existente = EstadisticasPorMes.query.filter_by(mes=datetime.now().strftime("%m"), anyo=datetime.now().strftime("%Y")).first()
-    libros = Libros.query.all()
+    estadistica_existente = EstadisticasPorMes.query.filter_by(mes=datetime.now().strftime("%m").lstrip('0'), anyo=datetime.now().strftime("%Y")).first()
+    libros = Libros.query.filter_by(mes_creacion=datetime.now().strftime("%m").lstrip('0'), anyo_creacion=datetime.now().strftime("%Y")).all()
     estimaciones = Estimacion.query.all()
     usuarios = Usuarios.query.all()
     numero_libros = len(libros)
@@ -44,7 +44,7 @@ def  ActualizarEstadisticasMensuales():
 
     else:
         nuevaEstadistica = EstadisticasPorMes(
-            mes = int(datetime.now().strftime("%m")),
+            mes = int(datetime.now().strftime("%m").lstrip('0')),
             anyo = int(datetime.now().strftime("%Y")),
             numero_libros = numero_libros,
             numero_estimaciones = numero_estimaciones,
@@ -72,13 +72,40 @@ class ObtenerEstadisticasGraficosGenerales(Resource):
             anyo_inicio = int(data['anyo_inicio'])
             mes_fin = int(data['mes_fin'])
             anyo_fin = int(data['anyo_fin'])
+            
+            print(mes_inicio, anyo_inicio, mes_fin, anyo_fin)
+            
+            # Condiciones para el año inicial y final
+            condiciones = []
+            
+            if anyo_inicio == anyo_fin:
+                # Mismo año
+                condiciones.append(and_(
+                    EstadisticasPorMes.anyo == anyo_inicio,
+                    EstadisticasPorMes.mes >= mes_inicio,
+                    EstadisticasPorMes.mes <= mes_fin
+                ))
+            else:
+                # Año inicial
+                condiciones.append(and_(
+                    EstadisticasPorMes.anyo == anyo_inicio,
+                    EstadisticasPorMes.mes >= mes_inicio
+                ))
 
-            query = query.filter(and_(
-                EstadisticasPorMes.anyo >= anyo_inicio,
-                EstadisticasPorMes.mes >= mes_inicio,
-                EstadisticasPorMes.anyo <= anyo_fin,
-                EstadisticasPorMes.mes <= mes_fin
-            ))
+                # Años completos entre el inicial y el final
+                if anyo_fin > anyo_inicio + 1:
+                    condiciones.append(and_(
+                        EstadisticasPorMes.anyo > anyo_inicio,
+                        EstadisticasPorMes.anyo < anyo_fin
+                    ))
+
+                # Año final
+                condiciones.append(and_(
+                    EstadisticasPorMes.anyo == anyo_fin,
+                    EstadisticasPorMes.mes <= mes_fin
+                ))
+
+            query = query.filter(or_(*condiciones))
         else:
             query = query.filter(EstadisticasPorMes.anyo == datetime.now().strftime("%Y"))
         estadisticas = query.all()

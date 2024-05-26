@@ -2,7 +2,7 @@ from flask_restful import Resource, request
 from flask_jwt_extended import jwt_required
 from flask import jsonify
 import app.Funciones_Auxiliares.funciones_webscraping as fw
-from app.modelos import db, Libros, fecha_modificacion, Libros_automaticos, EstadisticasPorMes
+from app.modelos import db, Libros, fecha_modificacion, Libros_automaticos, EstadisticasPorMes,Estimacion
 
 class ListadoLibros(Resource):
     
@@ -182,11 +182,14 @@ class buscarLibroAutomatico(Resource):
 
 
 class borrarTabla(Resource):
-    @jwt_required()
+
     def delete(self):
         print("No tan rápido")
-        #EstadisticasPorMes.__table__.drop(db.engine)
-        #db.session.commit()
+        Estimacion.__table__.drop(db.engine)
+        db.session.commit()
+        
+        db.create_all()
+        db.session.commit()
 
 
 class listarLibrosAutomaticos(Resource):

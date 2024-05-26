@@ -14,7 +14,7 @@ class Libros(db.Model):
     url_imagen = db.Column(db.String(300))
     visitas_mensuales = db.Column(db.Integer, default=0)
     visitas_totales = db.Column(db.Integer, default=0)
-    mes_creacion = db.Column(db.String(100), nullable=False, default=datetime.now().strftime("%m"))
+    mes_creacion = db.Column(db.String(100), nullable=False, default=datetime.now().strftime("%m").lstrip('0'))
     anyo_creacion = db.Column(db.String(100), nullable=False, default=datetime.now().strftime("%Y"))
     puntuacion_masculino_generico = db.Column(db.Integer, nullable=True)
     puntuacion_menores = db.Column(db.Integer, nullable=True)
@@ -105,6 +105,8 @@ class Estimacion(db.Model):
     correo = db.Column(db.String(100), nullable=False)
     institucion = db.Column(db.String(100), nullable=False)
     resultado = db.Column(db.Integer, nullable=False)
+    mes_creacion = db.Column(db.String(100), nullable=False, default=datetime.now().strftime("%m").lstrip('0'))
+    anyo_creacion = db.Column(db.String(100), nullable=False, default=datetime.now().strftime("%Y"))
        
 class EstadisticasPorMes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
