@@ -185,11 +185,11 @@ class borrarTabla(Resource):
 
     def delete(self):
         print("No tan rápido")
-        Estimacion.__table__.drop(db.engine)
-        db.session.commit()
-        
-        db.create_all()
-        db.session.commit()
+        #stimacion.__table__.drop(db.engine)
+        #db.session.commit()
+
+        #db.create_all()
+        #db.session.commit()
 
 
 class listarLibrosAutomaticos(Resource):
