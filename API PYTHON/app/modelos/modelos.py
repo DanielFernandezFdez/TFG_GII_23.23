@@ -119,3 +119,17 @@ class EstadisticasPorMes(db.Model):
     visitas_libro_mas_visitado = db.Column(db.Integer, nullable=False)
     url_imagen_libro_mas_visitado = db.Column(db.String(300), nullable=False)
     numero_sugerencias = db.Column(db.Integer, nullable = False)
+    
+class EstadisticasPorMesAuxiliar(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    mes = db.Column(db.Integer, nullable=False)
+    anyo = db.Column(db.Integer, nullable=False)
+    numero_libros = db.Column(db.Integer, nullable=False)
+    numero_visitas_totales = db.Column(db.Integer, nullable=False)
+    numero_estimaciones = db.Column(db.Integer, nullable=False)
+    numero_usuarios = db.Column(db.Integer, nullable=False)
+    libro_mas_visitado = db.Column(db.String(100), nullable=False)
+    isbn_libro_mas_visitado = db.Column(db.String(100), nullable=False)
+    visitas_libro_mas_visitado = db.Column(db.Integer, nullable=False)
+    url_imagen_libro_mas_visitado = db.Column(db.String(300), nullable=False)
+    numero_sugerencias = db.Column(db.Integer, nullable = False)

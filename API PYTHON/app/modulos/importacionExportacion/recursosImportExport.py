@@ -2,11 +2,76 @@ from flask_restful import Resource
 from flask_jwt_extended import jwt_required
 from flask import jsonify, Response, request, send_file
 from werkzeug.utils import secure_filename
-from app.modelos.modelos import Libros, db, fecha_modificacion
+from app.modelos.modelos import Libros, db, fecha_modificacion, EstadisticasPorMes, EstadisticasPorMesAuxiliar
 from openpyxl import Workbook, load_workbook
 from io import StringIO, BytesIO
 import csv
 from datetime import datetime
+
+
+def ClonarEstadisticas():
+    estadisticas =EstadisticasPorMes.query.all()
+    for estadistica in estadisticas:
+        nuevaEstadistica = EstadisticasPorMesAuxiliar(
+            mes = estadistica.mes,
+            anyo = estadistica.anyo,
+            numero_libros = estadistica.numero_libros,
+            numero_estimaciones = estadistica.numero_estimaciones,
+            numero_usuarios = estadistica.numero_usuarios,
+            libro_mas_visitado = estadistica.libro_mas_visitado,
+            isbn_libro_mas_visitado = estadistica.isbn_libro_mas_visitado,
+            visitas_libro_mas_visitado = estadistica.visitas_libro_mas_visitado,
+            url_imagen_libro_mas_visitado = estadistica.url_imagen_libro_mas_visitado,
+            numero_visitas_totales = estadistica.numero_visitas_totales,
+            numero_sugerencias = estadistica.numero_sugerencias
+        )
+        db.session.add(nuevaEstadistica)
+    db.session.query(EstadisticasPorMes).delete()
+    db.session.commit()
+
+def  ActualizarEstadisticasImportacion(libro : Libros):
+        estadistica_existente = EstadisticasPorMesAuxiliar.query.filter_by(mes=libro.mes_creacion, anyo=libro.anyo_creacion).first()
+        
+        if estadistica_existente:
+            estadistica_existente.numero_libros = estadistica_existente.numero_libros + 1
+            estadistica_existente.numero_visitas_totales = estadistica_existente.numero_visitas_totales + libro.visitas_mensuales
+            if estadistica_existente.visitas_libro_mas_visitado < libro.visitas_mensuales:
+                estadistica_existente.libro_mas_visitado = libro.titulo
+                estadistica_existente.isbn_libro_mas_visitado = libro.isbn
+                estadistica_existente.visitas_libro_mas_visitado = libro.visitas_mensuales
+                estadistica_existente.url_imagen_libro_mas_visitado = libro.url_imagen
+            
+            nuevaEstadistica = EstadisticasPorMesAuxiliar(
+            mes = estadistica_existente.mes,
+            anyo = estadistica_existente.anyo,
+            numero_libros = estadistica_existente.numero_libros + 1,
+            numero_estimaciones = estadistica_existente.numero_estimaciones,
+            numero_usuarios = estadistica_existente.numero_usuarios,
+            libro_mas_visitado = estadistica_existente.libro_mas_visitado,
+            isbn_libro_mas_visitado = estadistica_existente.isbn_libro_mas_visitado,
+            visitas_libro_mas_visitado = estadistica_existente.visitas_libro_mas_visitado,
+            url_imagen_libro_mas_visitado = estadistica_existente.url_imagen_libro_mas_visitado,
+            numero_visitas_totales = estadistica_existente.numero_visitas_totales,
+            numero_sugerencias = estadistica_existente.numero_sugerencias
+            )
+        else :
+            nuevaEstadistica = EstadisticasPorMesAuxiliar(
+            mes = libro.mes_creacion,
+            anyo = libro.anyo_creacion,
+            numero_libros = 1,
+            numero_estimaciones = 0,
+            numero_usuarios = 1,
+            libro_mas_visitado = libro.titulo,
+            isbn_libro_mas_visitado = libro.isbn,
+            visitas_libro_mas_visitado = libro.visitas_mensuales,
+            url_imagen_libro_mas_visitado = libro.url_imagen,
+            numero_visitas_totales = libro.visitas_mensuales,
+            numero_sugerencias = 0
+            )
+            
+        db.session.add(nuevaEstadistica)
+        db.session.commit()
+
 
 
 class ExportarCSV(Resource):
@@ -77,7 +142,7 @@ class ImportarArchivo(Resource):
 
         archivo = request.files['archivo']
         filename = secure_filename(archivo.filename)
-        
+        ClonarEstadisticas()
         if filename.endswith('.csv'):
             return self.importar_csv(archivo)
         elif filename.endswith('.xlsx'):
@@ -101,7 +166,7 @@ class ImportarArchivo(Resource):
                 descripcion=row[4],
                 anyo_publicacion=row[5],
                 puntuacion=row[6] if row[6] else 0,
-                ubicacion_estudio=row[7],
+                ubicacion_estudio=row[7] if row[7]  != "" & row[7] != "No disponible" else None,
                 url_imagen=row[8],
                 visitas_mensuales=row[9] if row[9] else 0,
                 visitas_totales=row[10] if row[10] else 0,
@@ -114,6 +179,7 @@ class ImportarArchivo(Resource):
                 puntuacion_actividades=int(row[17])
             )
             db.session.add(nuevo_libro)
+            ActualizarEstadisticasImportacion(nuevo_libro)
         
         fecha_modificacion.actualizar_fecha_modificacion()
         db.session.commit()
@@ -147,6 +213,7 @@ class ImportarArchivo(Resource):
                 puntuacion_actividades=int(row[17])
             )
             db.session.add(nuevo_libro)
+            ActualizarEstadisticasImportacion(nuevo_libro)
 
         fecha_modificacion.actualizar_fecha_modificacion()
         
@@ -155,3 +222,9 @@ class ImportarArchivo(Resource):
 
 
         return jsonify({"mensaje": "Datos importados exitosamente desde Excel"})
+    
+    
+    
+    
+    
+    
