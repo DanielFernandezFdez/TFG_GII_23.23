@@ -6,14 +6,13 @@ import { InfoLibroComponent } from './pages/info-libro/info-libro.component';
 import { PrimeNgModule } from '../prime-ng/prime-ng.module';
 import { SharedModule } from '../shared/shared.module';
 import { LoginComponent } from './pages/login/login.component';
-import { EstimadorComponent } from './pages/estimador/estimador.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { GuiaAnalisisComponent } from './pages/guia-analisis/guia-analisis.component';
 import { DecalogoComponent } from './pages/decalogo/decalogo.component';
 import { ReferentesComponent } from './pages/referentes/referentes.component';
 import { GuiaPuntuacionComponent } from './pages/guia-puntuacion/guia-puntuacion.component';
-
+import { EstimadorComponent } from './pages/estimador/estimador.component';
 
 @NgModule({
   declarations: [
@@ -21,11 +20,11 @@ import { GuiaPuntuacionComponent } from './pages/guia-puntuacion/guia-puntuacion
     CatalogoComponent,
     InfoLibroComponent,
     LoginComponent,
-    EstimadorComponent,
     GuiaAnalisisComponent,
     DecalogoComponent,
     ReferentesComponent,
-    GuiaPuntuacionComponent
+    GuiaPuntuacionComponent,
+    EstimadorComponent
   ],
   imports: [
     CommonModule,

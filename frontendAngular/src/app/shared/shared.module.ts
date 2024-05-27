@@ -8,22 +8,26 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 
 
 
+
+
 @NgModule({
   declarations: [
     MenuComponent,
     FooterComponent,
     MenuDashboardComponent,
-    SidebarComponent
+    SidebarComponent,
+
   ],
   imports: [
     CommonModule,
-    PrimeNgModule
+    PrimeNgModule,
   ],
   exports: [
     MenuComponent,
     FooterComponent,
     MenuDashboardComponent,
-    SidebarComponent
+    SidebarComponent,
+
   ]
 })
 export class SharedModule { }

@@ -28,6 +28,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { ChartModule } from 'primeng/chart';
 import { CalendarModule } from 'primeng/calendar';
 import { MeterGroupModule } from 'primeng/metergroup';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
   declarations: [],
@@ -62,7 +63,8 @@ import { MeterGroupModule } from 'primeng/metergroup';
     InputSwitchModule,
     ChartModule,
     CalendarModule,
-    MeterGroupModule
+    MeterGroupModule,
+    DialogModule
   ]
 })
 export class PrimeNgModule { }

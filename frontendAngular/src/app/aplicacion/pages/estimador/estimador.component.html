@@ -2,63 +2,93 @@
 <p-card>
   <form [formGroup]="estimacionForm">
     <div class="p-grid">
+      <!-- Sección Masculino Genérico -->
       <div class="p-col-12">
         <div class="card">
-          <div class="p-formgroup-inline">
-            <div class="p-field-checkbox mas-gen">
-              <p-checkbox formControlName="masculino_generico" [binary]="true" label="Masculino Genérico"></p-checkbox>
-            </div>
+          <div class="section-header">
+            <i class="pi pi-male"></i>
+            <h2>Género</h2>
           </div>
-
-          <div class="p-grid">
-            <div class="p-col-4">
+          <div class="p-field-checkbox mas-gen">
+            <p-checkbox formControlName="masculino_generico" [binary]="true" label="Masculino Genérico"></p-checkbox>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Sección Cantidades -->
+      <div class="p-col-12">
+        <div class="card">
+          <div class="section-header">
+            <i class="pi pi-users"></i>
+            <h2>Cantidades</h2>
+          </div>
+          <div class="cantidades">
+            <div class="hombre">
+              <h3>Hombres</h3>
               <label for="numeroHombres">Número de hombres</label>
               <p-inputNumber class="contadores" formControlName="numero_hombres" [min]="0"></p-inputNumber>
-            </div>
-            <div class="p-col-4">
-              <label for="numeroMujeres">Número de mujeres</label>
-              <p-inputNumber class="contadores" formControlName="numero_mujeres" [min]="0"></p-inputNumber>
-            </div>
-            <div class="p-col-4">
               <label for="numeroNinyos">Número de niños</label>
               <p-inputNumber class="contadores" formControlName="numero_ninyos" [min]="0"></p-inputNumber>
             </div>
-            <div class="p-col-4">
+            <img src="../../../../assets/images/libro prehistoria estimador.png" alt="Libro prehistoria" class="responsive-image">
+            <div class="mujer">
+              <h3>Mujeres</h3>
+              <label for="numeroMujeres">Número de mujeres</label>
+              <p-inputNumber class="contadores" formControlName="numero_mujeres" [min]="0"></p-inputNumber>
               <label for="numeroNinyas">Número de niñas</label>
               <p-inputNumber class="contadores" formControlName="numero_ninyas" [min]="0"></p-inputNumber>
             </div>
           </div>
+        </div>
+      </div>
 
-          <div class="p-grid">
-            <label>Actividades Hombre</label>
-            <div class="p-col-4 act-hombre">
+      <!-- Sección Actividades -->
+      <div class="p-col-12">
+        <div class="card">
+          <div class="section-header">
+            <i class="pi pi-briefcase"></i>
+            <h2>Actividades</h2>
+          </div>
+          <div class="actividades">
+            <div class="actividades-hombre">
+              <h3>Actividades Hombre</h3>
               <p-multiSelect formControlName="res_actividades_hombre_produccion" [options]="actividades_produccion" placeholder="Actividades producción"></p-multiSelect>
               <p-multiSelect formControlName="res_actividades_hombre_poder" [options]="actividades_poder" placeholder="Actividades poder"></p-multiSelect>
               <p-multiSelect formControlName="res_actividades_hombre_mantenimiento" [options]="actividades_mantenimiento" placeholder="Actividades mantenimiento"></p-multiSelect>
             </div>
+            <img src="../../../../assets/images/Footer niños.png" alt="Footer niños" class="responsive-image">
 
-            <label>Actividades Mujer</label>
-            <div class="p-col-4 act-mujer">
+            <div class="actividades-mujer">
+              <h3>Actividades Mujer</h3>
               <p-multiSelect formControlName="res_actividades_mujer_produccion" [options]="actividades_produccion" placeholder="Actividades producción"></p-multiSelect>
               <p-multiSelect formControlName="res_actividades_mujer_poder" [options]="actividades_poder" placeholder="Actividades poder"></p-multiSelect>
               <p-multiSelect formControlName="res_actividades_mujer_mantenimiento" [options]="actividades_mantenimiento" placeholder="Actividades mantenimiento"></p-multiSelect>
             </div>
           </div>
-
-          <div class="flex flex-column gap-3">
-            <div>
-              <label for="ubicacion" class="block">Ubicación de las personas</label>
-              <p-dropdown formControlName="ubicacion" [options]="ubicacionOptions" placeholder="Selecciona una opción" optionLabel="label"></p-dropdown>
-            </div>
-          </div>
-
-          <div class="p-field">
-            <button pButton type="button" (click)="calcularEstimacion()" label="Calcular" class="p-button-success"></button>
-          </div>
-
         </div>
       </div>
-    
+
+      <!-- Sección Ubicación -->
+      <div class="p-col-12">
+        <div class="card">
+          <div class="section-header">
+            <i class="pi pi-map-marker"></i>
+            <h2>Ubicación</h2>
+          </div>
+          <div class="flex flex-column gap-3">
+            <label for="ubicacion" class="block">Ubicación de las personas</label>
+            <p-dropdown formControlName="ubicacion" [options]="ubicacionOptions" placeholder="Selecciona una opción" optionLabel="label"></p-dropdown>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón Calcular -->
+      <div class="p-col-12">
+        <div class="p-field button-container">
+          <button pButton type="button" (click)="calcularEstimacion()" label="Calcular" class="p-button-success"></button>
+        </div>
+      </div>      
     </div>
   </form>
 </p-card>
+

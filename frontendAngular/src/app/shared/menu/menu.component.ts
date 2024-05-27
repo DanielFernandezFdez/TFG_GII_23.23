@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild  } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from '../../services/auth.service';
+
 import Swal from 'sweetalert2'
 import { Router } from '@angular/router';
 
@@ -10,6 +11,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent {
+
+
   elem_izq: MenuItem[] =[];
   
   isLoggedIn: boolean = false;
@@ -83,6 +86,8 @@ export class MenuComponent {
     ];
     
     }
+
+
 
 msgConfirmacionLogout=()=>{
     Swal.fire({
