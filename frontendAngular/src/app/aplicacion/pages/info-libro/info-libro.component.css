@@ -58,3 +58,31 @@
     max-width: 100%; 
   }
 }
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.columna {
+  flex: 1;
+}
+
+.img-fluid-info-libro {
+  max-width: 100%;
+  height: auto;
+}
+
+.rating-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.info-icon {
+  font-size: 1.2rem;
+  color: #007ad9;
+  cursor: pointer;
+}
+

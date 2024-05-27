@@ -16,7 +16,10 @@
     <h2>Descripción del libro</h2>
     <p>{{ libro?.descripcion || 'Descripción no proporcionada' }}</p>
     <h2>Puntuación del libro</h2>
-    <p-rating [(ngModel)]="puntuacion" [readonly]="true" [cancel]="false"></p-rating>
+    <div class="rating-info">
+      <p-rating [(ngModel)]="puntuacion" [readonly]="true" [cancel]="false"></p-rating>
+      <i class="pi pi-info-circle info-icon" pTooltip="1 estrella: Lorem ipsum&#10;2 estrellas: Lorem ipsum&#10;3 estrellas: Lorem ipsum&#10;4 estrellas: Lorem ipsum&#10;5 estrellas: Lorem ipsum" tooltipPosition="right"></i>
+    </div>
     <div class="puntuacion-meter">
       <p-meterGroup [value]="valoresPuntuaciones"  labelPosition="start" labelOrientation="vertical"></p-meterGroup>
     </div>
