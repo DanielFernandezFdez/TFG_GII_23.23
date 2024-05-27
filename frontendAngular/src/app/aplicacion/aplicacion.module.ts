@@ -11,7 +11,6 @@ import { FormsModule } from '@angular/forms';
 import { GuiaAnalisisComponent } from './pages/guia-analisis/guia-analisis.component';
 import { DecalogoComponent } from './pages/decalogo/decalogo.component';
 import { ReferentesComponent } from './pages/referentes/referentes.component';
-import { GuiaPuntuacionComponent } from './pages/guia-puntuacion/guia-puntuacion.component';
 import { EstimadorComponent } from './pages/estimador/estimador.component';
 
 @NgModule({
@@ -23,7 +22,6 @@ import { EstimadorComponent } from './pages/estimador/estimador.component';
     GuiaAnalisisComponent,
     DecalogoComponent,
     ReferentesComponent,
-    GuiaPuntuacionComponent,
     EstimadorComponent
   ],
   imports: [

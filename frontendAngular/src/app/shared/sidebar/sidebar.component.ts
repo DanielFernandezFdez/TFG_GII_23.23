@@ -61,14 +61,6 @@ export class SidebarComponent {
       
           },
           {
-            label: 'Guía de puntuación',
-            icon: 'pi pi-fw pi-info-circle',
-            command: () =>  {
-              this.router.navigate(['/guia-puntuacion']),
-             this.cerrarSidebar() }
-      
-          },
-          {
             label: 'Valoración',
             icon: 'pi pi-fw pi-calculator',
             command: () =>  {

@@ -18,7 +18,7 @@ import { GestionEstimadorComponent } from './administracion/pages/gestion-estima
 import { PermisosRolesComponent } from './administracion/pages/permisos-roles/permisos-roles.component';
 import { EstimacionesGuardadasComponent } from './administracion/pages/estimaciones-guardadas/estimaciones-guardadas.component';
 import { DecalogoComponent } from './aplicacion/pages/decalogo/decalogo.component';
-import { GuiaPuntuacionComponent } from './aplicacion/pages/guia-puntuacion/guia-puntuacion.component';
+
 import { GuiaAnalisisComponent } from './aplicacion/pages/guia-analisis/guia-analisis.component';
 import { ReferentesComponent } from './aplicacion/pages/referentes/referentes.component';
 
@@ -89,7 +89,7 @@ const routes: Routes = [
     path:'gestion-usuarios',
     component: GestionUsuarioComponent,
     pathMatch: 'full',
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path:'gestion-roles',
@@ -118,11 +118,6 @@ const routes: Routes = [
   {
     path: 'decalogo',
     component: DecalogoComponent,
-    pathMatch: 'full',
-  },
-  {
-    path: 'guia-puntuacion',
-    component: GuiaPuntuacionComponent,
     pathMatch: 'full',
   },
   {

@@ -73,11 +73,6 @@ export class MenuComponent {
         routerLink: ['/referentes'],
       },
       {
-        label: 'Guía de puntuación',
-        icon: 'pi pi-fw pi-info-circle',
-        routerLink: ['/guia-puntuacion'],
-      },
-      {
         label: 'Valoración',
         icon: 'pi pi-fw pi-calculator',
         routerLink: ['/estimador'],
