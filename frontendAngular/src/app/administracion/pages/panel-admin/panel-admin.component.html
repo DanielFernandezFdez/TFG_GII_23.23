@@ -1,11 +1,10 @@
-<!-- panel-admin.component.html -->
 <app-menu-dashboard></app-menu-dashboard>
 <div class="content">
     <div class="card">
         <form [formGroup]="rangoForm">
             <p-calendar formControlName="rangoFechas" selectionMode="range" [maxDate]="maxDateValue" [locale]="es" dateFormat="dd/mm/yy" [readonlyInput]="true"></p-calendar>
             <p-button type="button" (click)="cargarEstadisticasFiltradas()">Filtrar</p-button>
-          </form>
+        </form>
         <div class="p-grid">
             <div class="p-col-12 p-md-6">
                 <p-chart type="bar" [data]="barData" styleClass="chart-card"></p-chart>
