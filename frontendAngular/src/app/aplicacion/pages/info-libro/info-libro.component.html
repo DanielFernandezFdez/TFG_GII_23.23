@@ -18,7 +18,7 @@
     <h2>Puntuación del libro</h2>
     <div class="rating-info">
       <p-rating [(ngModel)]="puntuacion" [readonly]="true" [cancel]="false"></p-rating>
-      <i class="pi pi-info-circle info-icon" pTooltip="1 estrella: Lorem ipsum&#10;2 estrellas: Lorem ipsum&#10;3 estrellas: Lorem ipsum&#10;4 estrellas: Lorem ipsum&#10;5 estrellas: Lorem ipsum" tooltipPosition="right"></i>
+      <p-button icon="pi pi-info-circle" [rounded]="true" [text]="true" routerLink="/guia-analisis" />
     </div>
     <div class="puntuacion-meter">
       <p-meterGroup [value]="valoresPuntuaciones"  labelPosition="start" labelOrientation="vertical"></p-meterGroup>
