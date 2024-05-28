@@ -17,7 +17,6 @@ export class EstimadorComponent implements OnInit {
   actividades_poder: string[] = [];
   actividades_mantenimiento: string[] = [];
   resultadoEstimacion: number | null = null;
-  activeIndex: number = 0;
   items: MenuItem[] = [];
 
   constructor(private fb: FormBuilder, private estimacionService: EstimacionService, private router: Router) {
@@ -39,6 +38,23 @@ export class EstimadorComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarListados();
+  }
+
+  resetFormulario(): void {
+    this.estimacionForm = this.fb.group({
+      masculino_generico: [false],
+      numero_ninyos: [0],
+      numero_ninyas: [0],
+      numero_hombres: [0],
+      numero_mujeres: [0],
+      res_actividades_hombre_produccion: [[]],
+      res_actividades_hombre_poder: [[]],
+      res_actividades_hombre_mantenimiento: [[]],
+      res_actividades_mujer_produccion: [[]],
+      res_actividades_mujer_poder: [[]],
+      res_actividades_mujer_mantenimiento: [[]],
+      ubicacion: [0]
+    });
   }
 
 
@@ -80,7 +96,7 @@ export class EstimadorComponent implements OnInit {
     ];
 
     const valoresEstimacion = {
-      masculino_generico: formValues.masculino_generico,
+      masculino_generico: !formValues.masculino_generico,
       numero_ninyos: formValues.numero_ninyos,
       numero_ninyas: formValues.numero_ninyas,
       numero_hombres: formValues.numero_hombres,
@@ -107,7 +123,8 @@ export class EstimadorComponent implements OnInit {
     this.estimacionService.calcularEstimacion(valoresEstimacion).subscribe({
       next: (resultado) => {
         this.resultadoEstimacion = resultado.resultado;
-        this.estimacionForm.reset();
+        this.resetFormulario();
+
         Swal.fire({
           title: "Resultado del estudio:"+ this.resultadoEstimacion,
           text: "¿Le gustaría enviar los resultados para su estudio?",

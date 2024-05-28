@@ -94,7 +94,7 @@ export class EstimacionesGuardadasComponent implements OnInit {
       <p><strong>Número de niñas:</strong> ${estimacion.numero_ninyas}</p>
       <p><strong>Número de hombres:</strong> ${estimacion.numero_hombres}</p>
       <p><strong>Número de mujeres:</strong> ${estimacion.numero_mujeres}</p>
-      <p><strong>¿Masculino genérico?:</strong> ${estimacion.masculino_generico ? 'Sí' : 'No'}</p>
+      <p><strong>¿Lenguaje Inclusivo?:</strong> ${estimacion.masculino_generico ? 'Sí' : 'No'}</p>
       `,
       icon: "info"
     });
