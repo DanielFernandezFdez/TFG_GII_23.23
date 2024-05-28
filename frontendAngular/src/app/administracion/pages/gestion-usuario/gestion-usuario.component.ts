@@ -59,13 +59,12 @@ export class GestionUsuarioComponent implements OnInit {
   guardarCambiosNuevo(): void {
     this.authService.registrarUsuario(this.usuarioNuevo).subscribe({
       next: () => {
-        Swal.fire({
-          toast:true,
-          position: 'top-end',
+       Swal.fire({
+          title: 'Usuario creado',
+          text: 'La  contraseña por defecto es 12345678. El usuario deberá cambiarla en su primer acceso por seguridad',
           icon: 'success',
-          title: 'Usuario creado correctamente',
-          showConfirmButton: false,
-          timer: 1500
+          showConfirmButton: true,
+          confirmButtonText: 'Aceptar'
         });
         this.cargarUsuarios();
         if(this.nuevo){
