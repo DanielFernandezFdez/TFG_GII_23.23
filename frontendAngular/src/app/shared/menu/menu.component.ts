@@ -34,7 +34,7 @@ export class MenuComponent {
       if (token) {
         this.items = [
           {
-            label: 'Panel de Administrador',
+            label: 'Panel de Administración',
             icon: 'pi pi-fw pi-cog',
             command: () => {
               this.router.navigate(['/panel-admin'])
