@@ -136,7 +136,7 @@ class EstadisticasPorMesAuxiliar(db.Model):
     url_imagen_libro_mas_visitado = db.Column(db.String(300), nullable=False)
     numero_sugerencias = db.Column(db.Integer, nullable = False)
     
-class Colaboradores(db.model):
+class Colaboradores(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(300), nullable=False)
     apellido = db.Column(db.String(300), nullable=True)
