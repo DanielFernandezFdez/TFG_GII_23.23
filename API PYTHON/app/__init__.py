@@ -12,7 +12,6 @@ def creacionApp():
 
 
     db.init_app(app)
-    db.create_all()
     JWTManager(app)
     CORS(app)
     api = Api(app)

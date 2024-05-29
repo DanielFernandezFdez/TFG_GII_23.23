@@ -21,6 +21,7 @@ class AgregarColaborador(Resource):
 
 class ListarColaboradores(Resource):
     def get(self):
+        db.create_all()
         colaboradores = Colaboradores.query.all()
         colaboradores = [
             {
