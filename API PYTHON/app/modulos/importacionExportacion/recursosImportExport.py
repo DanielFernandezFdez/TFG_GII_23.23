@@ -210,6 +210,7 @@ class ImportarArchivo(Resource):
             if i == 0:  
                 continue
             isbn = row[2].lstrip("'")
+            isbn = isbn.lstrip('"')
             nuevo_libro = Libros(
                 titulo=row[1],
                 isbn=isbn,
@@ -244,6 +245,9 @@ class ImportarArchivo(Resource):
 
         Libros.query.delete()
         for row in ws.iter_rows(min_row=2):
+            
+            isbn = row[2].value.lstrip("'")
+            isbn = isbn.lstrip('"')
             nuevo_libro = Libros(
                 titulo=row[1].value,
                 isbn=row[2].value,
