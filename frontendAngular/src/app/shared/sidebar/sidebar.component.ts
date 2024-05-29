@@ -67,7 +67,12 @@ export class SidebarComponent {
               this.router.navigate(['/estimador']),
              this.cerrarSidebar() }
       
-          }
+          },
+          {
+            label: 'Colaboradores',
+            icon: 'pi pi-star-fill',
+            routerLink: ['/colaboradores'],
+          },
         ]
       },
       {
@@ -86,6 +91,13 @@ export class SidebarComponent {
             icon: 'pi pi-eye-slash',
             command: () =>  {
               this.router.navigate(['/gestion-roles']),
+             this.cerrarSidebar() }
+          },
+          {
+            label: 'Gestión de colaboradores',
+            icon: 'pi pi-users',
+            command: () =>  {
+              this.router.navigate(['/gestion-colaboradores']),
              this.cerrarSidebar() }
           }
         ]

@@ -77,6 +77,11 @@ export class MenuComponent {
         icon: 'pi pi-fw pi-calculator',
         routerLink: ['/estimador'],
       },
+      {
+        label: 'Colaboradores',
+        icon: 'pi pi-star-fill',
+        routerLink: ['/colaboradores'],
+      },
      
     ];
     

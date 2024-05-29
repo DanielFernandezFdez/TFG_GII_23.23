@@ -12,6 +12,7 @@ def creacionApp():
 
 
     db.init_app(app)
+    db.create_all()
     JWTManager(app)
     CORS(app)
     api = Api(app)
@@ -23,6 +24,7 @@ def creacionApp():
     from .modulos.roles import roles_bp
     from .modulos.sugerencias import sugerencias_bp
     from .modulos.usuarios import usuarios_bp
+    from .modulos.colaboradores import colaboradores_bp
     
     app.register_blueprint(botones_bp, url_prefix='/botones')
     app.register_blueprint(gestion_estimacion_bp, url_prefix='/gestion-estimacion')
@@ -31,6 +33,7 @@ def creacionApp():
     app.register_blueprint(roles_bp, url_prefix='/roles')
     app.register_blueprint(sugerencias_bp, url_prefix='/sugerencias')
     app.register_blueprint(usuarios_bp, url_prefix='/usuarios')
+    app.register_blueprint(colaboradores_bp, url_prefix='/colaboradores')
 
     return app
 

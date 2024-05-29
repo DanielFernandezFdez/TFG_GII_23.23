@@ -12,6 +12,7 @@ import { GuiaAnalisisComponent } from './pages/guia-analisis/guia-analisis.compo
 import { DecalogoComponent } from './pages/decalogo/decalogo.component';
 import { ReferentesComponent } from './pages/referentes/referentes.component';
 import { EstimadorComponent } from './pages/estimador/estimador.component';
+import { ColaboradoresComponent } from './pages/colaboradores/colaboradores.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { EstimadorComponent } from './pages/estimador/estimador.component';
     GuiaAnalisisComponent,
     DecalogoComponent,
     ReferentesComponent,
-    EstimadorComponent
+    EstimadorComponent,
+    ColaboradoresComponent
   ],
   imports: [
     CommonModule,

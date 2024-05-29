@@ -16,6 +16,7 @@ import { GestionEstimadorComponent } from './pages/gestion-estimador/gestion-est
 import { PermisosRolesComponent } from './pages/permisos-roles/permisos-roles.component';
 import { EstimacionesGuardadasComponent } from './pages/estimaciones-guardadas/estimaciones-guardadas.component';
 import { PrimeNGConfig } from 'primeng/api';
+import { GestionColaboradoresComponent } from './pages/gestion-colaboradores/gestion-colaboradores.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { PrimeNGConfig } from 'primeng/api';
     GestionRolesComponent,
     GestionEstimadorComponent,
     PermisosRolesComponent,
-    EstimacionesGuardadasComponent
+    EstimacionesGuardadasComponent,
+    GestionColaboradoresComponent
   ],
   imports: [
     CommonModule,

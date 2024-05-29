@@ -1,0 +1,70 @@
+<app-menu-dashboard></app-menu-dashboard>
+<div class="container-btn">
+  <div class="placeholder"></div> 
+    <h2 class="titulo-gestion">Gestión de Colaboradores</h2>
+    <p-button label="Nuevo Colaborador" icon="pi pi-plus" [rounded]="true" [text]="true" severity="primary" (click)="nuevoColaborador($event)"></p-button>
+</div>
+<div class="container mt-5">
+  <p-table [value]="colaboradores" [paginator]="true" [rows]="10" [responsive]="true">
+    <ng-template pTemplate="header">
+      <tr>
+        <th class="columna-nombre">Nombre</th>
+        <th class="columna-apellido">Apellido</th>
+        <th class="columna-institucion">Institución</th>
+        <th class="columna-acciones">Acciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-colaborador>
+      <tr>
+        <td>{{ colaborador.nombre }}</td>
+        <td>{{ colaborador.apellido }}</td>
+        <td>{{ colaborador.institucion }}</td>
+        <td>
+          <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="success" (click)="editarColaborador(colaborador.id, $event)"></p-button>
+          <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (click)="eliminarColaborador(colaborador.id)"></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-overlayPanel #modificar>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12">
+        <label for="nombre">Nombre</label>
+        <input type="text" pInputText [(ngModel)]="colaboradorEditado.nombre" id="nombre">
+      </div>
+      <div class="ui-g-12">
+        <label for="apellido">Apellido</label>
+        <input type="text" pInputText [(ngModel)]="colaboradorEditado.apellido" id="apellido">
+      </div>
+      <div class="ui-g-12">
+        <label for="institucion">Institución</label>
+        <input type="text" pInputText [(ngModel)]="colaboradorEditado.institucion" id="institucion">
+      </div>
+      <div class="ui-g-12 btn-modificar">
+        <p-button label="Guardar" (click)="guardarCambiosModificacion()"></p-button>
+      </div>
+    </div>
+  </p-overlayPanel>
+
+
+  <p-overlayPanel #nuevo>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12">
+        <label for="nombre">Nombre</label>
+        <input type="text" pInputText [(ngModel)]="colaboradorNuevo.nombre" id="nombre" placeholder="Nombre del colaborador">
+      </div>
+      <div class="ui-g-12">
+        <label for="apellido">Apellido</label>
+        <input type="text" pInputText [(ngModel)]="colaboradorNuevo.apellido" id="apellido" placeholder="Apellido">
+      </div>
+      <div class="ui-g-12">
+        <label for="institucion">Institución</label>
+        <input type="text" pInputText [(ngModel)]="colaboradorEditado.institucion" id="institucion" placeholder="Institución">
+      </div>
+      <div class="ui-g-12 btn-modificar">
+        <p-button label="Guardar" (click)="guardarCambiosNuevo()"></p-button>
+      </div>
+    </div>
+  </p-overlayPanel>
+</div>

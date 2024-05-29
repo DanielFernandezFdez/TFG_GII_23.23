@@ -21,6 +21,8 @@ import { DecalogoComponent } from './aplicacion/pages/decalogo/decalogo.componen
 
 import { GuiaAnalisisComponent } from './aplicacion/pages/guia-analisis/guia-analisis.component';
 import { ReferentesComponent } from './aplicacion/pages/referentes/referentes.component';
+import { ColaboradoresComponent } from './aplicacion/pages/colaboradores/colaboradores.component';
+import { GestionColaboradoresComponent } from './administracion/pages/gestion-colaboradores/gestion-colaboradores.component';
 
 
 const routes: Routes = [
@@ -78,6 +80,7 @@ const routes: Routes = [
     path: 'panel-admin',
     component: PanelAdminComponent,
     pathMatch: 'full',
+    canActivate: [AuthGuard]
   },
   {
     path:'gestion-catalogo',
@@ -110,6 +113,12 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path : 'gestion-colaboradores',
+    component: GestionColaboradoresComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard]
+  },
+  {
     path : 'estimaciones-guardadas',
     component: EstimacionesGuardadasComponent,
     pathMatch: 'full',
@@ -129,7 +138,12 @@ const routes: Routes = [
     path: 'referentes',
     component: ReferentesComponent,
     pathMatch: 'full',
-  }
+  },
+  {
+    path: 'colaboradores',
+    component: ColaboradoresComponent,
+    pathMatch: 'full',
+  },
 
 
 

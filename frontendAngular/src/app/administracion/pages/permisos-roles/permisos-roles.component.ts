@@ -45,6 +45,7 @@ export class PermisosRolesComponent implements OnInit{
     { alias: 'Editar Libro', descripcion: 'Permite editar un libro manualmente.', permitido: false ,  nombre: 'editar' },
     { alias: 'Agregar libro automáticamente', descripcion: 'Permite agregar un libro automáticamente.', permitido: false ,  nombre: 'agregar_auto' },
     { alias: 'Combinar libros', descripcion: 'Permite combinar varios libros obtenidos automáticamente.', permitido: false ,  nombre: 'combinar_auto' },
+    { alias: 'Gestión de colaboradores', descripcion: 'Permite gestionar los colaboradores de las valoraciones.', permitido: false ,  nombre: 'gestion-colaboradores' },
 
     
   ];
