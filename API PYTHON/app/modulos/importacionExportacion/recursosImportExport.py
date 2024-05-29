@@ -209,8 +209,8 @@ class ImportarArchivo(Resource):
         for i, row in enumerate(csv_input):
             if i == 0:  
                 continue
-            isbn = row[2].lstrip("'")
-            isbn = isbn.lstrip('"')
+            isbn = row[2].strip("'")
+            isbn = isbn.strip('"')
             nuevo_libro = Libros(
                 titulo=row[1],
                 isbn=isbn,
@@ -246,8 +246,8 @@ class ImportarArchivo(Resource):
         Libros.query.delete()
         for row in ws.iter_rows(min_row=2):
             
-            isbn = row[2].value.lstrip("'")
-            isbn = isbn.lstrip('"')
+            isbn = row[2].value.strip("'")
+            isbn = isbn.strip('"')
             nuevo_libro = Libros(
                 titulo=row[1].value,
                 isbn=row[2].value,
