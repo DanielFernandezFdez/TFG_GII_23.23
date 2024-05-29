@@ -11,9 +11,9 @@
     text-align: center;
 }
 
-.columna-usuario { width: 200px; }
-.columna-correo { width: 250px; }
-.columna-rol { width: 150px; }
+.columna-nombre { width: 200px; }
+.columna-apelido { width: 250px; }
+.columna-institucion { width: 150px; }
 .columna-acciones { width: 120px; }
 
 .p-datatable .p-datatable-thead > tr > th {
@@ -57,9 +57,9 @@ p-dropdown {
         margin-bottom: 10px;
     }
 
-    .columna-usuario,
-    .columna-correo,
-    .columna-rol,
+    .columna-nombre,
+    .columna-apellido,
+    .columna-institucion,
     .columna-acciones {
         width: auto; 
     }
