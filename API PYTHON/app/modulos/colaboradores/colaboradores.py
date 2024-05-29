@@ -12,7 +12,7 @@ class AgregarColaborador(Resource):
         colaborador = Colaboradores(
             nombre=data["nombre"],
             apellido=data["apellido"],
-            institucionn=data["institucion"],
+            institucion=data["institucion"],
         )
         db.session.add(colaborador)
         db.session.commit()
