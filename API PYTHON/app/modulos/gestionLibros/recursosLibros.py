@@ -162,7 +162,7 @@ class buscarLibroAutomatico(Resource):
                     logo=libro[1],
                     disponible=libro[2],
                     titulo=libro[3],
-                    isbn=libro[4] + "," + libro[5],
+                    isbn=libro[4] + "|" + libro[5],
                     editorial=libro[6],
                     anyo_publicacion=libro[7],
                     descripcion=libro[8],
