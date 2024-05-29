@@ -38,7 +38,7 @@ class EditarColaborador(Resource):
     @jwt_required()
     def put(self):
         data = request.get_json()
-        colaborador = Colaboradores.query.get(data.id)
+        colaborador = Colaboradores.query.get(data["id"])
         colaborador.nombre = data["nombre"]
         colaborador.apellido = data["apellido"]
         colaborador.institucion = data["institucion"]
