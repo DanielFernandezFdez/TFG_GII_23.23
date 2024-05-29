@@ -263,6 +263,7 @@ class CalcularEstimacion(Resource):
 
 class guardarEstimacion(Resource):
     def post(self):
+        nodisponible = "No disponible"
         data=request.get_json()
         estimacion = Estimacion(
             masculino_generico=data["masculino_generico"] if "masculino_generico" in data else False,
@@ -273,12 +274,12 @@ class guardarEstimacion(Resource):
             ubicacion=data["ubicacion"] if "ubicacion" in data else 0,
             res_actividades_hombre=json.dumps(data["res_actividades_hombre"] if "res_actividades_hombre" in data else []),
             res_actividades_mujer=json.dumps(data["res_actividades_mujer"] if "res_actividades_mujer" in data else []),
-            titulo=data["titulo"] if "titulo" in data else "No disponible",
-            isbn=data["isbn"] if "isbn" in data else "No disponible",
-            nombre=data["nombre"] if "nombre" in data else "No disponible",
-            apellido=data["apellido"] if "apellido" in data else "No disponible",
-            correo=data["correo"] if "correo" in data else "No disponible",
-            institucion=data["institucion"] if "institucion" in data else "No disponible",
+            titulo=data["titulo"] if "titulo" in data else nodisponible,
+            isbn=data["isbn"] if "isbn" in data else nodisponible,
+            nombre=data["nombre"] if "nombre" in data else nodisponible,
+            apellido=data["apellido"] if "apellido" in data else nodisponible,
+            correo=data["correo"] if "correo" in data else nodisponible,
+            institucion=data["institucion"] if "institucion" in data else nodisponible,
             resultado=data["resultado"] if "resultado" in data else 0
         )
         db.session.add(estimacion)

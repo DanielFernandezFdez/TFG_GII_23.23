@@ -2,6 +2,13 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
+parser = "html.parser"
+descripcion = "No se ha encontrado descripción"
+userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+languaje = "es; q=0.5"
+sintitulo = "No se ha encontrado título"
+sineditorial = "No se ha encontrado editorial"
+
 
 def obtener_resumen_extendido(isbn):
     url_endpoint = "https://www.agapea.com/ajax/funcionesAjaxResumen.inc.php"
@@ -23,21 +30,21 @@ def obtener_resumen_extendido(isbn):
         contenido_html = respuesta.content.decode("utf-8")
 
         # Analizar el contenido HTML
-        soup = BeautifulSoup(contenido_html, "html.parser")
+        soup = BeautifulSoup(contenido_html, parser)
 
         # Extraer el texto plano de la descripción
         descrip = soup.get_text(strip=True)
         if descrip:
             return descrip
         
-    return "No se ha encontrado descripción"
+    return descripcion
 
 
 def buscar_libro_amazon(elemento):
     contador_intentos=0
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
-        "Accept-Languaje": "es; q=0.5",
+        "User-Agent": userAgent,
+        "Accept-Languaje": languaje,
     }
 
     url_busqueda = f"https://www.amazon.es/s?k={elemento}"
@@ -45,7 +52,7 @@ def buscar_libro_amazon(elemento):
     respuesta = requests.get(url_busqueda, headers=headers)
     informacion = ['Amazon','amazon-logo.svg',True]
     if respuesta.status_code == 200:
-        instancia = BeautifulSoup(respuesta.content, "html.parser")
+        instancia = BeautifulSoup(respuesta.content, parser)
 
         primer_resultado = instancia.find(
             "div", {"data-component-type": "s-search-result"}
@@ -62,7 +69,7 @@ def buscar_libro_amazon(elemento):
             respuesta_libro = requests.get(book_url, headers=headers)
 
             if respuesta_libro.status_code == 200:
-                instancia_libro = BeautifulSoup(respuesta_libro.content, "html.parser")
+                instancia_libro = BeautifulSoup(respuesta_libro.content, parser)
 
                 encontradoISBN10 = False
                 encontradoISBN13 = False
@@ -75,7 +82,7 @@ def buscar_libro_amazon(elemento):
                     titulo = titulo.get_text(strip=True)
                     informacion.append(titulo)
                 else:
-                    informacion.append("No se ha encontrado título")
+                    informacion.append(sintitulo)
                     contador_sin_datos += 1
 
                 ISBNyeditorial = instancia_libro.find(
@@ -146,7 +153,7 @@ def buscar_libro_amazon(elemento):
                 else:
                     informacion.append(temp[1])
                 if not encontradoEditorial:
-                    informacion.append("No se ha encontrado editorial")
+                    informacion.append(sineditorial)
                     contador_sin_datos += 1
                 else:
                     informacion.append(temp[2])
@@ -170,7 +177,7 @@ def buscar_libro_amazon(elemento):
                         zonadescrip = zonadescrip.get_text(strip=True)
                         informacion.append(zonadescrip)
                 else:
-                    informacion.append("No se ha encontrado descripción")
+                    informacion.append(descripcion)
                     contador_sin_datos += 1
 
                 imagen_find = instancia.find("img", class_="s-image")
@@ -192,8 +199,8 @@ def buscar_libro_amazon(elemento):
 def buscar_libro_agapea_libro(info):
 
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
-        "Accept-Languaje": "es; q=0.5",
+        "User-Agent": userAgent,
+        "Accept-Languaje": languaje,
     }
 
     url_busqueda = f"https://www.agapea.com/buscar/buscador.php?texto={info}"
@@ -201,7 +208,7 @@ def buscar_libro_agapea_libro(info):
     respuesta = requests.get(url_busqueda, headers=headers)
     if respuesta.status_code == 200:
 
-        instancia = BeautifulSoup(respuesta.content, "html.parser")
+        instancia = BeautifulSoup(respuesta.content, parser)
 
         primer_resultado = instancia.find("div", {"class": "resultados"})
         if primer_resultado:
@@ -215,7 +222,7 @@ def buscar_libro_agapea_libro(info):
             respuesta_libro = requests.get(link, headers=headers)
 
             if respuesta_libro.status_code == 200:
-                instancia_libro = BeautifulSoup(respuesta_libro.content, "html.parser")
+                instancia_libro = BeautifulSoup(respuesta_libro.content, parser)
                 info = buscar_libro_agapea_generico(instancia_libro)
 
             return info
@@ -225,8 +232,8 @@ def buscar_libro_agapea_libro(info):
 def buscar_libro_agapea_isbn(info):
 
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
-        "Accept-Languaje": "es; q=0.5",
+        "User-Agent": userAgent,
+        "Accept-Languaje": languaje,
     }
 
     url_busqueda = f"https://www.agapea.com/buscar/buscador.php?texto={info}"
@@ -235,7 +242,7 @@ def buscar_libro_agapea_isbn(info):
 
     if respuesta.status_code == 200:
 
-        instancia_libro = BeautifulSoup(respuesta.content, "html.parser")
+        instancia_libro = BeautifulSoup(respuesta.content, parser)
         info_libro = instancia_libro.find("div", {"id": "cnt-busqueda"})
         if info_libro:
             return None
@@ -257,7 +264,7 @@ def buscar_libro_agapea_generico(instancia_libro):
         titulo = titulo.get_text(strip=True)
         informacion.append(titulo)
     else:
-        informacion.append("No se ha encontrado título")
+        informacion.append(sintitulo)
 
     info_espe = instancia_libro.find("div", {"class": "detalles-libro"})
 
@@ -300,7 +307,7 @@ def buscar_libro_agapea_generico(instancia_libro):
     else:
         informacion.append(ISBN13)
     if not encontradoEditorial:
-        informacion.append("No se ha encontrado editorial")
+        informacion.append(sineditorial)
     else:
         informacion.append(Editorial)
     if not encontradoFecha:
@@ -341,12 +348,12 @@ def obtener_info_libro_google(isbn_o_titulo, filtro):
 
         for libro in libros:
             info = libro['volumeInfo']
-            libros_con_descripcion.append(info.get("title", "No se ha encontrado título"))
+            libros_con_descripcion.append(info.get("title", sintitulo))
             libros_con_descripcion.append(next((ident['identifier'] for ident in info.get("industryIdentifiers", []) if ident["type"] == "ISBN_10"), "No se ha encontrado ISBN-10"))
             libros_con_descripcion.append(next((ident['identifier'] for ident in info.get("industryIdentifiers", []) if ident["type"] == "ISBN_13"), "No se ha encontrado ISBN-13"))
-            libros_con_descripcion.append(info.get("publisher", "No se ha encontrado editorial"))
+            libros_con_descripcion.append(info.get("publisher", sineditorial))
             libros_con_descripcion.append(info.get("publishedDate", "No se ha encontrado año de publicación"))
-            libros_con_descripcion.append(info.get("description", "No se ha encontrado descripción"))
+            libros_con_descripcion.append(info.get("description", descripcion))
             libros_con_descripcion.append(info.get("imageLinks", {}).get("thumbnail", "No se ha encontrado portada"))
         return libros_con_descripcion
     except requests.RequestException:

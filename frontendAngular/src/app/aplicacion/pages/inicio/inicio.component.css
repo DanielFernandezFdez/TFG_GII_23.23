@@ -12,11 +12,12 @@
     left: 0;
     overflow: hidden;
     justify-content: flex-start;
-    background-image: url('../../../../assets/images/fondo-inicio.webp');
+    background-image: url('../../../../assets/images/introducción.jpg');
     background-position: center center;
     background-attachment: fixed;
-    background-size: cover; 
+    background-size: contain; 
     background-repeat: no-repeat; 
+
     height:100vh; 
     width: 100%; 
     z-index: -1;

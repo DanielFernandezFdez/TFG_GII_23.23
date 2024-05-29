@@ -92,17 +92,9 @@ def  ActualizarEstadisticasImportacion(libro : Libros):
                 estadistica_nueva.visitas_libro_mas_visitado = int(libro.visitas_mensuales)
                 estadistica_nueva.url_imagen_libro_mas_visitado = libro.url_imagen
             
-            estadistica_nueva.mes = estadistica_nueva.mes
-            estadistica_nueva.anyo = estadistica_nueva.anyo
             estadistica_nueva.numero_libros = estadistica_nueva.numero_libros + 1
             estadistica_nueva.numero_visitas_totales = estadistica_nueva.numero_visitas_totales + int(libro.visitas_mensuales)
-            estadistica_nueva.numero_estimaciones = estadistica_nueva.numero_estimaciones
-            estadistica_nueva.numero_usuarios = estadistica_nueva.numero_usuarios
-            estadistica_nueva.libro_mas_visitado = estadistica_nueva.libro_mas_visitado
-            estadistica_nueva.isbn_libro_mas_visitado = estadistica_nueva.isbn_libro_mas_visitado
-            estadistica_nueva.visitas_libro_mas_visitado = estadistica_nueva.visitas_libro_mas_visitado
-            estadistica_nueva.url_imagen_libro_mas_visitado = estadistica_nueva.url_imagen_libro_mas_visitado
-            estadistica_nueva.numero_sugerencias = estadistica_nueva.numero_sugerencias
+
         else: 
             nuevaEstadistica = EstadisticasPorMes(
             mes = libro.mes_creacion,

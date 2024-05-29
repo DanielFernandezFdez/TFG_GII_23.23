@@ -169,7 +169,7 @@ class buscarLibroAutomatico(Resource):
                     url_imagen=libro[9],
                 )
             else:
-                if libro[2] == True:
+                if libro[2] == False:
                     nuevo_libro = Libros_automaticos(
                         auto_id=libro[0],
                         logo=libro[1],
