@@ -134,8 +134,9 @@ class ExportarCSV(Resource):
 
         libros = Libros.query.all()
         for libro in libros:
+            libro.isbn = "\"" + libro.isbn + "\""
             cw.writerow([
-                libro.id, libro.titulo, libro.isbn, libro.editorial, libro.descripcion, libro.anyo_publicacion,
+                libro.id, libro.titulo,   libro.isbn, libro.editorial, libro.descripcion, libro.anyo_publicacion,
                 libro.puntuacion, libro.ubicacion_estudio, libro.url_imagen, libro.visitas_mensuales, libro.visitas_totales,
                 libro.mes_creacion, libro.anyo_creacion, libro.puntuacion_masculino_generico, libro.puntuacion_menores,
                 libro.puntuacion_adultos, libro.puntuacion_ubicacion, libro.puntuacion_actividades
@@ -162,6 +163,7 @@ class ExportarExcel(Resource):
 
         libros = Libros.query.all()
         for libro in libros:
+            libro.isbn = "\"" + libro.isbn + "\""
             ws.append([
                 libro.id, libro.titulo, libro.isbn, libro.editorial, libro.descripcion, libro.anyo_publicacion,
                 libro.puntuacion, libro.ubicacion_estudio, libro.url_imagen, libro.visitas_mensuales, libro.visitas_totales,
