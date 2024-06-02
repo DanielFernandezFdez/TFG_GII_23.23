@@ -39,10 +39,11 @@ export class CatalogoComponent implements OnInit{
         this.libros = data;
       },
       error: (error) => {
-        console.error('Error al obtener los libros', error);
-      },
-      complete: () => {
-        console.log('Carga de libros completada');
+        Swal.fire({
+          title: 'Error',
+          text: 'No se han podido obtener los libros',
+          icon: 'error'
+        });
       }
     });
   }

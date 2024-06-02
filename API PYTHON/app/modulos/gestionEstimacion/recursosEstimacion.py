@@ -11,10 +11,11 @@ import json
 
 def  ActualizarEstadisticasMensuales():
     estadistica_existente = EstadisticasPorMes.query.filter_by(mes=datetime.now().strftime("%m").lstrip('0'), anyo=datetime.now().strftime("%Y")).first()
-    libros = Libros.query.filter_by(mes_creacion=datetime.now().strftime("%m").lstrip('0'), anyo_creacion=datetime.now().strftime("%Y")).all()
+    librosNUM = Libros.query.filter_by(mes_creacion=datetime.now().strftime("%m").lstrip('0'), anyo_creacion=datetime.now().strftime("%Y")).all()
+    libros = Libros.query.all()
     estimaciones = Estimacion.query.all()
     usuarios = Usuarios.query.all()
-    numero_libros = len(libros)
+    numero_libros = len(librosNUM)
     numero_estimaciones = len(estimaciones)
     numero_usuarios = len(usuarios)
 

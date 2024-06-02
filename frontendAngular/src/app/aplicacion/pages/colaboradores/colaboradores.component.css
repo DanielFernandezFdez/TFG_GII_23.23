@@ -1,0 +1,89 @@
+.colaboradores-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px; /* Puedes ajustar este valor según tus necesidades */
+    margin: 0 auto;
+    padding: 50px 20px; /* Añade un margen lateral */
+}
+
+.lateral {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.contenido-central {
+    flex: 2;
+    max-width: 800px;
+    margin: 0 20px;
+}
+
+.lateral img, .centro-autoria img {
+    max-width: 100%;
+    height: auto;
+}
+
+.centro-autoria {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+
+}
+
+.colaboradores-container h1, .colaboradores-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.colaboradores-container p, .colaboradores-container ul {
+    text-align: justify;
+    margin-bottom: 20px;
+}
+
+.colaboradores-container ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+p-table {
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .colaboradores-container {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .contenido-central {
+        margin: 0;
+        max-width: 100%;
+    }
+
+    .lateral {
+        margin-bottom: 20px;
+    }
+
+    .lateral img, .centro-autoria img {
+        width: 100%;
+    }
+}
+  
+  .colaboradores-container ul {
+    list-style-type: disc;
+    margin-left: 20px;
+  }
+  
+  p-table {
+    margin-top: 20px;
+  }
+  
+.centro-autoria{
+    max-width: 100px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}

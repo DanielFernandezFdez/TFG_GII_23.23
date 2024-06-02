@@ -78,7 +78,7 @@ export class MenuComponent {
         routerLink: ['/estimador'],
       },
       {
-        label: 'Colaboradores',
+        label: 'Información',
         icon: 'pi pi-star-fill',
         routerLink: ['/colaboradores'],
       },

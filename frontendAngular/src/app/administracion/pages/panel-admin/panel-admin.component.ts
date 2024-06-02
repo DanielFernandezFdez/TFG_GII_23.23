@@ -46,6 +46,7 @@ export class PanelAdminComponent implements OnInit {
   cargarEstadisticas(): void {
     this.librosService.obtenerEstadisticas().subscribe(data => {
       this.estadisticas = data;
+      console.log(this.estadisticas)
       this.configurarDatos();
       this.libroMasVisitado = this.estadisticas.reduce((max, libro) => libro.visitas_libro_mas_visitado > max.visitas_libro_mas_visitado ? libro : max);
     });

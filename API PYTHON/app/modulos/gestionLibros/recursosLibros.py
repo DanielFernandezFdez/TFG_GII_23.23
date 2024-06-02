@@ -3,6 +3,7 @@ from flask_jwt_extended import jwt_required
 from flask import jsonify
 import app.Funciones_Auxiliares.funciones_webscraping as fw
 from app.modelos import db, Libros, fecha_modificacion, Libros_automaticos, EstadisticasPorMes,Estimacion
+from datetime import datetime, timedelta
 
 class ListadoLibros(Resource):
     
@@ -54,7 +55,13 @@ class InfoLibroID(Resource):
 
     def get(self, id):
         libro = Libros.query.get_or_404(id)
-        libro.visitas_mensuales = libro.visitas_mensuales + 1
+        if fecha_modificacion.query.get_or_404(2).ultima_modificacion.month < datetime.now().month:
+            for libro in Libros.query.all():
+                libro.visitas_mensuales = 0
+                db.session.commit()
+            fecha_modificacion.query.get_or_404(2).ultima_modificacion = datetime.now()
+            db.session.commit()
+        libro.visitas_mensuales = libro.visitas_mensuales + 1 
         libro.visitas_totales = libro.visitas_totales + 1
         db.session.commit()
         return jsonify(
@@ -190,6 +197,16 @@ class borrarTabla(Resource):
 
         #db.create_all()
         #db.session.commit()
+
+class crearFecha(Resource):
+    @jwt_required()
+    def post(self):
+        if fecha_modificacion.query.get_or_404(2):
+            return jsonify({"mensaje": "Fecha ya creada"})
+        nueva_fecha = fecha_modificacion(ultima_modificacion = datetime.now()-timedelta(days=20))
+        db.session.add(nueva_fecha)
+        db.session.commit()
+        return jsonify({"mensaje": "Fecha creada exitosamente"})
 
 
 class listarLibrosAutomaticos(Resource):

@@ -365,7 +365,7 @@ def obtener_info_libro_google(isbn_o_titulo, filtro):
 
 
 def buscar_libro(isbn_o_titulo):
-    if re.match(r"\d{13}", isbn_o_titulo):
+    if re.match(r"\d{13}", isbn_o_titulo | re.match(r"\d{10}", isbn_o_titulo)):
         descripcionAgapea = buscar_libro_agapea_isbn(isbn_o_titulo)
         descripcionAmazon = buscar_libro_amazon(isbn_o_titulo)
         descripcionGoogle = obtener_info_libro_google(isbn_o_titulo, "isbn")
@@ -378,5 +378,5 @@ def buscar_libro(isbn_o_titulo):
 
 
 
-buscar_libro("9798321713754")
+
 

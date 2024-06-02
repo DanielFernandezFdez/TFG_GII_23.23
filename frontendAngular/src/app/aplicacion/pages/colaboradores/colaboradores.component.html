@@ -1,1 +1,49 @@
-<p>colaboradores works!</p>
+<app-menu></app-menu>
+<div class="colaboradores-container">
+    <div class="lateral lateral-izquierda">
+        <img src="../../../../assets/images/actividades4.jpg" alt="Imagen Izquierda">
+      </div>
+
+  <div class="contenido-central">
+    <h1>Autoría</h1>
+    <p>
+      Este sitio web surge como un proyecto de innovación educativa a través de la colaboración entre el profesor del Área de Didáctica de las Ciencias Sociales de la Universidad de Burgos Alberto San Martín Zapatero y la profesora Ana Serrano Mamolar del Área de Lenguajes y Sistemas Informáticos de la Universidad de Burgos. La web ha sido diseñada y creada por el alumno de Ingeniería Informática Daniel Fernández Fernández y es fruto de su Trabajo Fin de Grado cuya dirección ha estado a cargo de Ana Serrano Mamolar.
+    </p>
+    <div class="centro-autoria">
+        <img src="../../../../assets/images/Reconocimiento+-+NoComercial+-+SinObraDerivada+(by-nc-nd).jpeg" alt="Imagen Izquierda">
+      </div>
+    <h1>¿Qué es Prehistoria en Igualdad?</h1>
+    <p>
+      Es un proyecto colaborativo entre investigadoras e investigadores de la Universidad de Burgos destinado al ámbito educativo. Tiene como finalidad analizar recursos educativos como los libros infantiles de prehistoria para detectar sesgos y estereotipos de género que dificultan una enseñanza de la prehistoria ajustada a los avances científicos. Esta herramienta está abierta a la comunidad educativa y muy especialmente a las etapas de Educación Infantil Primaria y Secundaria. Pretende ser un recurso de aula ya que ofrece un catálogo amplio de libros infantiles de prehistoria. Este aspecto facilita la labor docente pues permite seleccionar los mejores recursos para la enseñanza de la prehistoria en el aula. A ello hay que añadir que Prehistoria en Igualdad es también una herramienta de investigación educativa puesto que ofrece información sobre estereotipos a través de unas determinadas categorías de análisis.
+    </p>
+    <h1>Objetivos de Prehistoria en Igualdad</h1>
+    <ul>
+      <li>Servir de plataforma digital para la detección de estereotipos de género en libros ilustrados infantiles de prehistoria. La web ofrece una guía de análisis fácil y sencilla que permite detectar sesgos y estereotipos de género.</li>
+      <li>Ofrecer una base de datos de libros infantiles de prehistoria a profesorado y otros miembros de la comunidad educativa donde puedan elegir los más convenientes para una alfabetización científica con base coeducativa.</li>
+      <li>Ser un espacio abierto a colaboradoras y colaboradores que deseen analizar libros para su uso educativo, contribuyendo a ampliar la base de datos.</li>
+      <li>Ofrecer recursos y referentes de investigación para ayudar a la comunidad educativa a crear y desarrollar recursos de aula como cuentos y relatos sobre prehistoria libres de estereotipos de género.</li>
+      <li>Visibilizar materiales y líneas de investigación en Arqueología y Prehistoria de género a todos los sectores involucrados en la divulgación histórica.</li>
+    </ul>
+  
+    <h2>Listado de Colaboradores</h2>
+    <p-table [value]="colaboradores" [paginator]="true" [rows]="10" [responsive]="true">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Institución</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-colaborador>
+        <tr>
+          <td>{{ colaborador.nombre }}</td>
+          <td>{{ colaborador.apellido }}</td>
+          <td>{{ colaborador.institucion }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="lateral lateral-derecha">
+    <img src="../../../../assets/images/actividades3.jpg" alt="Imagen Izquierda">
+  </div>
+  </div>

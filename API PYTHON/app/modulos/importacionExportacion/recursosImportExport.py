@@ -36,8 +36,7 @@ def ClonarEstadisticas():
 def  ActualizarEstadisticasImportacion(libro : Libros):
     estadistica_existente = EstadisticasPorMesAuxiliar.query.filter_by(mes=libro.mes_creacion, anyo=libro.anyo_creacion).first()
     estadistica_nueva = EstadisticasPorMes.query.filter_by(mes=libro.mes_creacion, anyo=libro.anyo_creacion).first()
-    print(estadistica_existente)
-    print(estadistica_nueva)
+
     if int(libro.mes_creacion) == 1:
         mes_anterior = 12
         anyo_anterior = int(libro.anyo_creacion) - 1
