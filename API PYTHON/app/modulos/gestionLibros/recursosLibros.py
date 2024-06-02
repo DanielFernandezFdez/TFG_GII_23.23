@@ -201,7 +201,7 @@ class borrarTabla(Resource):
 class crearFecha(Resource):
     @jwt_required()
     def post(self):
-        if fecha_modificacion.query.get_or_404(2):
+        if fecha_modificacion.query.all().count() > 1:
             return jsonify({"mensaje": "Fecha ya creada"})
         nueva_fecha = fecha_modificacion(ultima_modificacion = datetime.now()-timedelta(days=20))
         db.session.add(nueva_fecha)
