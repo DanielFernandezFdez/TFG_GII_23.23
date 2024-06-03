@@ -58,25 +58,31 @@ section h2 {
 }
 
 .cantidades-image {
-    max-width: 60%;
-    margin: 0 auto;
-    display: block;
-}
-
-.actividades-image {
-    max-width: 70%;
-    margin: 0 auto;
-    display: block;
-}
-
-.ubicacion-image {
     max-width: 80%;
     margin: 0 auto;
     display: block;
 }
 
+.actividades-image {
+    max-width: 90%;
+    margin: 0 auto;
+    display: block;
+}
+
+.ubicacion-image {
+    max-width: 60%;
+    margin: 0 auto;
+    display: block;
+}
+
+.calcular-image {
+    max-width: 40%;
+    margin: 0 auto;
+    display: block;
+}
+
 .guardar-image {
-    max-width: 30%;
+    max-width: 40%;
     margin: 0 auto;
     display: block;
 }
@@ -100,6 +106,7 @@ section h2 {
     .cantidades-image,
     .actividades-image,
     .ubicacion-image,
+    .calcular-image
     .guardar-image {
         max-width: 100%;
     }
