@@ -13,6 +13,7 @@ import { DecalogoComponent } from './pages/decalogo/decalogo.component';
 import { ReferentesComponent } from './pages/referentes/referentes.component';
 import { EstimadorComponent } from './pages/estimador/estimador.component';
 import { ColaboradoresComponent } from './pages/colaboradores/colaboradores.component';
+import { SanitizeUrlPipe } from './sanitize-url.pipe';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ColaboradoresComponent } from './pages/colaboradores/colaboradores.comp
     DecalogoComponent,
     ReferentesComponent,
     EstimadorComponent,
-    ColaboradoresComponent
+    ColaboradoresComponent,
+    SanitizeUrlPipe
   ],
   imports: [
     CommonModule,

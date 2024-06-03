@@ -9,11 +9,13 @@ import { RouterModule } from '@angular/router';
 import { AdministracionModule } from './administracion/administracion.module';
 
 
+
 ;
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+
 
   ],
   imports: [
@@ -24,6 +26,7 @@ import { AdministracionModule } from './administracion/administracion.module';
     AplicacionModule,
     HttpClientModule,
     AdministracionModule,
+    
 
    
   ],

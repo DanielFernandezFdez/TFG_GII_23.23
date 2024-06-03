@@ -10,7 +10,7 @@
     <p><strong>Editorial:</strong> {{ libro?.editorial }}</p>
     <p><strong>Año de publicación:</strong> {{ libro?.anyo_publicacion }}</p>
     <p *ngIf="libro?.ubicacion_estudio">
-      <strong>Ubicación del Estudio: </strong> <a [href]="libro?.ubicacion_estudio" target="_blank">Enlace al estudio</a>
+      <strong>Ubicación del Estudio: </strong> <a [href]="libro?.ubicacion_estudio | sanitizeUrl" target="_blank">Enlace al estudio</a>
     </p>
     <p *ngIf="!libro?.ubicacion_estudio"><strong>Ubicación del Estudio: </strong> No disponible</p>
     <h2>Descripción del libro</h2>
