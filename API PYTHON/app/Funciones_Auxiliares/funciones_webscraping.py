@@ -328,8 +328,6 @@ def buscar_libro_agapea_generico(instancia_libro):
     return informacion
 
 
-
-
 def obtener_info_libro_google(isbn_o_titulo, filtro):
     libros_con_descripcion = ['Google Books','google-logo.png',True]
     base_url = "https://www.googleapis.com/books/v1/volumes"
@@ -359,9 +357,6 @@ def obtener_info_libro_google(isbn_o_titulo, filtro):
     except requests.RequestException:
         libros_con_descripcion[2] = False
         return libros_con_descripcion
-
-
-
 
 
 def buscar_libro(isbn_o_titulo):

@@ -3,6 +3,7 @@ import { RolesService } from '../../../services/roles.service';
 import { BotonesService } from '../../../services/botones.service';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
+import { ChangeDetectorRef } from '@angular/core';
 
 
 interface Permiso {
@@ -51,7 +52,7 @@ export class PermisosRolesComponent implements OnInit{
   ];
 
 
-  constructor(private RolesService: RolesService,  private BotonesService: BotonesService,private route: ActivatedRoute) {
+  constructor(private RolesService: RolesService,  private BotonesService: BotonesService,private route: ActivatedRoute, private cd: ChangeDetectorRef) {
     
   }
 
@@ -82,6 +83,7 @@ export class PermisosRolesComponent implements OnInit{
           });
         }
       });
+      this.cd.detectChanges();
     });
   }
 
