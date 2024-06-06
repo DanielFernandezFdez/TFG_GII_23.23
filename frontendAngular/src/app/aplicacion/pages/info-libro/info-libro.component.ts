@@ -47,26 +47,27 @@ export class InfoLibroComponent implements OnInit {
   }
 
   establecerPuntuacion(): void {
-    if (!this.libro.puntuacion_menores ) {
+    if (!this.libro.puntuacion_menores) {
       this.valoresPuntuaciones = [
-        { label: 'Masculino genérico Max 20% :', color: '#34d399', value: this.libro.puntuacion_masculino_generico },
-        { label: 'Puntuación adultos Max 30% :', color: '#60a5fa', value: this.libro.puntuacion_adultos },
-        { label: 'Puntuación ubicación Max 20% :', color: '#c084fc', value: this.libro.puntuacion_ubicacion },
-        { label: 'Puntuación actividades Max 30% :', color: '#FF5733', value: this.libro.puntuacion_actividades }
-      ]
-    }
-    else{
-       this.valoresPuntuaciones = [
-        { label: 'Masculino genérico Max 20% :', color: '#34d399', value: this.libro.puntuacion_masculino_generico },
-        { label: 'Puntuación menores Max 15% :', color: '#fbbf24', value: this.libro.puntuacion_menores },
-        { label: 'Puntuación adultos Max 15% :', color: '#60a5fa', value: this.libro.puntuacion_adultos },
-        { label: 'Puntuación ubicación Max 20% :', color: '#c084fc', value: this.libro.puntuacion_ubicacion },
-        { label: 'Puntuación actividades Max 30% :', color: '#FF5733', value: this.libro.puntuacion_actividades }
-      ]
+        { label: 'Lenguaje Inclusivo Max 20% :', color: '#34d399', value: this.libro.puntuacion_masculino_generico, max: 20 },
+        { label: 'Puntuación adultos Max 30% :', color: '#60a5fa', value: this.libro.puntuacion_adultos, max: 30 },
+        { label: 'Puntuación ubicación Max 20% :', color: '#c084fc', value: this.libro.puntuacion_ubicacion, max: 20 },
+        { label: 'Puntuación actividades Max 30% :', color: '#FF5733', value: this.libro.puntuacion_actividades, max: 30 }
+      ];
+    } else {
+      this.valoresPuntuaciones = [
+        { label: 'Lenguaje Inclusivo Max 20% :', color: '#34d399', value: this.libro.puntuacion_masculino_generico, max: 20 },
+        { label: 'Puntuación menores Max 15% :', color: '#fbbf24', value: this.libro.puntuacion_menores, max: 15 },
+        { label: 'Puntuación adultos Max 15% :', color: '#60a5fa', value: this.libro.puntuacion_adultos, max: 15 },
+        { label: 'Puntuación ubicación Max 20% :', color: '#c084fc', value: this.libro.puntuacion_ubicacion, max: 20 },
+        { label: 'Puntuación actividades Max 30% :', color: '#FF5733', value: this.libro.puntuacion_actividades, max: 30 }
+      ];
     }
   }
 
-
+  calcularAncho(value: number, max: number): number {
+    return (value / max) * 100;
+  }
 
 
 

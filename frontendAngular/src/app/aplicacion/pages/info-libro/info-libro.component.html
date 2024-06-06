@@ -21,7 +21,13 @@
       <p-button icon="pi pi-info-circle" [rounded]="true" [text]="true" routerLink="/guia-analisis" />
     </div>
     <div class="puntuacion-meter">
-      <p-meterGroup [value]="valoresPuntuaciones"  labelPosition="start" labelOrientation="vertical"></p-meterGroup>
+      <div *ngFor="let puntuacion of valoresPuntuaciones" class="meter-container">
+        <div class="meter-label">{{ puntuacion.label }}</div>
+        <div class="meter-bar-wrapper">
+          <div class="meter-bar" [style.width.%]="calcularAncho(puntuacion.value, puntuacion.max)" [style.backgroundColor]="puntuacion.color"></div>
+        </div>
+        <div class="meter-value">{{ puntuacion.value }}%</div>
+      </div>
     </div>
   </div>
 </div>
