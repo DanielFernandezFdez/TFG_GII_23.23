@@ -81,10 +81,10 @@
 
 /* Catalogo.html */
 .card-img-top-catalogo {
-    height: 300px; /* Establece una altura fija para todas las imágenes */
-    width: 100%; /* Establece un ancho relativo al contenedor */
-    object-fit: contain; /* Escala la imagen para que se ajuste al contenedor */
-    object-position: center; /* Centra la imagen dentro del contenedor */
+    height: 300px; 
+    width: 100%; 
+    object-fit: contain;
+    object-position: center; 
 }
 
 .input-file-catalogo {
@@ -93,10 +93,10 @@
 
 /* Informacion_libro.html */
 .img-fluid-info-libro {
-    height: 500px; /* Establece una altura fija para todas las imágenes */
-    width: 100%; /* Establece un ancho relativo al contenedor */
-    object-fit: contain; /* Escala la imagen para que se ajuste al contenedor */
-    object-position: center; /* Centra la imagen dentro del contenedor */
+    height: 500px;
+    width: 100%;
+    object-fit: contain; 
+    object-position: center; 
 }
 
 

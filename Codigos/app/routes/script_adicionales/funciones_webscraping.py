@@ -6,26 +6,25 @@ import re
 def obtener_resumen_extendido(isbn):
     url_endpoint = "https://www.agapea.com/ajax/funcionesAjaxResumen.inc.php"
 
-    data = {"ISBN": isbn, "col": "0", "res": "1"}  # ISBN del libro
+    data = {"ISBN": isbn, "col": "0", "res": "1"} 
 
-    # Cabeceras necesarias para la solicitud
     headers = {
         "User-Agent": "Mozilla/5.0 (Tu User Agent)",
         "Referer": "https://www.agapea.com",
-        "X-Requested-With": "XMLHttpRequest",  # Esto indica que es una solicitud de AJAX
+        "X-Requested-With": "XMLHttpRequest",  
     }
 
-    # Realiza la solicitud POST al endpoint
+
     respuesta = requests.post(url_endpoint, headers=headers, data=data)
 
     if respuesta.status_code == 200:
-        # Decodificar correctamente el contenido
+ 
         contenido_html = respuesta.content.decode("utf-8")
 
-        # Analizar el contenido HTML
+
         soup = BeautifulSoup(contenido_html, "html.parser")
 
-        # Extraer el texto plano de la descripción
+
         descrip = soup.get_text(strip=True)
         if descrip:
             return descrip
@@ -258,7 +257,7 @@ def buscar_libro_agapea_generico(instancia_libro):
 
     info_espe = instancia_libro.find("div", {"class": "detalles-libro"})
 
-    # Encontrar todas las filas de la tabla
+   
     filas = info_espe.find_all("tr")
 
     encontradoISBN10 = False
@@ -266,7 +265,7 @@ def buscar_libro_agapea_generico(instancia_libro):
     encontradoEditorial = False
     encontradoFecha = False
     for fila in filas:
-        # Buscar las celdas de encabezado y de datos en la fila
+        
         celda_encabezado = fila.find("th")
 
         celda_dato = fila.find("td")
@@ -329,7 +328,7 @@ def obtener_info_libro_google(isbn_o_titulo, filtro):
         parametros = {"q": f"intitle:{isbn_o_titulo}", "maxResults": 1}
     try:
         respuesta = requests.get(base_url, params=parametros)
-        respuesta.raise_for_status()  # Esto lanzará un error si la solicitud falla.
+        respuesta.raise_for_status() 
         resultado = respuesta.json()
         libros = resultado.get('items', [])
         if not libros:
