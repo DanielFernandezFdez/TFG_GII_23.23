@@ -10,7 +10,7 @@ import { AdministracionModule } from './administracion/administracion.module';
 
 
 
-;
+
 
 @NgModule({
   declarations: [

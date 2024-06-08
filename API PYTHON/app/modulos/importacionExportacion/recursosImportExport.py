@@ -120,7 +120,7 @@ class ExportarCSV(Resource):
         si = StringIO()
         cw = csv.writer(si, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
-        # Incluir nuevas columnas
+      
         cw.writerow(['ID', 'Título', 'ISBN', 'Editorial', 'Descripción', 'Año de publicación', 'Puntuación', 'Ubicación del estudio', 'URL de la imagen', 'Visitas mensuales', 'Visitas totales', 'Mes de creación', 'Año de creación', 'Puntuación Lenguaje genérico', 'Puntuación Menores', 'Puntuación Adultos', 'Puntuación Ubicación', 'Puntuación Actividades'])
 
         libros = Libros.query.all()
@@ -134,7 +134,7 @@ class ExportarCSV(Resource):
             ])
 
         output = si.getvalue()
-        output = '\ufeff' + output  # BOM para que Excel maneje correctamente utf-8
+        output = '\ufeff' + output  
         output = output.encode('utf-8')
 
         return Response(
@@ -149,7 +149,7 @@ class ExportarExcel(Resource):
         wb = Workbook()
         ws = wb.active
 
-        # Incluir nuevas columnas
+        
         ws.append(['ID', 'Título', 'ISBN', 'Editorial', 'Descripción', 'Año de publicación', 'Puntuación', 'Ubicación del estudio', 'URL de la imagen', 'Visitas mensuales', 'Visitas totales', 'Mes de creación', 'Año de creación', 'Puntuación Lenguaje genérico', 'Puntuación Menores', 'Puntuación Adultos', 'Puntuación Ubicación', 'Puntuación Actividades'])
 
         libros = Libros.query.all()

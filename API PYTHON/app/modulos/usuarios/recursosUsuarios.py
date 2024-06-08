@@ -22,7 +22,7 @@ class RegistroUsuario(Resource):
         )
         db.session.add(nuevo_usuario)
         db.session.commit()
-        return jsonify({"mensaje": "Usuario registrado exitosamente"})
+        return jsonify({"mensaje": "Usuario registrado exitosamente", "id": nuevo_usuario.id})
 
 class Login(Resource):
     def post(self):

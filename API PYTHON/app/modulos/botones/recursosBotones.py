@@ -27,7 +27,7 @@ class consultarBoton(Resource):
 
         botones_respuesta = []
 
-        for nombre_boton in data['nombre_botones']: #! En teoria solo viene 1
+        for nombre_boton in data['nombre_botones']: 
             boton = Botones.query.filter_by(nombre_boton=nombre_boton).first()
             if boton:
                 roles_autorizados = json.loads(boton.roles_autorizados if boton.roles_autorizados else '[]')

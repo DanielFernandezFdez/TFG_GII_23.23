@@ -121,8 +121,6 @@ export class GestionRolesComponent {
         this.AuthService.listarUsuarios().subscribe({
           next: (data) => {
             for (let i = 0; i < data.length; i++) {
-              console.log(data[i].rol_id);
-              console.log(id);
               if (data[i].rol_id == id) {
                 Swal.fire('Error', 'No se puede eliminar el rol porque hay usuarios con ese rol', 'error');
                 return;

@@ -2,9 +2,9 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    max-width: 1200px; /* Puedes ajustar este valor según tus necesidades */
+    max-width: 1200px; 
     margin: 0 auto;
-    padding: 50px 20px; /* Añade un margen lateral */
+    padding: 50px 20px; 
 }
 
 .lateral {

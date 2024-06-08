@@ -76,31 +76,31 @@ class ObtenerEstadisticasGraficosGenerales(Resource):
             
             print(mes_inicio, anyo_inicio, mes_fin, anyo_fin)
             
-            # Condiciones para el año inicial y final
+         
             condiciones = []
             
             if anyo_inicio == anyo_fin:
-                # Mismo año
+       
                 condiciones.append(and_(
                     EstadisticasPorMes.anyo == anyo_inicio,
                     EstadisticasPorMes.mes >= mes_inicio,
                     EstadisticasPorMes.mes <= mes_fin
                 ))
             else:
-                # Año inicial
+      
                 condiciones.append(and_(
                     EstadisticasPorMes.anyo == anyo_inicio,
                     EstadisticasPorMes.mes >= mes_inicio
                 ))
 
-                # Años completos entre el inicial y el final
+          
                 if anyo_fin > anyo_inicio + 1:
                     condiciones.append(and_(
                         EstadisticasPorMes.anyo > anyo_inicio,
                         EstadisticasPorMes.anyo < anyo_fin
                     ))
 
-                # Año final
+      
                 condiciones.append(and_(
                     EstadisticasPorMes.anyo == anyo_fin,
                     EstadisticasPorMes.mes <= mes_fin
@@ -184,23 +184,22 @@ class CalcularEstimacion(Resource):
         ponderacion_ninyos = 0.15
         ponderacion_actividad=0.3
 
-        #?Apartado de masculino generico
+
         masculino_generico=data["masculino_generico"]
         if masculino_generico==False:
             resultado=20
-        
-        #? Apartado de calculos de niños
+
         if data["numero_ninyos"]!=0 or data["numero_ninyas"]!=0 in data :
             numero_ninyos = data["numero_ninyos"]
             numero_ninyas = data["numero_ninyas"]
             suma=numero_ninyos+numero_ninyas
             if numero_ninyos> numero_ninyas:
                 proporcion= numero_ninyas/suma
-                sobre100_ninyos=proporcion*2 #50 seria lo ideal por lo tanto al hacer regla de 3 con multiplicar por 2 se saca
+                sobre100_ninyos=proporcion*2 
                 resultado+=ponderacion_ninyos*sobre100_ninyos*100
             else:
                 proporcion= numero_ninyos/suma
-                sobre100_ninyos=proporcion*2 #50 seria lo ideal por lo tanto al hacer regla de 3 con multiplicar por 2 se saca
+                sobre100_ninyos=proporcion*2 
                 resultado+=ponderacion_ninyos*sobre100_ninyos*100
 
         else:
@@ -213,11 +212,11 @@ class CalcularEstimacion(Resource):
         suma=numero_hombres+numero_mujeres
         if numero_hombres> numero_mujeres:
             proporcion= numero_mujeres/suma
-            sobre100_adultos=proporcion*2 #50 seria lo ideal por lo tanto al hacer regla de 3 con multiplicar por 2 se saca
+            sobre100_adultos=proporcion*2 
             resultado+=ponderacion_adultos*sobre100_adultos*100
         else:
             proporcion= numero_hombres/suma
-            sobre100_adultos=proporcion*2 #50 seria lo ideal por lo tanto al hacer regla de 3 con multiplicar por 2 se saca
+            sobre100_adultos=proporcion*2 
             resultado+=ponderacion_adultos*sobre100_adultos*100
 
 
@@ -250,7 +249,6 @@ class CalcularEstimacion(Resource):
         resultado += proporcion * ponderacion_actividad * 100
 
 
-        #? Calculo de ubicacion, se pasa ya el valor correspondiente 0 a 100 
 
         resultado+=data["ubicacion"]*0.2
 

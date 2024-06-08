@@ -27,30 +27,30 @@ class CrearRol(Resource):
         data = request.get_json()
         rol = Roles.query.filter_by(nombre_rol=data['nombre_rol']).first()
         if rol:
-            return jsonify({"mensaje": "El rol ya existe"}), 400
+            return {"mensaje": "El rol ya existe"}, 400
         nuevo_rol = Roles(nombre_rol=data['nombre_rol'])
         db.session.add(nuevo_rol)
         db.session.commit()
-        return jsonify({"mensaje": "Rol creado exitosamente"})
+        return {"id": nuevo_rol.id, "mensaje": "Rol creado exitosamente"},200
 
 class EditarRol(Resource):
     @jwt_required()
-    def put(self, rol_id):
-        rol = Roles.query.get_or_404(rol_id)
+    def put(self, id):
+        rol = Roles.query.get_or_404(id)
         data = request.get_json()
         nombre_rol_existente = Roles.query.filter_by(nombre_rol=data['nombre_rol']).first()
         if nombre_rol_existente and nombre_rol_existente.id != rol.id:
-            return jsonify({"mensaje": "El rol ya existe"}), 406
+            return {"mensaje": "El rol ya existe"}, 406
         rol.nombre_rol = data['nombre_rol']
         db.session.commit()
-        return jsonify({"mensaje": "Rol modificado exitosamente"})
+        return {"mensaje": "Rol modificado exitosamente"},200
 
 class BorrarRol(Resource):
     @jwt_required()
-    def delete(self, rol_id):
-        rol = Roles.query.get_or_404(rol_id)
+    def delete(self, id):
+        rol = Roles.query.get_or_404(id)
         if rol.id == 1 or rol.id == 2:
-            return jsonify({"mensaje": "No se puede eliminar este rol"}), 400
+            return {"mensaje": "No se puede eliminar este rol"}, 400
         db.session.delete(rol)
         db.session.commit()
-        return jsonify({"mensaje": "Rol eliminado exitosamente"})
+        return {"mensaje": "Rol eliminado exitosamente"},200
