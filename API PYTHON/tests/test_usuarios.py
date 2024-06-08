@@ -27,6 +27,7 @@ class TestUsuariosExternos(unittest.TestCase):
     def test_2_modificar_usuario(self):
         response = requests.put(f'{self.BASE_URL}/usuarios/modificar_usuario/{self.__class__.Usuario_ID}', json={
             'usuario': 'usuario_modificado',
+            'correo': 'nuevo@nuevo.com',
             'contrasenya_actual': '12345678',
             'contrasenya_nueva': 'newpassword'
         }, headers=self.headers)
