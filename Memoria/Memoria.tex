@@ -343,8 +343,8 @@
   {%
     \noindent\LARGE
     Presentado por \@author{}\\ 
-    en Universidad de Burgos --- \@date{}\\
-    Tutor: \@tutor{}\\
+    en Universidad de Burgos \\ a \@date{}\\
+    Tutora: \@tutor{}\\
   }%
   \end{center}%
   \null
@@ -369,42 +369,42 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\thispagestyle{empty}
+%\thispagestyle{empty}
 
 
-\noindent\includegraphics[width=\textwidth]{cabecera}\vspace{1cm}
+%\noindent\includegraphics[width=\textwidth]{cabecera}\vspace{1cm}
 
-\noindent D. Ana Serrano Mamolar, profesor del departamento de nombre departamento, área de nombre área.
+%\noindent Dña. Ana Serrano Mamolar, profesora del departamento de ingeniería informática, área de Lenguajes y Sistemas Informáticos.
 
-\noindent Expone:
+%\noindent Expone:
 
-\noindent Que el alumno D. \nombre, con DNI 71305558S, ha realizado el Trabajo final de Grado en Ingeniería Informática titulado título de TFG. 
+%\noindent Que el alumno D. \nombre, con DNI 71305558S, ha realizado el Trabajo final de Grado en Ingeniería Informática titulado título de TFG. 
 
-\noindent Y que dicho trabajo ha sido realizado por el alumno bajo la dirección del que suscribe, en virtud de lo cual se autoriza su presentación y defensa.
+%\noindent Y que dicho trabajo ha sido realizado por el alumno bajo la dirección del que suscribe, en virtud de lo cual se autoriza su presentación y defensa.
 
-\begin{center} %\large
-En Burgos, {\large \today}
-\end{center}
+%\begin{center} %\large
+%En Burgos, {\large \today}
+%\end{center}
 
-\vfill\vfill\vfill
+%\vfill\vfill\vfill
 
 % Author and supervisor
-\begin{minipage}{0.45\textwidth}
-\begin{flushleft} %\large
-Vº. Bº. del Tutor:\\[2cm]
-D. nombre tutor
-\end{flushleft}
-\end{minipage}
-\hfill
-\begin{minipage}{0.45\textwidth}
-\begin{flushleft} %\large
-Vº. Bº. del co-tutor:\\[2cm]
-D. nombre co-tutor
-\end{flushleft}
-\end{minipage}
-\hfill
+%\begin{minipage}{0.45\textwidth}
+%\begin{flushleft} %\large
+%Vº. Bº. del Tutor:\\[2cm]
+%Dña. Ana Serrano Mamolar,
+%\end{flushleft}
+%\end{minipage}
+%\hfill
+%\begin{minipage}{0.45\textwidth}
+%\begin{flushleft} %\large
+%Vº. Bº. del co-tutor:\\[2cm]
+%D. Jesus Alberto San Martín Zapatero,
+%\end{flushleft}
+%\end{minipage}
+%\hfill
 
-\vfill
+%\vfill
 
 % para casos con solo un tutor comentar lo anterior
 % y descomentar lo siguiente
@@ -412,7 +412,7 @@ D. nombre co-tutor
 %D. nombre tutor
 
 
-\newpage\null\thispagestyle{empty}\newpage
+%\newpage\null\thispagestyle{empty}\newpage
 
 
 
@@ -422,12 +422,20 @@ D. nombre co-tutor
 % Abstract en castellano
 \renewcommand*\abstractname{Resumen}
 \begin{abstract}
-En este primer apartado se hace una \textbf{breve} presentación del tema que se aborda en el proyecto. \textbf{CAMBIAR}
+La educación de los niños es fundamental para su correcto desarrollo y la posibilidad de un futuro brillante. 
+
+En este aspecto, la literatura infantil constituye uno de los recursos más adecuados para la aproximación al conocimiento de realidades sociales y culturales. En el campo de la prehistoria es a menudo bastante común la reproducción de estereotipos de género que sin embargo la ciencia ya ha descartado definitivamente. Es muy importante por tanto para docentes y familias descubrir literatura infantil que no contribuyan a perpetuar estos estereotipos sino que muestren una realidad más alineada con los datos avalados por la ciencia. Con este enfoque hay diferentes investigaciones que abordan la evaluación de los libros de prehistoria y su adecuación en la etapa infantil.
+
+En este trabajo, se propone una plataforma que sirva de catálogo disponible para cualquier docente o familia a la hora de escoger qué libros de prehistoria ofrecer a las niñas y niños así como ofrecer mecanismos de evaluación derivados de investigaciones para la auto-evaluación de nuevos títulos.
+
+Adicionalmente, esta plataforma web incluye un apartado de administración que proporciona todas las herramientas necesarias para un desarrollo eficiente y colaboración en la integración de nuevos títulos. Entre las funcionalidades se encuentran la gestión de cuentas, permisos, copias de seguridad del catálogo y la búsqueda automática de libros en tres fuentes diferentes.
+
+La web está disponible ininterrumpidamente en el siguiente enlace: \href{https://prehistoriaenigualdad.netlify.app/}{Prehistoria en igualdad}.
 \end{abstract}
 
 \renewcommand*\abstractname{Descriptores}
 \begin{abstract}
-Aplicación web, algoritmos, libros, flask, base de datos \ldots 
+Aplicación web, full-stack, web scraping, libros, flask, base de datos, angular, python
 \end{abstract}
 
 \clearpage
@@ -435,12 +443,22 @@ Aplicación web, algoritmos, libros, flask, base de datos \ldots
 % Abstract en inglés
 \renewcommand*\abstractname{Abstract}
 \begin{abstract}
-A \textbf{brief} presentation of the topic addressed in the project.
+The education of children is essential for their correct development and the possibility of a bright future. 
+
+In this aspect, children's literature constitutes one of the most appropriate resources for approaching knowledge of social and cultural realities. In the field of prehistory, the reproduction of gender stereotypes is often quite common, although science has already definitively discarded them. It is therefore very important for teachers and families to discover children's literature that does not contribute to perpetuating these stereotypes but rather shows a reality more aligned with data supported by science. With this approach, there are different investigations that address the evaluation of prehistory books and their suitability in the childhood stage.
+
+In this work, a platform is proposed that serves as a catalog available to any teacher or family when choosing which prehistory books to offer to girls and boys, as well as offering evaluation mechanisms derived from research for the self-assessment of new titles. .
+
+Additionally, this web platform includes an administration section that provides all the necessary tools for efficient development and collaboration in the integration of new titles. Features include account management, permissions, catalog backups, and automatic search for books in three different sources.
+
+The website is available continuously at the following link: \href{https://prehistoriaenigualdad.netlify.app/}{Prehistoria en igualdad}. 
+
+ 
 \end{abstract}
 
 \renewcommand*\abstractname{Keywords}
 \begin{abstract}
-Web app, algorithms, books, flask, database \ldots 
+Web app, full-stack, web-scrapping, books, flask, database, angular, python 
 \end{abstract}
 
 \clearpage
@@ -469,6 +487,5 @@ Web app, algorithms, books, flask, database \ldots
 
 \bibliographystyle{plain}
 \bibliography{bibliografia}
-%Esto es un ejemplo de cita el a es el nombre a ponerle, y el kozaa92 es la referencia de la bibliografía.
-\cite[a]{koza92}
+
 \end{document}
