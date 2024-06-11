@@ -80,7 +80,7 @@ export class SidebarComponent {
         expanded: true,
         items: [
           {
-            label: 'Gestión de usuarios',
+            label: 'Gestión de Personas',
             icon: 'pi pi-user-edit',
             command: () =>  {
               this.router.navigate(['/gestion-usuarios']),
