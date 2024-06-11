@@ -1,7 +1,7 @@
 <app-menu-dashboard></app-menu-dashboard>
 <div class="container-btn">
   <div class="placeholder"></div> 
-    <h2 class="titulo-gestion">Gestión de Usuarios</h2>
+    <h2 class="titulo-gestion">Gestión de Personas</h2>
     <p-button label="Nuevo Usuario" icon="pi pi-plus" [rounded]="true" [text]="true" severity="primary" (click)="nuevoUsuario($event)"></p-button>
 </div>
 <div class="container mt-5">
@@ -30,7 +30,7 @@
   <p-overlayPanel #modificar>
     <div class="ui-g ui-fluid">
       <div class="ui-g-12">
-        <label for="usuario">Usuario</label>
+        <label for="usuario">Persona</label>
         <input type="text" pInputText [(ngModel)]="usuarioEditado.usuario" id="usuario">
       </div>
       <div class="ui-g-12">
@@ -51,8 +51,8 @@
   <p-overlayPanel #nuevo>
     <div class="ui-g ui-fluid">
       <div class="ui-g-12">
-        <label for="usuario">Usuario</label>
-        <input type="text" pInputText [(ngModel)]="usuarioNuevo.usuario" id="usuario" placeholder="Nombre de usuario">
+        <label for="usuario">Persona</label>
+        <input type="text" pInputText [(ngModel)]="usuarioNuevo.usuario" id="usuario" placeholder="Nombre de usuario/a">
       </div>
       <div class="ui-g-12">
         <label for="correo">Correo</label>

@@ -76,7 +76,7 @@ export class SidebarComponent {
         ]
       },
       {
-        label: 'Gestión de usuarios',
+        label: 'Gestión de personas',
         expanded: true,
         items: [
           {
